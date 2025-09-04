@@ -1,11 +1,12 @@
 # Dependencies
-/node_modules
+**/node_modules
 
 # Build artifacts
 /dist
 /.next/
 /.expo/
 /.expo-shared/
+/.turbo/
 
 # Logs
 *.log
