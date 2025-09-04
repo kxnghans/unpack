@@ -3,6 +3,9 @@
   "main": "expo-router/entry",
   "version": "1.0.0",
   "private": true,
+  "scripts": {
+    "dev": "expo start --lan"
+  },
   "dependencies": {
     "expo": "^51.0.0",
     "expo-router": "^3.0.0",
