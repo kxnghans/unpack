@@ -3,8 +3,8 @@
 
 # Build artifacts
 /dist
-/.next/
-/.expo/
+**/.next/
+**/.expo/
 /.expo-shared/
 /.turbo/
 
@@ -14,6 +14,9 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
+
+# Local files
+my_files/
 
 # Environment variables
 .env
