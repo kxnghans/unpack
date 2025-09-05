@@ -1,13 +1,9 @@
-import { View, Text, Button } from "react-native";
-import { Link } from "expo-router";
+import { Redirect } from 'expo-router';
 
-export default function Home() {
-  return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Text>Welcome to Unpack 🚀</Text>
-      <Link href="/itinerary" asChild>
-        <Button title="Go to Itinerary" />
-      </Link>
-    </View>
-  );
+/**
+ * The root index page of the app.
+ * This component redirects the user to the main planning screen.
+ */
+export default function RootIndex() {
+  return <Redirect href="/planning" />;
 }
