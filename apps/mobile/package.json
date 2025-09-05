@@ -7,6 +7,9 @@
     "dev": "expo start --lan"
   },
   "dependencies": {
+    "@expo/vector-icons": "^15.0.2",
+    "@ui": "workspace:*",
+    "@utils": "workspace:*",
     "axios": "^1.6.0",
     "expo": "^53.0.22",
     "expo-router": "^5.1.5",

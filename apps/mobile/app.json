@@ -1,4 +1,9 @@
 {
+  "expo": {
+    "name": "unpack-mobile",
+    "slug": "unpack-mobile",
+    "scheme": "unpack"
+  },
   "plugins": [
     "expo-router"
   ]

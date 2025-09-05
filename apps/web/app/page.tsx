@@ -1,3 +1,7 @@
+/**
+ * The home page for the web app.
+ * @returns The home page.
+ */
 export default function HomePage() {
   return (
     <main style={{ fontFamily: "sans-serif", padding: "2rem", textAlign: "center" }}>
