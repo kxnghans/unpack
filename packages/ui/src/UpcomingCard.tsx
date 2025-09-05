@@ -54,7 +54,7 @@ export function UpcomingCard({ color, icon, title, body, onPress }: UpcomingCard
     },
     title: {
       fontSize: 20,
-      fontWeight: 'bold',
+      fontWeight: '600',
       color: '#1A1A1A',
       fontFamily: typography.nunitoSans,
       textAlign: 'center',
