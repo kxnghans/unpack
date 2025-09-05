@@ -59,11 +59,8 @@ export default function PlanningScreen() {
     />
   );
 
-  return (
-    <ScrollView
-      style={styles.container}
-      contentContainerStyle={styles.contentContainer}
-    >
+  const renderListHeader = () => (
+    <>
       <Text style={styles.mainTitle}>Planning</Text>
 
       <View style={styles.hubsContainer}>
@@ -83,12 +80,18 @@ export default function PlanningScreen() {
       </View>
 
       <Text style={styles.sectionTitle}>Upcoming</Text>
-      <FlatList
-        data={UPCOMING_ITEMS}
-        renderItem={renderUpcomingItem}
-        keyExtractor={(item) => item.id}
-        numColumns={2}
-      />
-    </ScrollView>
+    </>
+  );
+
+  return (
+    <FlatList
+      ListHeaderComponent={renderListHeader}
+      style={styles.container}
+      contentContainerStyle={styles.contentContainer}
+      data={UPCOMING_ITEMS}
+      renderItem={renderUpcomingItem}
+      keyExtractor={(item) => item.id}
+      numColumns={2}
+    />
   );
 }
