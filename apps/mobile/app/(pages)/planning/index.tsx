@@ -71,7 +71,7 @@ export default function PlanningScreen() {
           data={HUBS}
           renderItem={({ item }) => (
             <HubCard
-              icon={<FontAwesome5 name={item.icon} size={24} color={colors.text} />}
+              icon={<FontAwesome5 name={item.icon} size={48} color="#1A1A1A" />}
               title={item.title}
               items={item.items}
             />

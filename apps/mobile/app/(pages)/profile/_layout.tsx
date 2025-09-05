@@ -21,6 +21,8 @@ export default function ProfileLayout() {
           fontFamily: typography.nunitoSans,
         },
       }}
-    />
+    >
+      <Stack.Screen name="index" options={{ headerShown: false }} />
+    </Stack>
   );
 }

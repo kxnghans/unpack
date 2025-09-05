@@ -11,4 +11,5 @@ export * from './PieChart';
 export * from './HubRow';
 export * from './ThemeProvider';
 export * from './tokens';
+export * from './Wave';
 
