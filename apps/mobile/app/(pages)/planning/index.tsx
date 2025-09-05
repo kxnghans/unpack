@@ -1,20 +1,94 @@
-import { View } from 'react-native';
-import { Link } from 'expo-router';
-import { Card } from '@ui/Card';
-import { PACKING_LISTS } from '../../../lib/mock-data';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  FlatList,
+} from 'react-native';
+import {
+  HubCard,
+  UpcomingCard,
+  useTheme,
+} from '@ui';
+import { HUBS, UPCOMING_ITEMS } from '../../../lib/mock-data';
+import { FontAwesome5 } from '@expo/vector-icons';
 
-/**
- * The main screen for the planning tab.
- * This component displays a list of packing lists from the mock data.
- */
+const iconMap = {
+  flight: 'plane',
+  hotel: 'hotel',
+  itinerary: 'map-signs',
+  savings: 'piggy-bank',
+  playlist: 'music',
+  packing: 'suitcase',
+};
+
 export default function PlanningScreen() {
+  const { colors, typography } = useTheme();
+
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: colors.background,
+    },
+    contentContainer: {
+      padding: 24,
+    },
+    mainTitle: {
+      fontSize: 32,
+      fontWeight: 'bold',
+      color: colors.text,
+      marginBottom: 16,
+    },
+    sectionTitle: {
+      fontSize: typography.sizes.l,
+      fontWeight: 'bold',
+      color: colors.text,
+      marginBottom: 16,
+    },
+    hubsContainer: {
+      marginBottom: 24,
+    },
+  });
+
+  const renderUpcomingItem = ({ item }) => (
+    <UpcomingCard
+      color={item.color}
+      icon={<FontAwesome5 name={iconMap[item.type]} size={24} color="white" />}
+      title={item.title}
+      body={item.body}
+    />
+  );
+
   return (
-    <View style={{ flex: 1 }}>
-      {PACKING_LISTS.map((list) => (
-        <Link key={list.id} href={`/planning/${list.id}`} asChild>
-          <Card title={list.name} subtitle={`${list.items} items`} />
-        </Link>
-      ))}
-    </View>
+    <ScrollView
+      style={styles.container}
+      contentContainerStyle={styles.contentContainer}
+    >
+      <Text style={styles.mainTitle}>Planning</Text>
+
+      <View style={styles.hubsContainer}>
+        <FlatList
+          data={HUBS}
+          renderItem={({ item }) => (
+            <HubCard
+              icon={<FontAwesome5 name={item.icon} size={24} color={colors.text} />}
+              title={item.title}
+              items={item.items}
+            />
+          )}
+          keyExtractor={(item) => item.id}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+        />
+      </View>
+
+      <Text style={styles.sectionTitle}>Upcoming</Text>
+      <FlatList
+        data={UPCOMING_ITEMS}
+        renderItem={renderUpcomingItem}
+        keyExtractor={(item) => item.id}
+        numColumns={2}
+      />
+    </ScrollView>
   );
 }
