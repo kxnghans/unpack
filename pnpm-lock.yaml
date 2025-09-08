@@ -36,6 +36,9 @@ importers:
       expo:
         specifier: ^53.0.22
         version: 53.0.22(@babel/core@7.28.4)(@expo/metro-runtime@5.0.4(react-native@0.79.5(@babel/core@7.28.4)(react@19.0.0)))(react-native@0.79.5(@babel/core@7.28.4)(react@19.0.0))(react@19.0.0)
+      expo-location:
+        specifier: ^17.0.1
+        version: 17.0.1(expo@53.0.22(@babel/core@7.28.4)(@expo/metro-runtime@5.0.4(react-native@0.79.5(@babel/core@7.28.4)(react@19.0.0)))(react-native@0.79.5(@babel/core@7.28.4)(react@19.0.0))(react@19.0.0))
       expo-router:
         specifier: ^5.1.5
         version: 5.1.5(expo-constants@17.1.7(expo@53.0.22(@babel/core@7.28.4)(@expo/metro-runtime@5.0.4(react-native@0.79.5(@babel/core@7.28.4)(react@19.0.0)))(react-native@0.79.5(@babel/core@7.28.4)(react@19.0.0))(react@19.0.0))(react-native@0.79.5(@babel/core@7.28.4)(react@19.0.0)))(expo-linking@7.1.7(expo@53.0.22(@babel/core@7.28.4)(@expo/metro-runtime@5.0.4(react-native@0.79.5(@babel/core@7.28.4)(react@19.0.0)))(react-native@0.79.5(@babel/core@7.28.4)(react@19.0.0))(react@19.0.0))(react-native@0.79.5(@babel/core@7.28.4)(react@19.0.0))(react@19.0.0))(expo@53.0.22(@babel/core@7.28.4)(@expo/metro-runtime@5.0.4(react-native@0.79.5(@babel/core@7.28.4)(react@19.0.0)))(react-native@0.79.5(@babel/core@7.28.4)(react@19.0.0))(react@19.0.0))(react-native-safe-area-context@5.4.0(react-native@0.79.5(@babel/core@7.28.4)(react@19.0.0))(react@19.0.0))(react-native-screens@4.11.1(react-native@0.79.5(@babel/core@7.28.4)(react@19.0.0))(react@19.0.0))(react-native@0.79.5(@babel/core@7.28.4)(react@19.0.0))(react@19.0.0)
@@ -1589,6 +1592,11 @@ packages:
     peerDependencies:
       react: 19.0.0
       react-native: '*'
+
+  expo-location@17.0.1:
+    resolution: {integrity: sha512-m+OzotzlAXO3ZZ1uqW5GC25nXW868zN+ROyBA1V4VF6jGay1ZEs4URPglCVUDzZby2F5wt24cMzqDKw2IX6nRw==}
+    peerDependencies:
+      expo: '*'
 
   expo-modules-autolinking@2.1.14:
     resolution: {integrity: sha512-nT5ERXwc+0ZT/pozDoJjYZyUQu5RnXMk9jDGm5lg+PiKvsrCTSA/2/eftJGMxLkTjVI2MXp5WjSz3JRjbA7UXA==}
@@ -4954,6 +4962,10 @@ snapshots:
     transitivePeerDependencies:
       - expo
       - supports-color
+
+  expo-location@17.0.1(expo@53.0.22(@babel/core@7.28.4)(@expo/metro-runtime@5.0.4(react-native@0.79.5(@babel/core@7.28.4)(react@19.0.0)))(react-native@0.79.5(@babel/core@7.28.4)(react@19.0.0))(react@19.0.0)):
+    dependencies:
+      expo: 53.0.22(@babel/core@7.28.4)(@expo/metro-runtime@5.0.4(react-native@0.79.5(@babel/core@7.28.4)(react@19.0.0)))(react-native@0.79.5(@babel/core@7.28.4)(react@19.0.0))(react@19.0.0)
 
   expo-modules-autolinking@2.1.14:
     dependencies:
