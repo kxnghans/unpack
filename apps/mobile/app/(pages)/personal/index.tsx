@@ -8,23 +8,18 @@ export default function PersonalScreen() {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
     },
-    headerContainer: {
-      paddingHorizontal: 24,
-      paddingTop: 24,
-    },
-    mainTitle: {
+    text: {
+      ...typography.fonts.description,
       color: colors.text,
-      marginBottom: 16,
-      ...typography.fonts.pageHeader,
     },
   });
 
   return (
     <View style={styles.container}>
-      <View style={styles.headerContainer}>
-        <Text style={styles.mainTitle}>Personal</Text>
-      </View>
+      <Text style={styles.text}>Personal / Profile Screen</Text>
     </View>
   );
 }

@@ -16,7 +16,7 @@ import { FilterDialog } from '@ui';
 const continents = ['Africa', 'Asia', 'Europe', 'North America', 'South America', 'Australia'];
 const tripTypes = ['Road Trip', 'Leisure / Vacation', 'Backpacking', 'Study Abroad', 'Business', 'Cruise', 'Adventure Travel'];
 const durations = ['1-3 Days', '4-7 Days', '1-2 Weeks', '2+ Weeks'];
-const budgets = ['Budget ($', 'Mid-range ($$)', 'Luxury ($$$)'];
+const budgets = ['Budget (, 'Mid-range ($)', 'Luxury ($$)'];
 const travelStyles = ['Foodie', 'Hiking', 'Museums', 'Nightlife', 'Relaxing', 'Adventure'];
 const groupTypes = ['Solo', 'Couple', 'Family', 'Friends'];
 
@@ -75,7 +75,7 @@ const CommunityScreen = () => {
     },
     tabText: {
       color: colors.background,
-      fontWeight: 'bold',
+      ...typography.fonts.title, // Standardized
     },
     mainContent: {
       flex: 1,
@@ -108,14 +108,20 @@ const CommunityScreen = () => {
     },
     cardTextContainer: { flex: 1, marginRight: 10 },
     cardTitle: {
-      fontSize: 17,
-      fontWeight: '600',
-      marginBottom: 4,
+      ...typography.fonts.title, // Standardized
       color: '#1C2833',
+      marginBottom: 4,
     },
-    cardBody: { fontSize: 14, color: '#566573' },
+    cardBody: {
+      ...typography.fonts.description, // Standardized
+      color: '#566573',
+    },
     authorContainer: { flexDirection: 'row', alignItems: 'center' },
-    cardAuthorName: { fontSize: 12, color: '#566573', marginRight: 8 },
+    cardAuthorName: {
+      ...typography.fonts.subtitle, // Standardized
+      color: '#566573',
+      marginRight: 8,
+    },
     authorImage: {
       width: 36,
       height: 36,

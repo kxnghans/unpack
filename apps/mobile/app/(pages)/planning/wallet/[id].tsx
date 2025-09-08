@@ -25,12 +25,21 @@ export default function WalletItemDetailPage() {
       marginBottom: 16,
       marginTop: 24,
     },
+    notFoundContainer: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    notFoundText: {
+      ...typography.fonts.description,
+      color: colors.text,
+    },
   });
 
   if (!card) {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Card not found</Text>
+      <View style={styles.notFoundContainer}>
+        <Text style={styles.notFoundText}>Card not found</Text>
       </View>
     );
   }

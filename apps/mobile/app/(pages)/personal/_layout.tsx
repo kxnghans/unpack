@@ -5,17 +5,22 @@ import { useTheme } from '@ui/ThemeProvider';
  * The layout for the personal section of the app.
  * This component defines the stack navigator for the personal tab.
  */
-import { Text, View } from 'react-native';
-import React from 'react';
+export default function PersonalLayout() {
+  const { colors, typography } = useTheme();
 
-/**
- * The main screen for the profile tab.
- * This component displays a placeholder for the user's profile.
- */
-export default function ProfileScreen() {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Profile Screen</Text>
-    </View>
+    <Stack
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: colors.background,
+        },
+        headerTintColor: colors.text,
+        headerTitleStyle: {
+          ...typography.fonts.sectionHeader,
+        },
+      }}
+    >
+      <Stack.Screen name="index" options={{ headerShown: false }} />
+    </Stack>
   );
 }
