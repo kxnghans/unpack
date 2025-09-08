@@ -7,16 +7,19 @@
     "dev": "expo start --lan"
   },
   "dependencies": {
-    "@expo/vector-icons": "^15.0.2",
+    "@expo/vector-icons": "^14.1.0",
     "@ui": "workspace:*",
     "@utils": "workspace:*",
     "axios": "^1.6.0",
     "expo": "^53.0.22",
     "expo-router": "^5.1.5",
+    "nanoid": "^5.1.5",
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "react-native": "0.79.5",
+    "react-native-maps": "1.20.1",
     "react-native-safe-area-context": "5.4.0",
-    "react-native-screens": "4.11.1"
+    "react-native-screens": "4.11.1",
+    "whatwg-fetch": "^3.6.20"
   }
 }

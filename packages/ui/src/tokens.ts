@@ -4,16 +4,18 @@
 
 export const colors = {
   light: {
-    background: '#f0f0f0',
+    background: '#FFFFFF',
     text: '#333333',
+    textSecondary: '#888888',
     primary: '#007bff',
-    card: '#ffffff',
+    card: '#F8F9FF',
     shadow: 'rgba(0,0,0,0.1)',
     highlight: 'rgba(255,255,255,0.7)',
   },
   dark: {
     background: '#333333',
     text: '#f0f0f0',
+    textSecondary: '#bbbbbb',
     primary: '#007bff',
     card: '#444444',
     shadow: 'rgba(0,0,0,0.3)',
@@ -24,10 +26,45 @@ export const colors = {
 export const typography = {
   nunitoSans: 'NunitoSans',
   inter: 'Inter',
+  roboto: 'Roboto',
   sizes: {
     s: 14,
-    m: 18,
-    l: 24,
+    m: 16,
+    l: 22,
+    xl: 34,
+  },
+  weights: {
+    light: '400',
+    regular: '500',
+    bold: '700',
+    extraBold: '800',
+  },
+  fonts: {
+    pageHeader: {
+      fontFamily: 'NunitoSans',
+      fontSize: 34,
+      fontWeight: '800',
+    },
+    sectionHeader: {
+      fontFamily: 'NunitoSans',
+      fontSize: 22,
+      fontWeight: '700',
+    },
+    title: {
+      fontFamily: 'Roboto',
+      fontSize: 16,
+      fontWeight: '700',
+    },
+    subtitle: {
+      fontFamily: 'Roboto',
+      fontSize: 14,
+      fontWeight: '500',
+    },
+    description: {
+      fontFamily: 'Inter',
+      fontSize: 14,
+      fontWeight: '400',
+    },
   },
 };
 

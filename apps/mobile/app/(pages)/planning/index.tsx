@@ -2,16 +2,18 @@ import {
   View,
   Text,
   StyleSheet,
-  ScrollView,
   FlatList,
+  ScrollView,
 } from 'react-native';
 import {
   HubCard,
   UpcomingCard,
   useTheme,
+  Divider,
 } from '@ui';
 import { HUBS, UPCOMING_ITEMS } from '../../../lib/mock-data';
 import { FontAwesome5 } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 
 const iconMap = {
   flight: 'plane',
@@ -24,26 +26,29 @@ const iconMap = {
 
 export default function PlanningScreen() {
   const { colors, typography } = useTheme();
+  const router = useRouter();
 
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: colors.background,
+      backgroundColor: '#FFFFFF',
     },
-    contentContainer: {
-      padding: 24,
+    headerContainer: {
+      paddingHorizontal: 24,
+      paddingTop: 24,
+    },
+    listContentContainer: {
+      paddingHorizontal: 24,
     },
     mainTitle: {
-      fontSize: 32,
-      fontWeight: 'bold',
       color: colors.text,
       marginBottom: 16,
+      ...typography.fonts.pageHeader,
     },
     sectionTitle: {
-      fontSize: typography.sizes.l,
-      fontWeight: 'bold',
       color: colors.text,
       marginBottom: 16,
+      ...typography.fonts.sectionHeader,
     },
     hubsContainer: {
       marginBottom: 24,
@@ -59,36 +64,41 @@ export default function PlanningScreen() {
     />
   );
 
-  return (
-    <ScrollView
-      style={styles.container}
-      contentContainerStyle={styles.contentContainer}
-    >
+  const ListHeader = () => (
+    <View style={styles.headerContainer}>
       <Text style={styles.mainTitle}>Planning</Text>
-
+      <Divider />
+      <Text style={styles.sectionTitle}>Hubs</Text>
       <View style={styles.hubsContainer}>
-        <FlatList
-          data={HUBS}
-          renderItem={({ item }) => (
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          {HUBS.map((hub) => (
             <HubCard
-              icon={<FontAwesome5 name={item.icon} size={48} color="#1A1A1A" />}
-              title={item.title}
-              items={item.items}
+              key={hub.id}
+              icon={<FontAwesome5 name={hub.icon} size={48} color="#1A1A1A" />}
+              title={hub.title}
+              items={hub.items}
+              onPress={() =>
+                hub.title === 'Wallets' && router.push('/planning/wallets')
+              }
             />
-          )}
-          keyExtractor={(item) => item.id}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-        />
+          ))}
+        </ScrollView>
       </View>
-
+      <Divider />
       <Text style={styles.sectionTitle}>Upcoming</Text>
+    </View>
+  );
+
+  return (
+    <View style={styles.container}>
       <FlatList
         data={UPCOMING_ITEMS}
         renderItem={renderUpcomingItem}
         keyExtractor={(item) => item.id}
         numColumns={2}
+        ListHeaderComponent={ListHeader}
+        contentContainerStyle={styles.listContentContainer}
       />
-    </ScrollView>
+    </View>
   );
 }

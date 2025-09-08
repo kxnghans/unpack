@@ -53,17 +53,14 @@ export function UpcomingCard({ color, icon, title, body, onPress }: UpcomingCard
       alignItems: 'center',
     },
     title: {
-      fontSize: 20,
-      fontWeight: '600',
-      color: '#1A1A1A',
-      fontFamily: typography.nunitoSans,
+      color: colors.text,
       textAlign: 'center',
+      ...typography.fonts.title,
     },
     body: {
-      fontSize: 14,
-      color: '#6B6B6B',
-      fontFamily: typography.inter,
+      color: colors.text,
       textAlign: 'center',
+      ...typography.fonts.description,
     },
   });
 

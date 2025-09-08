@@ -18,6 +18,8 @@ export default function TabLayout() {
         tabBarInactiveTintColor: colors.text,
         tabBarStyle: {
           backgroundColor: colors.background,
+          borderTopWidth: 0,
+          paddingBottom: 0,
         },
       }}>
       <Tabs.Screen
@@ -39,9 +41,9 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="profile"
+        name="personal"
         options={{
-          title: 'Profile',
+          title: 'Personal',
           tabBarIcon: ({ color, size }) => (
             <Feather name="user" size={size} color={color} />
           ),
