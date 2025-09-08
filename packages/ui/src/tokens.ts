@@ -11,6 +11,7 @@ export const colors = {
     card: '#F8F9FF',
     shadow: 'rgba(0,0,0,0.1)',
     highlight: 'rgba(255,255,255,0.7)',
+    surface: '#F8F9FF',
   },
   dark: {
     background: '#333333',
@@ -20,7 +21,14 @@ export const colors = {
     card: '#444444',
     shadow: 'rgba(0,0,0,0.3)',
     highlight: 'rgba(255,255,255,0.1)',
+    surface: '#444444',
   },
+};
+
+export const spacing = {
+  small: 8,
+  medium: 16,
+  large: 24,
 };
 
 export const typography = {
@@ -63,6 +71,16 @@ export const typography = {
     description: {
       fontFamily: 'Inter',
       fontSize: 14,
+      fontWeight: '400',
+    },
+    heading3: {
+      fontFamily: 'NunitoSans',
+      fontSize: 18,
+      fontWeight: '700',
+    },
+    body: {
+      fontFamily: 'Inter',
+      fontSize: 16,
       fontWeight: '400',
     },
   },

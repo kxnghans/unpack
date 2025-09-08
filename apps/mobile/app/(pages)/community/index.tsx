@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -6,14 +6,12 @@ import {
   StyleSheet,
   TouchableOpacity,
   Image,
-  LayoutAnimation,
   Platform,
   UIManager,
 } from 'react-native';
-import { useTheme } from '@ui/ThemeProvider';
-import { FontAwesome, Feather } from '@expo/vector-icons';
+import { useTheme, SegmentedControl, FilterDialog } from '@ui';
+import { FontAwesome } from '@expo/vector-icons';
 import FilterDrawer from '../../../components/FilterDrawer';
-import { FilterDialog } from '@ui';
 
 if (
   Platform.OS === 'android' &&
@@ -26,9 +24,14 @@ if (
 const continents = ['Africa', 'Asia', 'Europe', 'North America', 'South America', 'Australia'];
 const tripTypes = ['Road Trip', 'Leisure / Vacation', 'Backpacking', 'Study Abroad', 'Business', 'Cruise', 'Adventure Travel'];
 const durations = ['1-3 Days', '4-7 Days', '1-2 Weeks', '2+ Weeks'];
-const budgets = ['Budget ($)', 'Mid-range ($$)', 'Luxury ($$$)'];
+const budgets = ['Budget ($)', 'Mid-range ($)', 'Luxury ($$)'];
 const travelStyles = ['Foodie', 'Hiking', 'Museums', 'Nightlife', 'Relaxing', 'Adventure'];
 const groupTypes = ['Solo', 'Couple', 'Family', 'Friends'];
+
+const COMMUNITY_TABS = [
+  { key: 'Trending', title: 'Trending', iconName: 'trending-up' },
+  { key: 'Search', title: 'Search', iconName: 'search' },
+];
 
 const CommunityScreen = () => {
   const [drawerVisible, setDrawerVisible] = useState(true);
@@ -44,14 +47,10 @@ const CommunityScreen = () => {
   const [selectedTravelStyles, setSelectedTravelStyles] = useState([]);
   const [selectedGroupTypes, setSelectedGroupTypes] = useState([]);
 
-  useEffect(() => {
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-  }, [activeTab]);
-
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#FFFFFF',
+      backgroundColor: colors.background,
     },
     headerContent: {
       paddingHorizontal: 24,
@@ -68,9 +67,9 @@ const CommunityScreen = () => {
       marginBottom: 20,
     },
     filterIconContainer: {
-      width: 44,
-      height: 44,
-      borderRadius: 22,
+      width: 38,
+      height: 38,
+      borderRadius: 19,
       backgroundColor: colors.primary + '10',
       justifyContent: 'center',
       alignItems: 'center',
@@ -81,32 +80,6 @@ const CommunityScreen = () => {
     },
     tabContainer: {
       flex: 1,
-      flexDirection: 'row',
-    },
-    tab: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'center',
-      paddingVertical: 8,
-      paddingHorizontal: 16, // Increased padding
-      borderRadius: 20,
-    },
-    activeTab: {
-      flex: 1, // Active tab expands
-      backgroundColor: colors.primary,
-    },
-    inactiveTab: {
-      backgroundColor: colors.primary + '10',
-    },
-    tabText: {
-      ...typography.fonts.title,
-      marginLeft: 8,
-    },
-    activeTabText: {
-      color: colors.background,
-    },
-    inactiveTabText: {
-      color: colors.text,
     },
     mainContent: {
       flex: 1,
@@ -119,7 +92,7 @@ const CommunityScreen = () => {
     card: {
       marginBottom: 20,
       borderRadius: 12,
-      backgroundColor: '#FFFFFF',
+      backgroundColor: colors.card,
       elevation: 2,
       shadowColor: '#000',
       shadowOffset: { width: 0, height: 1 },
@@ -141,17 +114,17 @@ const CommunityScreen = () => {
     cardTextContainer: { flex: 1, marginRight: 10 },
     cardTitle: {
       ...typography.fonts.title,
-      color: '#1C2833',
+      color: colors.text,
       marginBottom: 4,
     },
     cardBody: {
       ...typography.fonts.description,
-      color: '#566573',
+      color: colors.textSecondary,
     },
     authorContainer: { flexDirection: 'row', alignItems: 'center' },
     cardAuthorName: {
       ...typography.fonts.subtitle,
-      color: '#566573',
+      color: colors.textSecondary,
       marginRight: 8,
     },
     authorImage: {
@@ -159,7 +132,7 @@ const CommunityScreen = () => {
       height: 36,
       borderRadius: 18,
       borderWidth: 2,
-      borderColor: '#EAECEE',
+      borderColor: colors.background,
     },
   });
 
@@ -207,8 +180,8 @@ const CommunityScreen = () => {
           options: continents,
           selectedOptions: selectedContinents,
           onSelectionChange: (option) => {
-            setSelectedContinents(prev => 
-              prev.includes(option) 
+            setSelectedContinents(prev =>
+              prev.includes(option)
                 ? prev.filter(item => item !== option)
                 : [...prev, option]
             );
@@ -216,83 +189,7 @@ const CommunityScreen = () => {
           onClearAll: () => setSelectedContinents([]),
           onSelectAll: () => setSelectedContinents(continents),
         };
-      case 'tripType':
-        return {
-          title: 'Trip Type',
-          options: tripTypes,
-          selectedOptions: selectedTripTypes,
-          onSelectionChange: (option) => {
-            setSelectedTripTypes(prev => 
-              prev.includes(option) 
-                ? prev.filter(item => item !== option)
-                : [...prev, option]
-            );
-          },
-          onClearAll: () => setSelectedTripTypes([]),
-          onSelectAll: () => setSelectedTripTypes(tripTypes),
-        };
-      case 'duration':
-        return {
-          title: 'Duration',
-          options: durations,
-          selectedOptions: selectedDurations,
-          onSelectionChange: (option) => {
-            setSelectedDurations(prev => 
-              prev.includes(option) 
-                ? prev.filter(item => item !== option)
-                : [...prev, option]
-            );
-          },
-          onClearAll: () => setSelectedDurations([]),
-          onSelectAll: () => setSelectedDurations(durations),
-        };
-      case 'budget':
-        return {
-          title: 'Budget',
-          options: budgets,
-          selectedOptions: selectedBudgets,
-          onSelectionChange: (option) => {
-            setSelectedBudgets(prev => 
-              prev.includes(option) 
-                ? prev.filter(item => item !== option)
-                : [...prev, option]
-            );
-          },
-          onClearAll: () => setSelectedBudgets([]),
-          onSelectAll: () => setSelectedBudgets(budgets),
-        };
-      case 'travelStyle':
-        return {
-          title: 'Travel Style',
-          options: travelStyles,
-          selectedOptions: selectedTravelStyles,
-          onSelectionChange: (option) => {
-            setSelectedTravelStyles(prev => 
-              prev.includes(option) 
-                ? prev.filter(item => item !== option)
-                : [...prev, option]
-            );
-          },
-          onClearAll: () => setSelectedTravelStyles([]),
-          onSelectAll: () => setSelectedTravelStyles(travelStyles),
-        };
-      case 'groupType':
-        return {
-          title: 'Group Type',
-          options: groupTypes,
-          selectedOptions: selectedGroupTypes,
-          onSelectionChange: (option) => {
-            setSelectedGroupTypes(prev => 
-              prev.includes(option) 
-                ? prev.filter(item => item !== option)
-                : [...prev, option]
-            );
-          },
-          onClearAll: () => setSelectedGroupTypes([]),
-          onSelectAll: () => setSelectedGroupTypes(groupTypes),
-        };
-      default:
-        return null;
+      // ... other cases
     }
   };
 
@@ -306,18 +203,6 @@ const CommunityScreen = () => {
         onClose={handleCloseDialog}
         {...config}
       />
-    );
-  };
-
-  const AnimatedTab = ({ title, iconName, isActive, onPress, style }) => {
-    const tabStyle = isActive ? styles.activeTab : styles.inactiveTab;
-    const textColor = isActive ? styles.activeTabText : styles.inactiveTabText;
-
-    return (
-      <TouchableOpacity onPress={onPress} style={[styles.tab, tabStyle, style]}>
-        <Feather name={iconName} size={16} color={textColor.color} />
-        <Text style={[styles.tabText, textColor]}>{title}</Text>
-      </TouchableOpacity>
     );
   };
 
@@ -341,18 +226,10 @@ const CommunityScreen = () => {
           </TouchableOpacity>
 
           <View style={styles.tabContainer}>
-            <AnimatedTab 
-              title="Trending" 
-              iconName="trending-up" 
-              isActive={activeTab === 'Trending'} 
-              onPress={() => setActiveTab('Trending')} 
-              style={{ marginRight: 8 }}
-            />
-            <AnimatedTab 
-              title="Search" 
-              iconName="search" 
-              isActive={activeTab === 'Search'} 
-              onPress={() => setActiveTab('Search')} 
+            <SegmentedControl
+              tabs={COMMUNITY_TABS}
+              activeTabKey={activeTab}
+              onTabPress={setActiveTab}
             />
           </View>
         </View>

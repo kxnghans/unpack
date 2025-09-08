@@ -148,3 +148,106 @@ export const WALLET_CARDS = [
     description: '0 used, 2 in progress, 8 unused',
   },
 ];
+
+export const MOCK_STATS = [
+  {
+    id: '1',
+    label: 'Countries Visited',
+    value: '12',
+    icon: 'globe',
+  },
+  {
+    id: '2',
+    label: 'Trips Taken',
+    value: '34',
+    icon: 'briefcase',
+  },
+  {
+    id: '3',
+    label: 'Cities Explored',
+    value: '56',
+    icon: 'city',
+  },
+  {
+    id: '4',
+    label: 'Longest Trip',
+    value: '21',
+    unit: 'days',
+    icon: 'calendar-alt',
+  },
+  {
+    id: '5',
+    label: 'Continents Touched',
+    value: '4',
+    icon: 'globe-americas',
+  },
+  {
+    id: '6',
+    label: 'Photos Taken',
+    value: '7,890',
+    icon: 'camera',
+  },
+  {
+    id: '7',
+    label: 'Languages Spoken',
+    value: '3',
+    icon: 'language',
+  },
+  {
+    id: '8',
+    label: 'Miles Traveled',
+    value: '123,456',
+    icon: 'plane',
+  },
+  {
+    id: '9',
+    label: 'Travel Buddies',
+    value: '8',
+    icon: 'user-friends',
+  },
+  {
+    id: '10',
+    label: 'Next Trip In',
+    value: '42',
+    unit: 'days',
+    icon: 'hourglass-start',
+  },
+];
+
+export const MOCK_CREATOR_STATS = [
+  {
+    id: '1',
+    label: 'Contributions',
+    value: '5',
+    icon: 'code-branch',
+  },
+  {
+    id: '2',
+    label: 'Lines of Code',
+    value: '1,234',
+    icon: 'file-code',
+  },
+  {
+    id: '3',
+    label: 'Reviews',
+    value: '12',
+    icon: 'eye',
+  },
+  {
+    id: '4',
+    label: 'Templates Created',
+    value: '3',
+    icon: 'box',
+  },
+  {
+    id: '5',
+    label: 'Community Likes',
+    value: '128',
+    icon: 'heart',
+  },
+];
+
+export const MOCK_USER = {
+  name: 'Kobby',
+  image: 'https://i.pravatar.cc/150?u=kobby',
+};
