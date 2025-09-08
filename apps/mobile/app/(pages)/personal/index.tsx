@@ -1,8 +1,10 @@
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, FlatList } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import { useTheme, BottomSheet } from '@ui';
+import { useTheme, BottomSheet, StatCard } from '@ui';
 import MapView, { PROVIDER_DEFAULT, Camera } from 'react-native-maps';
 import * as Location from 'expo-location';
+import { MOCK_STATS, MOCK_CREATOR_STATS, MOCK_USER } from '../../../lib/mock-data';
+import { StatsHeader } from '../../../components/StatsHeader';
 
 // Define the initial camera position to show the globe
 const INITIAL_GLOBE_CAMERA: Camera = {
@@ -17,8 +19,8 @@ const INITIAL_GLOBE_CAMERA: Camera = {
 };
 
 export default function PersonalScreen() {
-  const { colors, typography } = useTheme();
   const [location, setLocation] = useState<Location.LocationObject | null>(null);
+  const [activeTab, setActiveTab] = useState('personal');
 
   useEffect(() => {
     (async () => {
@@ -43,17 +45,10 @@ export default function PersonalScreen() {
       ...StyleSheet.absoluteFillObject,
     },
     sheetContent: {
-      padding: 24,
-      paddingTop: 0,
+      flex: 1,
     },
-    sheetTitle: {
-      ...typography.fonts.sectionHeader,
-      color: colors.text,
-      marginBottom: 16,
-    },
-    placeholderText: {
-      ...typography.fonts.description,
-      color: colors.textSecondary,
+    listContent: {
+      paddingHorizontal: 24,
     },
   });
 
@@ -69,10 +64,26 @@ export default function PersonalScreen() {
       />
       <BottomSheet>
         <View style={styles.sheetContent}>
-          <Text style={styles.sheetTitle}>My Details</Text>
-          <Text style={styles.placeholderText}>
-            More user details will go here...
-          </Text>
+          <StatsHeader
+            user={MOCK_USER}
+            activeTab={activeTab}
+            onTabPress={setActiveTab}
+          />
+          <FlatList
+            key={activeTab} // Ensures re-render on tab change
+            data={activeTab === 'personal' ? MOCK_STATS : MOCK_CREATOR_STATS}
+            renderItem={({ item }) => (
+              <StatCard
+                label={item.label}
+                value={item.value}
+                unit={item.unit}
+              />
+            )}
+            keyExtractor={(item) => item.id}
+            numColumns={2}
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={styles.listContent}
+          />
         </View>
       </BottomSheet>
     </View>

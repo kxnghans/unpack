@@ -18,4 +18,6 @@ export * from './UpcomingCard';
 export * from './Wave';
 export * from './DetailAccordionCard';
 export * from './HubItemCard';
+export * from './StatCard';
+export * from './SegmentedControl';
 

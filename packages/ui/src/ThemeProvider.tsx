@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
-import { colors, typography, shadows } from './tokens';
+import { colors, typography, shadows, spacing } from './tokens';
 
 const ThemeContext = createContext({
   theme: 'light',
@@ -7,6 +7,7 @@ const ThemeContext = createContext({
   colors: colors.light,
   typography,
   shadows,
+  spacing,
 });
 
 export const useTheme = () => useContext(ThemeContext);
@@ -21,7 +22,7 @@ export const ThemeProvider = ({ children }) => {
   const themeColors = theme === 'light' ? colors.light : colors.dark;
 
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme, colors: themeColors, typography, shadows }}>
+    <ThemeContext.Provider value={{ theme, toggleTheme, colors: themeColors, typography, shadows, spacing }}>
       {children}
     </ThemeContext.Provider>
   );
