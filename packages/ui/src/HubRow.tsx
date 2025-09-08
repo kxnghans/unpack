@@ -45,7 +45,7 @@ export function HubRow({ icon, title, rewards, onPress }: HubRowProps) {
       marginBottom: 4,
     },
     rewardText: {
-      fontSize: typography.sizes.s,
+      ...typography.fonts.description,
       color: colors.textSecondary,
       marginLeft: 8,
     },

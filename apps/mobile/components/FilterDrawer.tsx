@@ -10,7 +10,7 @@ import { useTheme } from '@ui/ThemeProvider';
 import { FontAwesome } from '@expo/vector-icons';
 
 const FilterDrawer = ({ filters, onFilterPress }) => {
-  const { colors } = useTheme();
+  const { colors, typography } = useTheme();
 
   const styles = StyleSheet.create({
     sidebarContainer: {
@@ -30,7 +30,7 @@ const FilterDrawer = ({ filters, onFilterPress }) => {
       paddingVertical: 15,
     },
     filterTitle: {
-      fontSize: 12,
+      ...typography.fonts.subtitle,
       color: colors.text,
       marginTop: 4,
       textAlign: 'center',

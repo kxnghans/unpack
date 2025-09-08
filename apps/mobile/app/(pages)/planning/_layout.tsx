@@ -17,9 +17,7 @@ export default function PlanningLayout() {
         },
         headerTintColor: colors.text,
         headerTitleStyle: {
-          fontWeight: 'bold',
-          fontSize: typography.sizes.l,
-          fontFamily: typography.nunitoSans,
+          ...typography.fonts.sectionHeader,
         },
       }}
     >
