@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -6,23 +6,34 @@ import {
   StyleSheet,
   TouchableOpacity,
   Image,
+  LayoutAnimation,
+  Platform,
+  UIManager,
 } from 'react-native';
 import { useTheme } from '@ui/ThemeProvider';
-import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesome, Feather } from '@expo/vector-icons';
 import FilterDrawer from '../../../components/FilterDrawer';
 import { FilterDialog } from '@ui';
+
+if (
+  Platform.OS === 'android' &&
+  UIManager.setLayoutAnimationEnabledExperimental
+) {
+  UIManager.setLayoutAnimationEnabledExperimental(true);
+}
 
 // --- Data --- 
 const continents = ['Africa', 'Asia', 'Europe', 'North America', 'South America', 'Australia'];
 const tripTypes = ['Road Trip', 'Leisure / Vacation', 'Backpacking', 'Study Abroad', 'Business', 'Cruise', 'Adventure Travel'];
 const durations = ['1-3 Days', '4-7 Days', '1-2 Weeks', '2+ Weeks'];
-const budgets = ['Budget (, 'Mid-range ($)', 'Luxury ($$)'];
+const budgets = ['Budget ($)', 'Mid-range ($$)', 'Luxury ($$$)'];
 const travelStyles = ['Foodie', 'Hiking', 'Museums', 'Nightlife', 'Relaxing', 'Adventure'];
 const groupTypes = ['Solo', 'Couple', 'Family', 'Friends'];
 
 const CommunityScreen = () => {
-  const [drawerVisible, setDrawerVisible] = useState(false);
+  const [drawerVisible, setDrawerVisible] = useState(true);
   const [activeFilterId, setActiveFilterId] = useState(null);
+  const [activeTab, setActiveTab] = useState('Trending');
   const { colors, typography } = useTheme();
 
   // --- State for each filter ---
@@ -33,11 +44,18 @@ const CommunityScreen = () => {
   const [selectedTravelStyles, setSelectedTravelStyles] = useState([]);
   const [selectedGroupTypes, setSelectedGroupTypes] = useState([]);
 
+  useEffect(() => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+  }, [activeTab]);
+
   const styles = StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: '#FFFFFF',
-      padding: 24, // Set global padding
+    },
+    headerContent: {
+      paddingHorizontal: 24,
+      paddingTop: 24,
     },
     mainTitle: {
       color: colors.text,
@@ -47,7 +65,6 @@ const CommunityScreen = () => {
     filterAndTabsContainer: {
       flexDirection: 'row',
       alignItems: 'center',
-      justifyContent: 'space-between',
       marginBottom: 20,
     },
     filterIconContainer: {
@@ -57,6 +74,7 @@ const CommunityScreen = () => {
       backgroundColor: colors.primary + '10',
       justifyContent: 'center',
       alignItems: 'center',
+      marginRight: 12,
     },
     filterIconActive: {
       backgroundColor: colors.primary,
@@ -64,25 +82,39 @@ const CommunityScreen = () => {
     tabContainer: {
       flex: 1,
       flexDirection: 'row',
-      justifyContent: 'center',
     },
-    tabButton: {
+    tab: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
       paddingVertical: 8,
-      paddingHorizontal: 15,
+      paddingHorizontal: 16, // Increased padding
       borderRadius: 20,
+    },
+    activeTab: {
+      flex: 1, // Active tab expands
       backgroundColor: colors.primary,
-      marginRight: 10,
+    },
+    inactiveTab: {
+      backgroundColor: colors.primary + '10',
     },
     tabText: {
+      ...typography.fonts.title,
+      marginLeft: 8,
+    },
+    activeTabText: {
       color: colors.background,
-      ...typography.fonts.title, // Standardized
+    },
+    inactiveTabText: {
+      color: colors.text,
     },
     mainContent: {
       flex: 1,
-      position: 'relative', // Needed for overlay
+      flexDirection: 'row',
     },
     contentFeed: {
       flex: 1,
+      paddingHorizontal: 24,
     },
     card: {
       marginBottom: 20,
@@ -108,17 +140,17 @@ const CommunityScreen = () => {
     },
     cardTextContainer: { flex: 1, marginRight: 10 },
     cardTitle: {
-      ...typography.fonts.title, // Standardized
+      ...typography.fonts.title,
       color: '#1C2833',
       marginBottom: 4,
     },
     cardBody: {
-      ...typography.fonts.description, // Standardized
+      ...typography.fonts.description,
       color: '#566573',
     },
     authorContainer: { flexDirection: 'row', alignItems: 'center' },
     cardAuthorName: {
-      ...typography.fonts.subtitle, // Standardized
+      ...typography.fonts.subtitle,
       color: '#566573',
       marginRight: 8,
     },
@@ -147,6 +179,7 @@ const CommunityScreen = () => {
       body: 'Discover the breathtaking beauty of the Swiss Alps in just 3 days.',
       author: 'AdventurerKate',
       image: 'https://picsum.photos/seed/picsum/400/300',
+      authorImage: 'https://randomuser.me/api/portraits/thumb/women/47.jpg',
     },
     {
       id: '2',
@@ -154,6 +187,7 @@ const CommunityScreen = () => {
       body: 'Explore the vibrant streets of Tokyo without breaking the bank.',
       author: 'JapanExplorer',
       image: 'https://picsum.photos/seed/picsum2/400/300',
+      authorImage: 'https://randomuser.me/api/portraits/thumb/men/32.jpg',
     },
   ];
 
@@ -275,36 +309,62 @@ const CommunityScreen = () => {
     );
   };
 
+  const AnimatedTab = ({ title, iconName, isActive, onPress, style }) => {
+    const tabStyle = isActive ? styles.activeTab : styles.inactiveTab;
+    const textColor = isActive ? styles.activeTabText : styles.inactiveTabText;
+
+    return (
+      <TouchableOpacity onPress={onPress} style={[styles.tab, tabStyle, style]}>
+        <Feather name={iconName} size={16} color={textColor.color} />
+        <Text style={[styles.tabText, textColor]}>{title}</Text>
+      </TouchableOpacity>
+    );
+  };
+
   return (
     <View style={styles.container}>
-      <Text style={styles.mainTitle}>Community</Text>
-
-      <View style={styles.filterAndTabsContainer}>
-        <TouchableOpacity
-          style={[
-            styles.filterIconContainer,
-            drawerVisible && styles.filterIconActive,
-          ]}
-          onPress={() => setDrawerVisible(!drawerVisible)}
-        >
-          <FontAwesome
-            name={drawerVisible ? 'chevron-left' : 'filter'}
-            size={20}
-            color={drawerVisible ? colors.background : colors.text}
-          />
-        </TouchableOpacity>
-
-        <View style={styles.tabContainer}>
-          <TouchableOpacity style={styles.tabButton}>
-            <Text style={styles.tabText}>Trending</Text>
+      <View style={styles.headerContent}>
+        <Text style={styles.mainTitle}>Community</Text>
+        <View style={styles.filterAndTabsContainer}>
+          <TouchableOpacity
+            style={[
+              styles.filterIconContainer,
+              drawerVisible && styles.filterIconActive,
+            ]}
+            onPress={() => setDrawerVisible(!drawerVisible)}
+          >
+            <FontAwesome
+              name={drawerVisible ? 'chevron-left' : 'filter'}
+              size={20}
+              color={drawerVisible ? colors.background : colors.text}
+            />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.tabButton}>
-            <Text style={styles.tabText}>Search</Text>
-          </TouchableOpacity>
+
+          <View style={styles.tabContainer}>
+            <AnimatedTab 
+              title="Trending" 
+              iconName="trending-up" 
+              isActive={activeTab === 'Trending'} 
+              onPress={() => setActiveTab('Trending')} 
+              style={{ marginRight: 8 }}
+            />
+            <AnimatedTab 
+              title="Search" 
+              iconName="search" 
+              isActive={activeTab === 'Search'} 
+              onPress={() => setActiveTab('Search')} 
+            />
+          </View>
         </View>
       </View>
 
       <View style={styles.mainContent}>
+        {drawerVisible && (
+          <FilterDrawer
+            filters={filters}
+            onFilterPress={handleFilterPress}
+          />
+        )}
         <ScrollView style={styles.contentFeed}>
           {guides.map((guide) => (
             <View key={guide.id} style={styles.card}>
@@ -316,19 +376,12 @@ const CommunityScreen = () => {
                 </View>
                 <View style={styles.authorContainer}>
                   <Text style={styles.cardAuthorName}>{guide.author}</Text>
-                  <Image source={{ uri: 'https://picsum.photos/seed/avatar/40/40' }} style={styles.authorImage} />
+                  <Image source={{ uri: guide.authorImage }} style={styles.authorImage} />
                 </View>
               </View>
             </View>
           ))}
         </ScrollView>
-
-        {drawerVisible && (
-          <FilterDrawer
-            filters={filters}
-            onFilterPress={handleFilterPress}
-          />
-        )}
       </View>
 
       {renderFilterDialog()}

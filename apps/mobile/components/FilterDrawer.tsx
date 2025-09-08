@@ -14,10 +14,6 @@ const FilterDrawer = ({ filters, onFilterPress }) => {
 
   const styles = StyleSheet.create({
     sidebarContainer: {
-      position: 'absolute',
-      left: 10, // 10px from left edge
-      top: 0,
-      bottom: 0,
       backgroundColor: colors.background,
       paddingTop: 20,
       paddingHorizontal: 5,
