@@ -2,6 +2,7 @@
  * This file exports all the components from the ui package.
  */
 export * from './Button';
+export * from './BottomSheet';
 export * from './card';
 export * from './Divider';
 export * from './FilterDialog';
