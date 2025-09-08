@@ -29,9 +29,8 @@ export function Button({ title, onPress }: Props) {
     },
     text: {
       color: colors.card,
-      fontWeight: "bold",
       textAlign: "center",
-      fontFamily: typography.inter,
+      ...typography.fonts.title,
     },
   });
 

@@ -24,15 +24,12 @@ export function QuickAccessCard({ title, subtitle, icon, colors, onPress }: Quic
       marginHorizontal: 8,
     },
     title: {
-      fontSize: typography.sizes.m,
-      fontWeight: 'bold',
       color: '#FFFFFF',
-      fontFamily: typography.nunitoSans,
+      ...typography.fonts.title,
     },
     subtitle: {
-      fontSize: typography.sizes.s,
       color: '#FFFFFF',
-      fontFamily: typography.inter,
+      ...typography.fonts.subtitle,
     },
     iconContainer: {
       position: 'absolute',

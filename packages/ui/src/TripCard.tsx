@@ -1,4 +1,3 @@
-
 import { View, Text, StyleSheet, Pressable, ImageBackground } from 'react-native';
 import React from 'react';
 import { useTheme } from './ThemeProvider';
@@ -37,15 +36,12 @@ export function TripCard({ location, date, image, onPress }: TripCardProps) {
       padding: 12,
     },
     location: {
-      fontSize: typography.sizes.m,
-      fontWeight: 'bold',
       color: '#FFFFFF',
-      fontFamily: typography.nunitoSans,
+      ...typography.fonts.title,
     },
     date: {
-      fontSize: typography.sizes.s,
       color: '#FFFFFF',
-      fontFamily: typography.inter,
+      ...typography.fonts.subtitle,
     },
   });
 
@@ -57,8 +53,8 @@ export function TripCard({ location, date, image, onPress }: TripCardProps) {
           style={styles.gradient}
         />
         <View style={styles.textContainer}>
-          <Text style={styles.location}>{location}</Text>
-          <Text style={styles.date}>{date}</Text>
+          <Text style={styles.location} numberOfLines={1}>{location}</Text>
+          <Text style={styles.date} numberOfLines={1}>{date}</Text>
         </View>
       </ImageBackground>
     </Pressable>

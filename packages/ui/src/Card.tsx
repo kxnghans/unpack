@@ -44,15 +44,12 @@ export function Card({ title, subtitle, onPress }: CardProps) {
       elevation: 5,
     },
     title: {
-      fontSize: typography.sizes.m,
-      fontWeight: 'bold',
       color: colors.text,
-      fontFamily: typography.nunitoSans,
+      ...typography.fonts.title,
     },
     subtitle: {
-      fontSize: typography.sizes.s,
       color: colors.text,
-      fontFamily: typography.inter,
+      ...typography.fonts.subtitle,
     },
   });
 

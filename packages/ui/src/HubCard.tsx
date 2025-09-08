@@ -39,6 +39,7 @@ export function HubCard({ icon, title, items, onPress }: HubCardProps) {
     rightColumn: {
       width: '70%',
       paddingLeft: 16,
+      justifyContent: 'center',
     },
     iconContainer: {
       width: 64,
@@ -47,19 +48,15 @@ export function HubCard({ icon, title, items, onPress }: HubCardProps) {
       alignItems: 'center',
     },
     title: {
-      fontSize: 20,
-      lineHeight: 28,
-      fontWeight: '600',
-      color: '#1A1A1A',
+      color: colors.text,
+      ...typography.fonts.sectionHeader,
     },
     body: {
       marginTop: 8,
     },
     item: {
-      fontSize: 14,
-      lineHeight: 20,
-      fontWeight: '400',
-      color: '#6B6B6B',
+      color: colors.text,
+      ...typography.fonts.description,
       marginBottom: 4,
     },
     chevronContainer: {
@@ -84,15 +81,11 @@ export function HubCard({ icon, title, items, onPress }: HubCardProps) {
           <View style={styles.rightColumn}>
             <Text style={styles.title}>{title}</Text>
             <View style={styles.body}>
-              {items.length > 0 ? (
-                items.slice(0, 3).map((item, index) => (
-                  <Text key={index} style={styles.item}>
-                    {item}
-                  </Text>
-                ))
-              ) : (
-                <Text style={styles.item}>N/A</Text>
-              )}
+              {items.slice(0, 2).map((item, index) => (
+                <Text key={index} style={styles.item}>
+                  {item}
+                </Text>
+              ))}
             </View>
           </View>
         </View>
