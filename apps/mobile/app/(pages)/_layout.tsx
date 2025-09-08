@@ -5,7 +5,7 @@ import { useTheme } from '@ui/ThemeProvider';
 
 /**
  * The main tab navigator for the app.
- * This component defines the three main tabs: Planning, Community, and Profile.
+  * This component defines the three main tabs: Planning, Community, and Personal.
  */
 export default function TabLayout() {
   const { colors } = useTheme();
