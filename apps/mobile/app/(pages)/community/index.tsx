@@ -172,7 +172,15 @@ const CommunityScreen = () => {
     { id: 'groupType', title: 'Group Type', icon: 'users' },
   ];
 
-  const handleLike = (guideId) => {
+  const handleDoubleClick = (guideId) => {
+    setGuides((prevGuides) =>
+      prevGuides.map((guide) =>
+        guide.id === guideId ? { ...guide, liked: true } : guide
+      )
+    );
+  };
+
+  const handleHeartPress = (guideId) => {
     setGuides((prevGuides) =>
       prevGuides.map((guide) =>
         guide.id === guideId ? { ...guide, liked: !guide.liked } : guide
@@ -263,12 +271,12 @@ const CommunityScreen = () => {
             const doubleTap = Gesture.Tap()
               .numberOfTaps(2)
               .onStart(() => {
-                handleLike(guide.id);
+                handleDoubleClick(guide.id);
               });
 
             return (
-              <GestureDetector gesture={doubleTap}>
-                <View key={guide.id} style={styles.card}>
+              <GestureDetector gesture={doubleTap} key={guide.id}>
+                <View style={styles.card}>
                   <Image source={{ uri: guide.image }} style={styles.cardImage} />
                   <View style={styles.cardInfo}>
                     <View style={styles.cardTextContainer}>
@@ -283,7 +291,7 @@ const CommunityScreen = () => {
                   <View style={styles.heartIcon}>
                     <HeartIcon
                       isLiked={guide.liked}
-                      onPress={() => handleLike(guide.id)}
+                      onPress={() => handleHeartPress(guide.id)}
                     />
                   </View>
                 </View>
