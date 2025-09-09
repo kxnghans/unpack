@@ -46,10 +46,8 @@ export function DetailAccordionCard({
 
   const styles = StyleSheet.create({
     container: {
-      backgroundColor: colors.card,
       borderRadius: 8,
       marginBottom: 16,
-      overflow: 'hidden',
     },
     header: {
       flexDirection: 'row',
@@ -87,9 +85,27 @@ export function DetailAccordionCard({
       color: colors.textSecondary,
       marginBottom: 12,
     },
+    lightShadow: {
+      shadowColor: colors.shadow,
+      shadowOffset: {
+        width: 4,
+        height: 4,
+      },
+      shadowOpacity: 1,
+      shadowRadius: 8,
+    },
+    darkShadow: {
+      shadowColor: colors.highlight,
+      shadowOffset: {
+        width: -4,
+        height: -4,
+      },
+      shadowOpacity: 1,
+      shadowRadius: 8,
+    },
   });
 
-  return (
+  const cardContent = (
     <View style={styles.container}>
       <TouchableOpacity onPress={toggleExpand}>
         <View style={styles.header}>
@@ -111,6 +127,12 @@ export function DetailAccordionCard({
           <Text style={styles.bodyText}>{conditions}</Text>
         </View>
       )}
+    </View>
+  );
+
+  return (
+    <View style={styles.darkShadow}>
+      <View style={styles.lightShadow}>{cardContent}</View>
     </View>
   );
 }

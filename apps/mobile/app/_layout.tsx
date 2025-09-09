@@ -1,6 +1,7 @@
 import { Slot } from 'expo-router';
 import { ThemeProvider, useTheme } from '@ui';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 function ThemedSafeArea() {
   const { colors } = useTheme();
@@ -17,8 +18,10 @@ function ThemedSafeArea() {
  */
 export default function RootLayout() {
   return (
-    <ThemeProvider>
-      <ThemedSafeArea />
-    </ThemeProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <ThemeProvider>
+        <ThemedSafeArea />
+      </ThemeProvider>
+    </GestureHandlerRootView>
   );
 }

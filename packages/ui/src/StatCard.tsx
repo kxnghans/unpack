@@ -18,7 +18,6 @@ export const StatCard = ({ label, value, unit, icon }: StatCardProps) => {
       padding: spacing.medium,
       backgroundColor: colors.surface,
       borderRadius: spacing.medium,
-      margin: spacing.small,
       alignItems: 'center',
       justifyContent: 'center',
       minHeight: 120,
@@ -40,9 +39,31 @@ export const StatCard = ({ label, value, unit, icon }: StatCardProps) => {
       textAlign: 'center',
       color: colors.textSecondary,
     },
+    shadowWrapper: {
+      flex: 1,
+      margin: spacing.medium,
+    },
+    lightShadow: {
+      shadowColor: colors.shadow,
+      shadowOffset: {
+        width: 4,
+        height: 4,
+      },
+      shadowOpacity: 1,
+      shadowRadius: 8,
+    },
+    darkShadow: {
+      shadowColor: colors.highlight,
+      shadowOffset: {
+        width: -4,
+        height: -4,
+      },
+      shadowOpacity: 1,
+      shadowRadius: 8,
+    },
   });
 
-  return (
+  const cardContent = (
     <TouchableOpacity style={styles.container}>
       <View style={styles.iconContainer}>{icon}</View>
       <View>
@@ -53,5 +74,11 @@ export const StatCard = ({ label, value, unit, icon }: StatCardProps) => {
         <Text style={styles.label}>{label}</Text>
       </View>
     </TouchableOpacity>
+  );
+
+  return (
+    <View style={[styles.darkShadow, styles.shadowWrapper]}>
+      <View style={styles.lightShadow}>{cardContent}</View>
+    </View>
   );
 };

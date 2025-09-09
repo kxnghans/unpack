@@ -27,6 +27,7 @@ export const Button = ({
       justifyContent: 'center',
       backgroundColor: colors.primary,
       opacity: disabled ? 0.5 : 1,
+      width: '100%',
     },
     text: {
       ...typography.fonts.title,

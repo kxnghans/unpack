@@ -51,7 +51,8 @@ export default function PlanningScreen() {
       ...typography.fonts.sectionHeader,
     },
     hubsContainer: {
-      marginBottom: 24,
+      marginBottom: 0,
+      paddingVertical: 16,
     },
   });
 

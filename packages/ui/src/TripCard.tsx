@@ -18,12 +18,12 @@ export function TripCard({ location, date, image, onPress }: TripCardProps) {
       width: 160,
       height: 160,
       borderRadius: 8,
-      marginHorizontal: 8,
-      overflow: 'hidden',
     },
     imageBackground: {
       flex: 1,
       justifyContent: 'flex-end',
+      borderRadius: 8,
+      overflow: 'hidden',
     },
     gradient: {
       position: 'absolute',

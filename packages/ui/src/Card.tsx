@@ -25,23 +25,18 @@ export interface CardProps {
  * This component can be used to display a title, subtitle, and handle a press event.
  */
 export function Card({ title, subtitle, onPress }: CardProps) {
-  const { colors, typography, shadows } = useTheme();
+  const { colors, typography, theme } = useTheme();
 
   const styles = StyleSheet.create({
     card: {
+      borderRadius: 8,
+      marginVertical: 8,
+      marginHorizontal: 16,
+    },
+    cardInner: {
       backgroundColor: colors.card,
       borderRadius: 8,
       padding: 16,
-      marginVertical: 8,
-      marginHorizontal: 16,
-      shadowColor: colors.shadow,
-      shadowOffset: {
-        width: 0,
-        height: 2,
-      },
-      shadowOpacity: 0.25,
-      shadowRadius: 3.84,
-      elevation: 5,
     },
     title: {
       color: colors.text,
@@ -51,12 +46,36 @@ export function Card({ title, subtitle, onPress }: CardProps) {
       color: colors.text,
       ...typography.fonts.subtitle,
     },
+    lightShadow: {
+      shadowColor: colors.shadow,
+      shadowOffset: {
+        width: 4,
+        height: 4,
+      },
+      shadowOpacity: 1,
+      shadowRadius: 8,
+    },
+    darkShadow: {
+      shadowColor: colors.highlight,
+      shadowOffset: {
+        width: -4,
+        height: -4,
+      },
+      shadowOpacity: 1,
+      shadowRadius: 8,
+    },
   });
 
   return (
-    <Pressable onPress={onPress} style={styles.card}>
-      <Text style={styles.title}>{title}</Text>
-      {subtitle && <Text style={styles.subtitle}>{subtitle}</Text>}
-    </Pressable>
+    <View style={styles.darkShadow}>
+      <View style={styles.lightShadow}>
+        <Pressable onPress={onPress} style={styles.card}>
+          <View style={styles.cardInner}>
+            <Text style={styles.title}>{title}</Text>
+            {subtitle && <Text style={styles.subtitle}>{subtitle}</Text>}
+          </View>
+        </Pressable>
+      </View>
+    </View>
   );
 }
