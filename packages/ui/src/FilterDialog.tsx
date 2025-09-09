@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import {
   Modal,
   View,
@@ -6,9 +6,9 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
-} from 'react-native';
-import { PillButton } from './PillButton';
-import { useTheme } from './ThemeProvider';
+} from 'react-native'
+import { PillButton } from './PillButton'
+import { useTheme } from './ThemeProvider'
 
 export const FilterDialog = ({
   isVisible,
@@ -20,7 +20,7 @@ export const FilterDialog = ({
   onClearAll,
   onSelectAll,
 }) => {
-  const { colors } = useTheme();
+  const { colors } = useTheme()
 
   const styles = StyleSheet.create({
     modalOverlay: {
@@ -59,7 +59,7 @@ export const FilterDialog = ({
       color: colors.primary,
       marginLeft: 15,
     },
-  });
+  })
 
   return (
     <Modal
@@ -68,8 +68,15 @@ export const FilterDialog = ({
       onRequestClose={onClose}
       animationType="fade"
     >
-      <TouchableOpacity style={styles.modalOverlay} activeOpacity={1} onPressOut={onClose}>
-        <View style={styles.dialogContainer} onStartShouldSetResponder={() => true}>
+      <TouchableOpacity
+        style={styles.modalOverlay}
+        activeOpacity={1}
+        onPressOut={onClose}
+      >
+        <View
+          style={styles.dialogContainer}
+          onStartShouldSetResponder={() => true}
+        >
           <View style={styles.header}>
             <Text style={styles.title}>{title}</Text>
             <View style={styles.headerActions}>
@@ -94,5 +101,5 @@ export const FilterDialog = ({
         </View>
       </TouchableOpacity>
     </Modal>
-  );
-};
+  )
+}

@@ -1,15 +1,26 @@
 {
   "name": "unpack",
   "private": true,
+  "description": "your travel buddy that gets it out the groupchat",
+  "author": "Unpack",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/PackUnpack/unpack"
+  },
+  "bugs": {
+    "url": "https://github.com/PackUnpack/unpack/issues"
+  },
   "packageManager": "pnpm@9.12.0",
   "scripts": {
     "dev": "turbo run dev --parallel",
     "build": "turbo run build",
-    "lint": "turbo run lint"
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
     "turbo": "latest",
-    "typescript": "^5.3.0"
+    "typescript": "^5.3.0",
+    "prettier": "latest"
   },
   "pnpm": {
     "overrides": {

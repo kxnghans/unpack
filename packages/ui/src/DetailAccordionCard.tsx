@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import {
   View,
   Text,
@@ -7,42 +7,42 @@ import {
   LayoutAnimation,
   Platform,
   UIManager,
-} from 'react-native';
-import { FontAwesome5 } from '@expo/vector-icons';
-import { useTheme } from './ThemeProvider';
+} from 'react-native'
+import { FontAwesome5 } from '@expo/vector-icons'
+import { useTheme } from './ThemeProvider'
 
 if (Platform.OS === 'android') {
   if (UIManager.setLayoutAnimationEnabledExperimental) {
-    UIManager.setLayoutAnimationEnabledExperimental(true);
+    UIManager.setLayoutAnimationEnabledExperimental(true)
   }
 }
 
 export interface DetailAccordionCardProps {
-  statusIcon: string;
-  statusColor: string;
-  title: string;
-  estimatedValue?: string;
-  description: string;
-  activation: string;
-  conditions: string;
+  statusIcon: string
+  statusColor: string
+  title: string
+  estimatedValue?: string
+  description: string
+  activation: string
+  conditions: string
 }
 
-export function DetailAccordionCard({ 
-  statusIcon, 
-  statusColor, 
-  title, 
-  estimatedValue, 
-  description, 
-  activation, 
-  conditions 
+export function DetailAccordionCard({
+  statusIcon,
+  statusColor,
+  title,
+  estimatedValue,
+  description,
+  activation,
+  conditions,
 }: DetailAccordionCardProps) {
-  const [expanded, setExpanded] = useState(false);
-  const { colors, typography } = useTheme();
+  const [expanded, setExpanded] = useState(false)
+  const { colors, typography } = useTheme()
 
   const toggleExpand = () => {
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-    setExpanded(!expanded);
-  };
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
+    setExpanded(!expanded)
+  }
 
   const styles = StyleSheet.create({
     container: {
@@ -87,18 +87,29 @@ export function DetailAccordionCard({
       color: colors.textSecondary,
       marginBottom: 12,
     },
-  });
+  })
 
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={toggleExpand}>
         <View style={styles.header}>
           <View style={styles.headerLeft}>
-            <FontAwesome5 name={statusIcon} size={20} color={statusColor} style={styles.statusIcon} />
+            <FontAwesome5
+              name={statusIcon}
+              size={20}
+              color={statusColor}
+              style={styles.statusIcon}
+            />
             <Text style={styles.title}>{title}</Text>
-            {estimatedValue && <Text style={styles.estimatedValue}>{estimatedValue}</Text>}
+            {estimatedValue && (
+              <Text style={styles.estimatedValue}>{estimatedValue}</Text>
+            )}
           </View>
-          <FontAwesome5 name={expanded ? 'chevron-up' : 'chevron-down'} size={16} color={colors.text} />
+          <FontAwesome5
+            name={expanded ? 'chevron-up' : 'chevron-down'}
+            size={16}
+            color={colors.text}
+          />
         </View>
       </TouchableOpacity>
       {expanded && (
@@ -112,5 +123,5 @@ export function DetailAccordionCard({
         </View>
       )}
     </View>
-  );
+  )
 }

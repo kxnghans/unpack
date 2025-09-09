@@ -1,8 +1,8 @@
-import { View, StyleSheet } from 'react-native';
-import { useTheme } from './ThemeProvider';
+import { View, StyleSheet } from 'react-native'
+import { useTheme } from './ThemeProvider'
 
 export function Divider() {
-  const { colors } = useTheme();
+  const { colors } = useTheme()
 
   const styles = StyleSheet.create({
     divider: {
@@ -10,7 +10,7 @@ export function Divider() {
       backgroundColor: colors.card,
       marginVertical: 16,
     },
-  });
+  })
 
-  return <View style={styles.divider} />;
+  return <View style={styles.divider} />
 }

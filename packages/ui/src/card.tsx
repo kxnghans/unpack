@@ -1,6 +1,6 @@
-import { View, Text, StyleSheet, Pressable } from 'react-native';
-import React from 'react';
-import { useTheme } from './ThemeProvider';
+import { View, Text, StyleSheet, Pressable } from 'react-native'
+import React from 'react'
+import { useTheme } from './ThemeProvider'
 
 /**
  * The props for the Card component.
@@ -9,15 +9,15 @@ export interface CardProps {
   /**
    * The title of the card.
    */
-  title: string;
+  title: string
   /**
    * The subtitle of the card.
    */
-  subtitle?: string;
+  subtitle?: string
   /**
    * The function to call when the card is pressed.
    */
-  onPress?: () => void;
+  onPress?: () => void
 }
 
 /**
@@ -25,7 +25,7 @@ export interface CardProps {
  * This component can be used to display a title, subtitle, and handle a press event.
  */
 export function Card({ title, subtitle, onPress }: CardProps) {
-  const { colors, typography, shadows } = useTheme();
+  const { colors, typography, shadows } = useTheme()
 
   const styles = StyleSheet.create({
     card: {
@@ -51,12 +51,12 @@ export function Card({ title, subtitle, onPress }: CardProps) {
       color: colors.text,
       ...typography.fonts.subtitle,
     },
-  });
+  })
 
   return (
     <Pressable onPress={onPress} style={styles.card}>
       <Text style={styles.title}>{title}</Text>
       {subtitle && <Text style={styles.subtitle}>{subtitle}</Text>}
     </Pressable>
-  );
+  )
 }

@@ -1,6 +1,6 @@
-# Expo
-.expo/
-.expo-shared/
+# Next.js
+.next/
+out/
 
 # Environment variables
 .env

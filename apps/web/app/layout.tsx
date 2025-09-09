@@ -1,4 +1,4 @@
-import { Providers } from './providers';
+import { Providers } from './providers'
 
 /**
  * The metadata for the app.

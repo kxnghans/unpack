@@ -1,19 +1,19 @@
-import { View, Text, StyleSheet, Pressable } from 'react-native';
-import React from 'react';
-import { useTheme } from './ThemeProvider';
-import { FontAwesome5 } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
-import { Wave } from './Wave';
+import { View, Text, StyleSheet, Pressable } from 'react-native'
+import React from 'react'
+import { useTheme } from './ThemeProvider'
+import { FontAwesome5 } from '@expo/vector-icons'
+import { LinearGradient } from 'expo-linear-gradient'
+import { Wave } from './Wave'
 
 export interface HubCardProps {
-  icon: React.ReactNode;
-  title: string;
-  items: string[];
-  onPress?: () => void;
+  icon: React.ReactNode
+  title: string
+  items: string[]
+  onPress?: () => void
 }
 
 export function HubCard({ icon, title, items, onPress }: HubCardProps) {
-  const { colors, typography } = useTheme();
+  const { colors, typography } = useTheme()
 
   const styles = StyleSheet.create({
     card: {
@@ -64,7 +64,7 @@ export function HubCard({ icon, title, items, onPress }: HubCardProps) {
       bottom: 16,
       right: 16,
     },
-  });
+  })
 
   return (
     <Pressable onPress={onPress}>
@@ -98,5 +98,5 @@ export function HubCard({ icon, title, items, onPress }: HubCardProps) {
         </View>
       </View>
     </Pressable>
-  );
+  )
 }

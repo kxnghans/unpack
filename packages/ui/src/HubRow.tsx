@@ -1,23 +1,22 @@
-
-import { View, Text, StyleSheet, Pressable } from 'react-native';
-import React from 'react';
-import { useTheme } from './ThemeProvider';
-import { FontAwesome5 } from '@expo/vector-icons';
-import { theme } from './tokens';
+import { View, Text, StyleSheet, Pressable } from 'react-native'
+import React from 'react'
+import { useTheme } from './ThemeProvider'
+import { FontAwesome5 } from '@expo/vector-icons'
+import { theme } from './tokens'
 
 export interface HubRowProps {
-  icon: React.ReactNode;
-  title: React.ReactNode;
+  icon: React.ReactNode
+  title: React.ReactNode
   rewards?: {
-    text: string;
-    icon: string;
-    color: keyof typeof theme.light.colors;
-  }[];
-  onPress?: () => void;
+    text: string
+    icon: string
+    color: keyof typeof theme.light.colors
+  }[]
+  onPress?: () => void
 }
 
 export function HubRow({ icon, title, rewards, onPress }: HubRowProps) {
-  const { colors, typography } = useTheme();
+  const { colors, typography } = useTheme()
 
   const styles = StyleSheet.create({
     container: {
@@ -50,7 +49,7 @@ export function HubRow({ icon, title, rewards, onPress }: HubRowProps) {
       color: colors.textSecondary,
       marginLeft: 8,
     },
-  });
+  })
 
   return (
     <Pressable onPress={onPress} style={styles.container}>
@@ -74,5 +73,5 @@ export function HubRow({ icon, title, rewards, onPress }: HubRowProps) {
       </View>
       <FontAwesome5 name="chevron-right" size={16} color={colors.text} />
     </Pressable>
-  );
+  )
 }

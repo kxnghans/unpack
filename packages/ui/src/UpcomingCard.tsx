@@ -1,18 +1,23 @@
-
-import { View, Text, StyleSheet } from 'react-native';
-import React from 'react';
-import { useTheme } from './ThemeProvider';
+import { View, Text, StyleSheet } from 'react-native'
+import React from 'react'
+import { useTheme } from './ThemeProvider'
 
 export interface UpcomingCardProps {
-  color: string;
-  icon: React.ReactNode;
-  title: string;
-  body: string;
-  onPress?: () => void;
+  color: string
+  icon: React.ReactNode
+  title: string
+  body: string
+  onPress?: () => void
 }
 
-export function UpcomingCard({ color, icon, title, body, onPress }: UpcomingCardProps) {
-  const { colors, typography } = useTheme();
+export function UpcomingCard({
+  color,
+  icon,
+  title,
+  body,
+  onPress,
+}: UpcomingCardProps) {
+  const { colors, typography } = useTheme()
 
   const styles = StyleSheet.create({
     card: {
@@ -62,7 +67,7 @@ export function UpcomingCard({ color, icon, title, body, onPress }: UpcomingCard
       textAlign: 'center',
       ...typography.fonts.description,
     },
-  });
+  })
 
   return (
     <View style={styles.card}>
@@ -74,5 +79,5 @@ export function UpcomingCard({ color, icon, title, body, onPress }: UpcomingCard
         <Text style={styles.body}>{body}</Text>
       </View>
     </View>
-  );
+  )
 }

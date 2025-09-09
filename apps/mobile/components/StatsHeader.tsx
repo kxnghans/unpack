@@ -1,21 +1,35 @@
-import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
-import { useTheme, SegmentedControl } from '@ui';
-import { Feather } from '@expo/vector-icons';
+import React from 'react'
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
+import { useTheme, SegmentedControl } from '@ui'
+import { Feather } from '@expo/vector-icons'
 
 const TABS = [
   { key: 'personal', title: 'Personal', iconName: 'user' },
   { key: 'creator', title: 'Creator', iconName: 'edit-3' },
-];
+]
 
 const THEME_TABS = [
   { key: 'auto', title: 'Auto', iconName: 'cpu' },
   { key: 'light', title: 'Light', iconName: 'sun' },
   { key: 'dark', title: 'Dark', iconName: 'moon' },
-];
+]
 
-export const StatsHeader = ({ user, activeTab, onTabPress, isThemeExpanded, onToggleThemeExpanded }) => {
-  const { colors, typography, spacing, theme, themePreference, setThemePreference, toggleTheme } = useTheme();
+export const StatsHeader = ({
+  user,
+  activeTab,
+  onTabPress,
+  isThemeExpanded,
+  onToggleThemeExpanded,
+}) => {
+  const {
+    colors,
+    typography,
+    spacing,
+    theme,
+    themePreference,
+    setThemePreference,
+    toggleTheme,
+  } = useTheme()
 
   const styles = StyleSheet.create({
     headerContainer: {
@@ -115,22 +129,24 @@ export const StatsHeader = ({ user, activeTab, onTabPress, isThemeExpanded, onTo
       color: colors.primary,
       fontWeight: 'bold',
     },
-  });
+  })
 
   const PlanTag = ({ plan }) => {
-    const isPremium = plan.toLowerCase() === 'premium';
-    const tagStyle = isPremium ? styles.premiumPlan : styles.freePlan;
-    const textStyle = isPremium ? styles.premiumPlanText : styles.freePlanText;
-    const iconName = isPremium ? 'award' : 'user'; // Changed crown to award
-    const iconColor = isPremium ? styles.premiumPlanText.color : styles.freePlanText.color;
+    const isPremium = plan.toLowerCase() === 'premium'
+    const tagStyle = isPremium ? styles.premiumPlan : styles.freePlan
+    const textStyle = isPremium ? styles.premiumPlanText : styles.freePlanText
+    const iconName = isPremium ? 'award' : 'user' // Changed crown to award
+    const iconColor = isPremium
+      ? styles.premiumPlanText.color
+      : styles.freePlanText.color
 
     return (
       <View style={[styles.planTag, tagStyle]}>
         <Feather name={iconName} size={12} color={iconColor} />
         <Text style={[styles.planTagText, textStyle]}>{plan}</Text>
       </View>
-    );
-  };
+    )
+  }
 
   return (
     <View style={styles.headerContainer}>
@@ -138,17 +154,34 @@ export const StatsHeader = ({ user, activeTab, onTabPress, isThemeExpanded, onTo
       <View style={styles.row1}>
         <Text style={styles.statsTitle}>My Stats</Text>
         <View style={styles.themeControlContainer}>
-          <TouchableOpacity style={styles.themeToggleButton} onPress={toggleTheme}>
-            <Feather name={theme === 'light' ? 'moon' : 'sun'} size={20} color={colors.text} />
+          <TouchableOpacity
+            style={styles.themeToggleButton}
+            onPress={toggleTheme}
+          >
+            <Feather
+              name={theme === 'light' ? 'moon' : 'sun'}
+              size={20}
+              color={colors.text}
+            />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.expansionButton} onPress={onToggleThemeExpanded}>
-            <Feather name={isThemeExpanded ? 'chevron-up' : 'chevron-down'} size={24} color={colors.text} />
+          <TouchableOpacity
+            style={styles.expansionButton}
+            onPress={onToggleThemeExpanded}
+          >
+            <Feather
+              name={isThemeExpanded ? 'chevron-up' : 'chevron-down'}
+              size={24}
+              color={colors.text}
+            />
           </TouchableOpacity>
         </View>
       </View>
 
       {isThemeExpanded && (
-        <View style={styles.expandedThemeContainer} onStartShouldSetResponder={() => true}>
+        <View
+          style={styles.expandedThemeContainer}
+          onStartShouldSetResponder={() => true}
+        >
           <SegmentedControl
             tabs={THEME_TABS}
             activeTabKey={themePreference}
@@ -180,5 +213,5 @@ export const StatsHeader = ({ user, activeTab, onTabPress, isThemeExpanded, onTo
         />
       </View>
     </View>
-  );
-};
+  )
+}

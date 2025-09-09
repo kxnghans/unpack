@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import {
   View,
   Text,
@@ -8,44 +8,66 @@ import {
   Image,
   Platform,
   UIManager,
-} from 'react-native';
-import { useTheme, SegmentedControl, FilterDialog } from '@ui';
-import { FontAwesome } from '@expo/vector-icons';
-import FilterDrawer from '../../../components/FilterDrawer';
+} from 'react-native'
+import { useTheme, SegmentedControl, FilterDialog } from '@ui'
+import { FontAwesome } from '@expo/vector-icons'
+import FilterDrawer from '../../../components/FilterDrawer'
 
 if (
   Platform.OS === 'android' &&
   UIManager.setLayoutAnimationEnabledExperimental
 ) {
-  UIManager.setLayoutAnimationEnabledExperimental(true);
+  UIManager.setLayoutAnimationEnabledExperimental(true)
 }
 
-// --- Data --- 
-const continents = ['Africa', 'Asia', 'Europe', 'North America', 'South America', 'Australia'];
-const tripTypes = ['Road Trip', 'Leisure / Vacation', 'Backpacking', 'Study Abroad', 'Business', 'Cruise', 'Adventure Travel'];
-const durations = ['1-3 Days', '4-7 Days', '1-2 Weeks', '2+ Weeks'];
-const budgets = ['Budget ($)', 'Mid-range ($)', 'Luxury ($$)'];
-const travelStyles = ['Foodie', 'Hiking', 'Museums', 'Nightlife', 'Relaxing', 'Adventure'];
-const groupTypes = ['Solo', 'Couple', 'Family', 'Friends'];
+// --- Data ---
+const continents = [
+  'Africa',
+  'Asia',
+  'Europe',
+  'North America',
+  'South America',
+  'Australia',
+]
+const tripTypes = [
+  'Road Trip',
+  'Leisure / Vacation',
+  'Backpacking',
+  'Study Abroad',
+  'Business',
+  'Cruise',
+  'Adventure Travel',
+]
+const durations = ['1-3 Days', '4-7 Days', '1-2 Weeks', '2+ Weeks']
+const budgets = ['Budget ($)', 'Mid-range ($)', 'Luxury ($$)']
+const travelStyles = [
+  'Foodie',
+  'Hiking',
+  'Museums',
+  'Nightlife',
+  'Relaxing',
+  'Adventure',
+]
+const groupTypes = ['Solo', 'Couple', 'Family', 'Friends']
 
 const COMMUNITY_TABS = [
   { key: 'Trending', title: 'Trending', iconName: 'trending-up' },
   { key: 'Search', title: 'Search', iconName: 'search' },
-];
+]
 
 const CommunityScreen = () => {
-  const [drawerVisible, setDrawerVisible] = useState(true);
-  const [activeFilterId, setActiveFilterId] = useState(null);
-  const [activeTab, setActiveTab] = useState('Trending');
-  const { colors, typography } = useTheme();
+  const [drawerVisible, setDrawerVisible] = useState(true)
+  const [activeFilterId, setActiveFilterId] = useState(null)
+  const [activeTab, setActiveTab] = useState('Trending')
+  const { colors, typography } = useTheme()
 
   // --- State for each filter ---
-  const [selectedContinents, setSelectedContinents] = useState([]);
-  const [selectedTripTypes, setSelectedTripTypes] = useState([]);
-  const [selectedDurations, setSelectedDurations] = useState([]);
-  const [selectedBudgets, setSelectedBudgets] = useState([]);
-  const [selectedTravelStyles, setSelectedTravelStyles] = useState([]);
-  const [selectedGroupTypes, setSelectedGroupTypes] = useState([]);
+  const [selectedContinents, setSelectedContinents] = useState([])
+  const [selectedTripTypes, setSelectedTripTypes] = useState([])
+  const [selectedDurations, setSelectedDurations] = useState([])
+  const [selectedBudgets, setSelectedBudgets] = useState([])
+  const [selectedTravelStyles, setSelectedTravelStyles] = useState([])
+  const [selectedGroupTypes, setSelectedGroupTypes] = useState([])
 
   const styles = StyleSheet.create({
     container: {
@@ -134,7 +156,7 @@ const CommunityScreen = () => {
       borderWidth: 2,
       borderColor: colors.background,
     },
-  });
+  })
 
   const filters = [
     { id: 'continent', title: 'Continent', icon: 'globe' },
@@ -143,7 +165,7 @@ const CommunityScreen = () => {
     { id: 'budget', title: 'Budget', icon: 'tag' },
     { id: 'travelStyle', title: 'Travel Style', icon: 'star' },
     { id: 'groupType', title: 'Group Type', icon: 'users' },
-  ];
+  ]
 
   const guides = [
     {
@@ -162,15 +184,15 @@ const CommunityScreen = () => {
       image: 'https://picsum.photos/seed/picsum2/400/300',
       authorImage: 'https://randomuser.me/api/portraits/thumb/men/32.jpg',
     },
-  ];
+  ]
 
   const handleFilterPress = (filterId) => {
-    setActiveFilterId(filterId);
-  };
+    setActiveFilterId(filterId)
+  }
 
   const handleCloseDialog = () => {
-    setActiveFilterId(null);
-  };
+    setActiveFilterId(null)
+  }
 
   const getFilterConfig = () => {
     switch (activeFilterId) {
@@ -180,22 +202,22 @@ const CommunityScreen = () => {
           options: continents,
           selectedOptions: selectedContinents,
           onSelectionChange: (option) => {
-            setSelectedContinents(prev =>
+            setSelectedContinents((prev) =>
               prev.includes(option)
-                ? prev.filter(item => item !== option)
-                : [...prev, option]
-            );
+                ? prev.filter((item) => item !== option)
+                : [...prev, option],
+            )
           },
           onClearAll: () => setSelectedContinents([]),
           onSelectAll: () => setSelectedContinents(continents),
-        };
+        }
       // ... other cases
     }
-  };
+  }
 
   const renderFilterDialog = () => {
-    const config = getFilterConfig();
-    if (!config) return null;
+    const config = getFilterConfig()
+    if (!config) return null
 
     return (
       <FilterDialog
@@ -203,8 +225,8 @@ const CommunityScreen = () => {
         onClose={handleCloseDialog}
         {...config}
       />
-    );
-  };
+    )
+  }
 
   return (
     <View style={styles.container}>
@@ -237,10 +259,7 @@ const CommunityScreen = () => {
 
       <View style={styles.mainContent}>
         {drawerVisible && (
-          <FilterDrawer
-            filters={filters}
-            onFilterPress={handleFilterPress}
-          />
+          <FilterDrawer filters={filters} onFilterPress={handleFilterPress} />
         )}
         <ScrollView style={styles.contentFeed}>
           {guides.map((guide) => (
@@ -248,12 +267,19 @@ const CommunityScreen = () => {
               <Image source={{ uri: guide.image }} style={styles.cardImage} />
               <View style={styles.cardInfo}>
                 <View style={styles.cardTextContainer}>
-                  <Text style={styles.cardTitle} numberOfLines={1}>{guide.title}</Text>
-                  <Text style={styles.cardBody} numberOfLines={1}>{guide.body}</Text>
+                  <Text style={styles.cardTitle} numberOfLines={1}>
+                    {guide.title}
+                  </Text>
+                  <Text style={styles.cardBody} numberOfLines={1}>
+                    {guide.body}
+                  </Text>
                 </View>
                 <View style={styles.authorContainer}>
                   <Text style={styles.cardAuthorName}>{guide.author}</Text>
-                  <Image source={{ uri: guide.authorImage }} style={styles.authorImage} />
+                  <Image
+                    source={{ uri: guide.authorImage }}
+                    style={styles.authorImage}
+                  />
                 </View>
               </View>
             </View>
@@ -263,7 +289,7 @@ const CommunityScreen = () => {
 
       {renderFilterDialog()}
     </View>
-  );
-};
+  )
+}
 
-export default CommunityScreen;
+export default CommunityScreen

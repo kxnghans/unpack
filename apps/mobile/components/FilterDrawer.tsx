@@ -1,16 +1,16 @@
-import React from 'react';
+import React from 'react'
 import {
   View,
   Text,
   ScrollView,
   StyleSheet,
   TouchableOpacity,
-} from 'react-native';
-import { useTheme } from '@ui/ThemeProvider';
-import { FontAwesome } from '@expo/vector-icons';
+} from 'react-native'
+import { useTheme } from '@ui/ThemeProvider'
+import { FontAwesome } from '@expo/vector-icons'
 
 const FilterDrawer = ({ filters, onFilterPress }) => {
-  const { colors, typography } = useTheme();
+  const { colors, typography } = useTheme()
 
   const styles = StyleSheet.create({
     sidebarContainer: {
@@ -31,7 +31,7 @@ const FilterDrawer = ({ filters, onFilterPress }) => {
       marginTop: 4,
       textAlign: 'center',
     },
-  });
+  })
 
   return (
     <View style={styles.sidebarContainer}>
@@ -48,7 +48,7 @@ const FilterDrawer = ({ filters, onFilterPress }) => {
         ))}
       </ScrollView>
     </View>
-  );
-};
+  )
+}
 
-export default FilterDrawer;
+export default FilterDrawer

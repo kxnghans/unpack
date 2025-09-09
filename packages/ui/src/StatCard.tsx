@@ -1,16 +1,16 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { useTheme } from './ThemeProvider';
+import React from 'react'
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { useTheme } from './ThemeProvider'
 
 export type StatCardProps = {
-  label: string;
-  value: string;
-  unit?: string;
-  icon?: React.ReactNode; // For now, we'll just pass a node
-};
+  label: string
+  value: string
+  unit?: string
+  icon?: React.ReactNode // For now, we'll just pass a node
+}
 
 export const StatCard = ({ label, value, unit, icon }: StatCardProps) => {
-  const { colors, typography, spacing } = useTheme();
+  const { colors, typography, spacing } = useTheme()
 
   const styles = StyleSheet.create({
     container: {
@@ -40,7 +40,7 @@ export const StatCard = ({ label, value, unit, icon }: StatCardProps) => {
       textAlign: 'center',
       color: colors.textSecondary,
     },
-  });
+  })
 
   return (
     <TouchableOpacity style={styles.container}>
@@ -53,5 +53,5 @@ export const StatCard = ({ label, value, unit, icon }: StatCardProps) => {
         <Text style={styles.label}>{label}</Text>
       </View>
     </TouchableOpacity>
-  );
-};
+  )
+}

@@ -1,20 +1,14 @@
-
-import {
-  View,
-  Text,
-  FlatList,
-  StyleSheet,
-} from 'react-native';
-import React from 'react';
-import { WALLET_CARDS } from '../../../lib/mock-data';
-import { useTheme, HubRow } from '@ui';
-import { FontAwesome5 } from '@expo/vector-icons';
-import { useRouter } from 'expo-router';
-import { amexRewards } from '../../../lib/amex-rewards';
+import { View, Text, FlatList, StyleSheet } from 'react-native'
+import React from 'react'
+import { WALLET_CARDS } from '../../../lib/mock-data'
+import { useTheme, HubRow } from '@ui'
+import { FontAwesome5 } from '@expo/vector-icons'
+import { useRouter } from 'expo-router'
+import { amexRewards } from '../../../lib/amex-rewards'
 
 export default function WalletsScreen() {
-  const { colors, typography } = useTheme();
-  const router = useRouter();
+  const { colors, typography } = useTheme()
+  const router = useRouter()
 
   const styles = StyleSheet.create({
     container: {
@@ -32,13 +26,25 @@ export default function WalletsScreen() {
       color: colors.textSecondary,
       ...typography.fonts.subtitle,
     },
-  });
+  })
 
   const rewards = [
-    { text: `${amexRewards.used.length} used`, icon: 'check-circle', color: 'success' },
-    { text: `${amexRewards.inProgress.length} in progress`, icon: 'spinner', color: 'warning' },
-    { text: `${amexRewards.unused.length} not used`, icon: 'times-circle', color: 'danger' },
-  ];
+    {
+      text: `${amexRewards.used.length} used`,
+      icon: 'check-circle',
+      color: 'success',
+    },
+    {
+      text: `${amexRewards.inProgress.length} in progress`,
+      icon: 'spinner',
+      color: 'warning',
+    },
+    {
+      text: `${amexRewards.unused.length} not used`,
+      icon: 'times-circle',
+      color: 'danger',
+    },
+  ]
 
   return (
     <View style={styles.container}>
@@ -47,14 +53,23 @@ export default function WalletsScreen() {
         contentContainerStyle={styles.contentContainer}
         renderItem={({ item }) => (
           <HubRow
-            icon={<FontAwesome5 name="credit-card" size={24} color={colors.text} />}
-            title={<Text style={styles.cardTitle}>{item.name} <Text style={styles.fee}>${item.annualFee}</Text></Text>}
+            icon={
+              <FontAwesome5 name="credit-card" size={24} color={colors.text} />
+            }
+            title={
+              <Text style={styles.cardTitle}>
+                {item.name} <Text style={styles.fee}>${item.annualFee}</Text>
+              </Text>
+            }
             rewards={rewards}
-            onPress={() => item.name === 'Amex Platinum' && router.push(`/planning/wallet/${item.id}`)}
+            onPress={() =>
+              item.name === 'Amex Platinum' &&
+              router.push(`/planning/wallet/${item.id}`)
+            }
           />
         )}
         keyExtractor={(item) => item.id}
       />
     </View>
-  );
+  )
 }

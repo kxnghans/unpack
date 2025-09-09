@@ -1,15 +1,15 @@
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import React from 'react';
-import { useLocalSearchParams } from 'expo-router';
-import { useTheme, HubItemCard, DetailAccordionCard } from '@ui';
-import { WALLET_CARDS } from '../../../../lib/mock-data';
-import { amexRewards } from '../../../../lib/amex-rewards';
+import { View, Text, StyleSheet, ScrollView } from 'react-native'
+import React from 'react'
+import { useLocalSearchParams } from 'expo-router'
+import { useTheme, HubItemCard, DetailAccordionCard } from '@ui'
+import { WALLET_CARDS } from '../../../../lib/mock-data'
+import { amexRewards } from '../../../../lib/amex-rewards'
 
 export default function WalletItemDetailPage() {
-  const { id } = useLocalSearchParams();
-  const { colors, typography } = useTheme();
+  const { id } = useLocalSearchParams()
+  const { colors, typography } = useTheme()
 
-  const card = WALLET_CARDS.find((c) => c.id === id);
+  const card = WALLET_CARDS.find((c) => c.id === id)
 
   const styles = StyleSheet.create({
     container: {
@@ -34,18 +34,21 @@ export default function WalletItemDetailPage() {
       ...typography.fonts.description,
       color: colors.text,
     },
-  });
+  })
 
   if (!card) {
     return (
       <View style={styles.notFoundContainer}>
         <Text style={styles.notFoundText}>Card not found</Text>
       </View>
-    );
+    )
   }
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+    <ScrollView
+      style={styles.container}
+      contentContainerStyle={styles.contentContainer}
+    >
       <HubItemCard title={card.name} imageUri={card.image} />
 
       <Text style={styles.sectionTitle}>Rewards Used</Text>
@@ -63,5 +66,5 @@ export default function WalletItemDetailPage() {
         <DetailAccordionCard key={index} {...reward} />
       ))}
     </ScrollView>
-  );
+  )
 }

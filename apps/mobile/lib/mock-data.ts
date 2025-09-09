@@ -39,7 +39,7 @@ export const HUBS = [
     icon: 'piggy-bank',
     items: [],
   },
-];
+]
 
 export const UPCOMING_ITEMS = [
   {
@@ -84,7 +84,7 @@ export const UPCOMING_ITEMS = [
     body: 'Status: 12 items remaining',
     color: '#FF6347',
   },
-];
+]
 
 export const WALLET_CARDS = [
   {
@@ -147,7 +147,7 @@ export const WALLET_CARDS = [
     subtitle: '$0 annual fee',
     description: '0 used, 2 in progress, 8 unused',
   },
-];
+]
 
 export const MOCK_STATS = [
   {
@@ -212,7 +212,7 @@ export const MOCK_STATS = [
     unit: 'days',
     icon: 'hourglass-start',
   },
-];
+]
 
 export const MOCK_CREATOR_STATS = [
   {
@@ -245,10 +245,10 @@ export const MOCK_CREATOR_STATS = [
     value: '128',
     icon: 'heart',
   },
-];
+]
 
 export const MOCK_USER = {
   name: 'Kobby',
   image: 'https://i.pravatar.cc/150?u=kobby',
   plan: 'Free',
-};
+}

@@ -1,19 +1,14 @@
-import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  ImageBackground,
-} from 'react-native';
-import { useTheme } from './ThemeProvider';
+import React from 'react'
+import { View, Text, StyleSheet, ImageBackground } from 'react-native'
+import { useTheme } from './ThemeProvider'
 
 export interface HubItemCardProps {
-  title: string;
-  imageUri: string;
+  title: string
+  imageUri: string
 }
 
 export function HubItemCard({ title, imageUri }: HubItemCardProps) {
-  const { colors, typography } = useTheme();
+  const { colors, typography } = useTheme()
 
   const styles = StyleSheet.create({
     container: {
@@ -35,7 +30,7 @@ export function HubItemCard({ title, imageUri }: HubItemCardProps) {
       ...typography.fonts.title,
       color: colors.textOnOverlay,
     },
-  });
+  })
 
   return (
     <View style={styles.container}>
@@ -45,5 +40,5 @@ export function HubItemCard({ title, imageUri }: HubItemCardProps) {
         </View>
       </ImageBackground>
     </View>
-  );
+  )
 }

@@ -1,4 +1,4 @@
-import React, { useRef, useMemo, useEffect, useState } from 'react';
+import React, { useRef, useMemo, useEffect, useState } from 'react'
 import {
   View,
   StyleSheet,
@@ -6,11 +6,11 @@ import {
   PanResponder,
   Dimensions,
   Easing,
-} from 'react-native';
-import { useTheme } from './ThemeProvider';
-import { Feather } from '@expo/vector-icons';
+} from 'react-native'
+import { useTheme } from './ThemeProvider'
+import { Feather } from '@expo/vector-icons'
 
-const { height: SCREEN_HEIGHT } = Dimensions.get('window');
+const { height: SCREEN_HEIGHT } = Dimensions.get('window')
 
 export function BottomSheet({
   children,
@@ -18,32 +18,33 @@ export function BottomSheet({
   snapToIndex = 0,
   onSnap,
 }) {
-  const { colors } = useTheme();
-  const [isCollapsed, setIsCollapsed] = useState(snapToIndex === 0);
+  const { colors } = useTheme()
+  const [isCollapsed, setIsCollapsed] = useState(snapToIndex === 0)
 
   const snapPoints = useMemo(
     () => providedSnapPoints || [60, SCREEN_HEIGHT * 0.4, SCREEN_HEIGHT * 0.8],
-    [providedSnapPoints]
-  );
+    [providedSnapPoints],
+  )
 
-  const animatedHeight = useRef(new Animated.Value(snapPoints[snapToIndex]))
-    .current;
-  const lastHeight = useRef(snapPoints[snapToIndex]);
-  const currentIndex = useRef(snapToIndex);
-  const bounceValue = useRef(new Animated.Value(0)).current;
+  const animatedHeight = useRef(
+    new Animated.Value(snapPoints[snapToIndex]),
+  ).current
+  const lastHeight = useRef(snapPoints[snapToIndex])
+  const currentIndex = useRef(snapToIndex)
+  const bounceValue = useRef(new Animated.Value(0)).current
 
   useEffect(() => {
-    lastHeight.current = snapPoints[snapToIndex];
-    currentIndex.current = snapToIndex;
+    lastHeight.current = snapPoints[snapToIndex]
+    currentIndex.current = snapToIndex
     Animated.spring(animatedHeight, {
       toValue: snapPoints[snapToIndex],
       friction: 9,
       tension: 80,
       useNativeDriver: false,
     }).start(() => {
-      lastHeight.current = snapPoints[snapToIndex];
-      const isCurrentlyCollapsed = snapToIndex === 0;
-      setIsCollapsed(isCurrentlyCollapsed);
+      lastHeight.current = snapPoints[snapToIndex]
+      const isCurrentlyCollapsed = snapToIndex === 0
+      setIsCollapsed(isCurrentlyCollapsed)
       if (isCurrentlyCollapsed) {
         const bounce = Animated.sequence([
           Animated.timing(bounceValue, {
@@ -58,43 +59,46 @@ export function BottomSheet({
             easing: Easing.inOut(Easing.quad),
             useNativeDriver: true,
           }),
-        ]);
-        Animated.loop(bounce).start();
+        ])
+        Animated.loop(bounce).start()
       } else {
-        bounceValue.stopAnimation();
-        bounceValue.setValue(0);
+        bounceValue.stopAnimation()
+        bounceValue.setValue(0)
       }
-    });
-  }, [snapToIndex, snapPoints, animatedHeight, bounceValue]);
+    })
+  }, [snapToIndex, snapPoints, animatedHeight, bounceValue])
 
   const panResponder = useRef(
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
       onPanResponderGrant: () => {
-        animatedHeight.setOffset(lastHeight.current);
-        animatedHeight.setValue(0);
+        animatedHeight.setOffset(lastHeight.current)
+        animatedHeight.setValue(0)
       },
       onPanResponderMove: (e, gestureState) => {
-        animatedHeight.setValue(-gestureState.dy);
+        animatedHeight.setValue(-gestureState.dy)
       },
       onPanResponderRelease: (e, gestureState) => {
-        animatedHeight.flattenOffset();
-        const finalHeight = lastHeight.current - gestureState.dy;
-        
-        const nextSnapPointIndex = snapPoints.reduce((closestIndex, point, i) => {
-          const distance = Math.abs(finalHeight - point);
-          const closestDistance = Math.abs(
-            finalHeight - snapPoints[closestIndex]
-          );
-          return distance < closestDistance ? i : closestIndex;
-        }, 0);
+        animatedHeight.flattenOffset()
+        const finalHeight = lastHeight.current - gestureState.dy
 
-        currentIndex.current = nextSnapPointIndex;
+        const nextSnapPointIndex = snapPoints.reduce(
+          (closestIndex, point, i) => {
+            const distance = Math.abs(finalHeight - point)
+            const closestDistance = Math.abs(
+              finalHeight - snapPoints[closestIndex],
+            )
+            return distance < closestDistance ? i : closestIndex
+          },
+          0,
+        )
+
+        currentIndex.current = nextSnapPointIndex
         if (onSnap) {
-          onSnap(nextSnapPointIndex);
+          onSnap(nextSnapPointIndex)
         }
 
-        lastHeight.current = snapPoints[nextSnapPointIndex];
+        lastHeight.current = snapPoints[nextSnapPointIndex]
 
         Animated.spring(animatedHeight, {
           toValue: snapPoints[nextSnapPointIndex],
@@ -102,8 +106,8 @@ export function BottomSheet({
           tension: 80,
           useNativeDriver: false,
         }).start(() => {
-          const isCurrentlyCollapsed = nextSnapPointIndex === 0;
-          setIsCollapsed(isCurrentlyCollapsed);
+          const isCurrentlyCollapsed = nextSnapPointIndex === 0
+          setIsCollapsed(isCurrentlyCollapsed)
           if (isCurrentlyCollapsed) {
             const bounce = Animated.sequence([
               Animated.timing(bounceValue, {
@@ -118,16 +122,16 @@ export function BottomSheet({
                 easing: Easing.inOut(Easing.quad),
                 useNativeDriver: true,
               }),
-            ]);
-            Animated.loop(bounce).start();
+            ])
+            Animated.loop(bounce).start()
           } else {
-            bounceValue.stopAnimation();
-            bounceValue.setValue(0);
+            bounceValue.stopAnimation()
+            bounceValue.setValue(0)
           }
-        });
+        })
       },
-    })
-  ).current;
+    }),
+  ).current
 
   const panelStyle = {
     height: animatedHeight.interpolate({
@@ -135,7 +139,7 @@ export function BottomSheet({
       outputRange: [snapPoints[0], snapPoints[snapPoints.length - 1]],
       extrapolate: 'clamp',
     }),
-  };
+  }
 
   const styles = StyleSheet.create({
     container: {
@@ -169,7 +173,7 @@ export function BottomSheet({
       position: 'absolute',
       top: 25,
     },
-  });
+  })
 
   return (
     <Animated.View
@@ -191,5 +195,5 @@ export function BottomSheet({
       </View>
       {children}
     </Animated.View>
-  );
+  )
 }

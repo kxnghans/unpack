@@ -1,12 +1,12 @@
-import React from 'react';
+import React from 'react'
 import {
   TouchableOpacity,
   Text,
   StyleSheet,
   ActivityIndicator,
   View,
-} from 'react-native';
-import { useTheme } from './ThemeProvider';
+} from 'react-native'
+import { useTheme } from './ThemeProvider'
 
 export const Button = ({
   title,
@@ -16,7 +16,7 @@ export const Button = ({
   loading = false,
   ...props
 }) => {
-  const { colors, typography } = useTheme();
+  const { colors, typography } = useTheme()
 
   const styles = StyleSheet.create({
     button: {
@@ -32,7 +32,7 @@ export const Button = ({
       ...typography.fonts.title,
       color: colors.card,
     },
-  });
+  })
 
   return (
     <TouchableOpacity
@@ -47,5 +47,5 @@ export const Button = ({
         <Text style={styles.text}>{title}</Text>
       )}
     </TouchableOpacity>
-  );
-};
+  )
+}

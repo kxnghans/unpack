@@ -40,7 +40,6 @@ http://localhost:3000
 To view the mobile app on your device, you can use the Expo Go app.
 
 1. **Install the Expo Go app**
-
    - [Android](https://play.google.com/store/apps/details?id=host.exp.exponent)
    - [iOS](https://apps.apple.com/us/app/expo-go/id982107779)
 
@@ -62,7 +61,7 @@ This is a monorepo with the following structure:
 - `packages/utils`: Shared utility functions
 - `packages/config`: Shared configuration (e.g. ESLint, TypeScript)
 
-## File Structure
+### File Structure
 
 Here is a brief overview of the project's file structure:
 

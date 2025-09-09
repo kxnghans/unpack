@@ -1,20 +1,19 @@
-
-import React from 'react';
-import { View } from 'react-native';
-import Svg, { Circle } from 'react-native-svg';
-import { useTheme } from './ThemeProvider';
+import React from 'react'
+import { View } from 'react-native'
+import Svg, { Circle } from 'react-native-svg'
+import { useTheme } from './ThemeProvider'
 
 export interface PieChartProps {
-  progress: number; // 0 to 1
-  size: number;
+  progress: number // 0 to 1
+  size: number
 }
 
 export function PieChart({ progress, size }: PieChartProps) {
-  const { colors } = useTheme();
-  const strokeWidth = 10;
-  const radius = (size - strokeWidth) / 2;
-  const circumference = radius * 2 * Math.PI;
-  const strokeDashoffset = circumference - progress * circumference;
+  const { colors } = useTheme()
+  const strokeWidth = 10
+  const radius = (size - strokeWidth) / 2
+  const circumference = radius * 2 * Math.PI
+  const strokeDashoffset = circumference - progress * circumference
 
   return (
     <View style={{ width: size, height: size }}>
@@ -41,5 +40,5 @@ export function PieChart({ progress, size }: PieChartProps) {
         />
       </Svg>
     </View>
-  );
+  )
 }

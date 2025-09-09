@@ -1,12 +1,12 @@
-import { Stack } from 'expo-router';
-import { useTheme } from '@ui/ThemeProvider';
+import { Stack } from 'expo-router'
+import { useTheme } from '@ui/ThemeProvider'
 
 /**
  * The layout for the personal section of the app.
  * This component defines the stack navigator for the personal tab.
  */
 export default function PersonalLayout() {
-  const { colors, typography } = useTheme();
+  const { colors, typography } = useTheme()
 
   return (
     <Stack
@@ -22,5 +22,5 @@ export default function PersonalLayout() {
     >
       <Stack.Screen name="index" options={{ headerShown: false }} />
     </Stack>
-  );
+  )
 }

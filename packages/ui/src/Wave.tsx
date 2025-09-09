@@ -1,19 +1,14 @@
-import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import { Svg, Path } from 'react-native-svg';
-import { useTheme } from './ThemeProvider';
+import React from 'react'
+import { View, StyleSheet } from 'react-native'
+import { Svg, Path } from 'react-native-svg'
+import { useTheme } from './ThemeProvider'
 
 export function Wave() {
-  const { colors } = useTheme();
+  const { colors } = useTheme()
 
   return (
     <View style={styles.container}>
-      <Svg
-        height="100%"
-        width="100%"
-        viewBox="0 0 1440 320"
-        style={styles.svg}
-      >
+      <Svg height="100%" width="100%" viewBox="0 0 1440 320" style={styles.svg}>
         <Path
           fill={colors.primary}
           fillOpacity="0.1"
@@ -21,7 +16,7 @@ export function Wave() {
         />
       </Svg>
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -34,5 +29,5 @@ const styles = StyleSheet.create({
   },
   svg: {
     transform: [{ rotate: '180deg' }],
-  }
-});
+  },
+})

@@ -88,7 +88,8 @@ export const theme = {
     },
     shadows: {
       soft: '4px 4px 8px rgba(0,0,0,0.1), -4px -4px 8px rgba(255,255,255,0.7)',
-      inset: 'inset 4px 4px 8px rgba(0,0,0,0.3), inset -4px -4px 8px rgba(255,255,255,0.1)',
+      inset:
+        'inset 4px 4px 8px rgba(0,0,0,0.3), inset -4px -4px 8px rgba(255,255,255,0.1)',
     },
   },
   dark: {
@@ -176,7 +177,8 @@ export const theme = {
     },
     shadows: {
       soft: '4px 4px 8px rgba(0,0,0,0.5), -4px -4px 8px rgba(255,255,255,0.15)',
-      inset: 'inset 4px 4px 8px rgba(0,0,0,0.5), inset -4px -4px 8px rgba(255,255,255,0.15)',
+      inset:
+        'inset 4px 4px 8px rgba(0,0,0,0.5), inset -4px -4px 8px rgba(255,255,255,0.15)',
     },
   },
-};
+}

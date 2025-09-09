@@ -1,14 +1,14 @@
-import { Tabs } from 'expo-router';
-import React from 'react';
-import { Feather } from '@expo/vector-icons';
-import { useTheme } from '@ui/ThemeProvider';
+import { Tabs } from 'expo-router'
+import React from 'react'
+import { Feather } from '@expo/vector-icons'
+import { useTheme } from '@ui/ThemeProvider'
 
 /**
  * The main tab navigator for the app.
-  * This component defines the three main tabs: Planning, Community, and Personal.
+ * This component defines the three main tabs: Planning, Community, and Personal.
  */
 export default function TabLayout() {
-  const { colors } = useTheme();
+  const { colors } = useTheme()
 
   return (
     <Tabs
@@ -21,7 +21,8 @@ export default function TabLayout() {
           borderTopWidth: 0,
           paddingBottom: 0,
         },
-      }}>
+      }}
+    >
       <Tabs.Screen
         name="planning"
         options={{
@@ -50,5 +51,5 @@ export default function TabLayout() {
         }}
       />
     </Tabs>
-  );
+  )
 }

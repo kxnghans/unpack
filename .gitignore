@@ -4,10 +4,6 @@
 # Build artifacts
 /dist
 build/
-**/.next/
-out/
-**/.expo/
-.expo-shared/
 .turbo/
 
 # Logs
@@ -17,16 +13,6 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
-
-# Local files
-my_files/
-
-# Environment variables
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
 
 # IDEs and editors
 .idea/
@@ -45,14 +31,8 @@ Thumbs.db
 package-lock.json
 yarn.lock
 
-# Expo
-*.jks
-*.p12
-*.keystore
-*.p8
-*.mobileprovision
-
 # Test
 coverage/
 
+# Gemini
 GEMINI.md

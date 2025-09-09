@@ -1,19 +1,8 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  FlatList,
-  ScrollView,
-} from 'react-native';
-import {
-  HubCard,
-  UpcomingCard,
-  useTheme,
-  Divider,
-} from '@ui';
-import { HUBS, UPCOMING_ITEMS } from '../../../lib/mock-data';
-import { FontAwesome5 } from '@expo/vector-icons';
-import { useRouter } from 'expo-router';
+import { View, Text, StyleSheet, FlatList, ScrollView } from 'react-native'
+import { HubCard, UpcomingCard, useTheme, Divider } from '@ui'
+import { HUBS, UPCOMING_ITEMS } from '../../../lib/mock-data'
+import { FontAwesome5 } from '@expo/vector-icons'
+import { useRouter } from 'expo-router'
 
 const iconMap = {
   flight: 'plane',
@@ -22,11 +11,11 @@ const iconMap = {
   savings: 'piggy-bank',
   playlist: 'music',
   packing: 'suitcase',
-};
+}
 
 export default function PlanningScreen() {
-  const { colors, typography } = useTheme();
-  const router = useRouter();
+  const { colors, typography } = useTheme()
+  const router = useRouter()
 
   const styles = StyleSheet.create({
     container: {
@@ -53,16 +42,22 @@ export default function PlanningScreen() {
     hubsContainer: {
       marginBottom: 24,
     },
-  });
+  })
 
   const renderUpcomingItem = ({ item }) => (
     <UpcomingCard
       color={item.color}
-      icon={<FontAwesome5 name={iconMap[item.type]} size={24} color={colors.textOnOverlay} />}
+      icon={
+        <FontAwesome5
+          name={iconMap[item.type]}
+          size={24}
+          color={colors.textOnOverlay}
+        />
+      }
       title={item.title}
       body={item.body}
     />
-  );
+  )
 
   const ListHeader = () => (
     <View style={styles.headerContainer}>
@@ -74,7 +69,9 @@ export default function PlanningScreen() {
           {HUBS.map((hub) => (
             <HubCard
               key={hub.id}
-              icon={<FontAwesome5 name={hub.icon} size={48} color={colors.text} />}
+              icon={
+                <FontAwesome5 name={hub.icon} size={48} color={colors.text} />
+              }
               title={hub.title}
               items={hub.items}
               onPress={() =>
@@ -87,7 +84,7 @@ export default function PlanningScreen() {
       <Divider />
       <Text style={styles.sectionTitle}>Upcoming</Text>
     </View>
-  );
+  )
 
   return (
     <View style={styles.container}>
@@ -100,5 +97,5 @@ export default function PlanningScreen() {
         contentContainerStyle={styles.listContentContainer}
       />
     </View>
-  );
+  )
 }

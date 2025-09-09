@@ -14,7 +14,8 @@ export const amexRewards = {
       statusColor: '#2ECC71',
       title: '$200 Airline Fee Credit',
       estimatedValue: '$200',
-      description: 'Up to $200 in statement credits per calendar year for incidental fees.',
+      description:
+        'Up to $200 in statement credits per calendar year for incidental fees.',
       activation: 'Select one qualifying airline.',
       conditions: 'Fees must be charged by the selected airline.',
     },
@@ -23,7 +24,8 @@ export const amexRewards = {
       statusColor: '#2ECC71',
       title: '$200 Hotel Credit',
       estimatedValue: '$200',
-      description: 'Up to $200 back in statement credits each year on prepaid bookings.',
+      description:
+        'Up to $200 back in statement credits each year on prepaid bookings.',
       activation: 'Book through Fine Hotels + Resorts or The Hotel Collection.',
       conditions: 'Minimum two-night stay for The Hotel Collection.',
     },
@@ -43,7 +45,8 @@ export const amexRewards = {
       statusColor: '#F1C40F',
       title: 'Hilton Honors Gold Status',
       estimatedValue: '$100+',
-      description: 'Benefits include room upgrades and complimentary breakfast.',
+      description:
+        'Benefits include room upgrades and complimentary breakfast.',
       activation: 'Enrollment required.',
       conditions: 'Benefits vary by property.',
     },
@@ -63,7 +66,8 @@ export const amexRewards = {
       statusColor: '#E74C3C',
       title: '$240 Digital Entertainment Credit',
       estimatedValue: '$240',
-      description: 'Up to $20 in statement credits each month on eligible purchases.',
+      description:
+        'Up to $20 in statement credits each month on eligible purchases.',
       activation: 'Enrollment required.',
       conditions: 'Valid for participating partners only.',
     },
@@ -99,7 +103,8 @@ export const amexRewards = {
       statusColor: '#E74C3C',
       title: 'CLEAR Plus Credit',
       estimatedValue: '$189',
-      description: 'Up to $189 in statement credits per year for a CLEAR Plus membership.',
+      description:
+        'Up to $189 in statement credits per year for a CLEAR Plus membership.',
       activation: 'Pay for CLEAR Plus with your card.',
       conditions: "Membership is subject to CLEAR's terms.",
     },
@@ -108,7 +113,8 @@ export const amexRewards = {
       statusColor: '#E74C3C',
       title: 'Global Dining Access by Resy',
       estimatedValue: 'Varies',
-      description: 'Unlock access to exclusive reservations and dining experiences.',
+      description:
+        'Unlock access to exclusive reservations and dining experiences.',
       activation: 'Add your card to your Resy profile.',
       conditions: 'Reservations subject to availability.',
     },
@@ -117,9 +123,11 @@ export const amexRewards = {
       statusColor: '#E74C3C',
       title: 'Premium Concierge Service',
       estimatedValue: 'Varies',
-      description: 'Get assistance with booking reservations, planning travel, and more.',
+      description:
+        'Get assistance with booking reservations, planning travel, and more.',
       activation: 'Call the number on the back of your card.',
-      conditions: 'Services are complimentary, but you pay for purchased items.',
+      conditions:
+        'Services are complimentary, but you pay for purchased items.',
     },
   ],
-};
+}
