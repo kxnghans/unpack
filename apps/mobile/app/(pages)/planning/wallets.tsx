@@ -26,6 +26,7 @@ export default function WalletsScreen() {
     },
     cardTitle: {
       ...typography.fonts.title,
+      color: colors.text,
     },
     fee: {
       color: colors.textSecondary,
@@ -34,9 +35,9 @@ export default function WalletsScreen() {
   });
 
   const rewards = [
-    { text: `${amexRewards.used.length} used`, icon: 'check-circle', color: '#2ECC71' },
-    { text: `${amexRewards.inProgress.length} in progress`, icon: 'spinner', color: '#F1C40F' },
-    { text: `${amexRewards.unused.length} not used`, icon: 'times-circle', color: '#E74C3C' },
+    { text: `${amexRewards.used.length} used`, icon: 'check-circle', color: 'success' },
+    { text: `${amexRewards.inProgress.length} in progress`, icon: 'spinner', color: 'warning' },
+    { text: `${amexRewards.unused.length} not used`, icon: 'times-circle', color: 'danger' },
   ];
 
   return (
@@ -46,7 +47,7 @@ export default function WalletsScreen() {
         contentContainerStyle={styles.contentContainer}
         renderItem={({ item }) => (
           <HubRow
-            icon={<FontAwesome5 name="credit-card" size={24} color="#1A1A1A" />}
+            icon={<FontAwesome5 name="credit-card" size={24} color={colors.text} />}
             title={<Text style={styles.cardTitle}>{item.name} <Text style={styles.fee}>${item.annualFee}</Text></Text>}
             rewards={rewards}
             onPress={() => item.name === 'Amex Platinum' && router.push(`/planning/wallet/${item.id}`)}

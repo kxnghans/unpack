@@ -70,7 +70,7 @@ export function HubCard({ icon, title, items, onPress }: HubCardProps) {
     <Pressable onPress={onPress}>
       <View style={styles.card}>
         <LinearGradient
-          colors={['#E8EFFF', '#F8F9FF']}
+          colors={[colors.background, colors.card]}
           style={styles.gradient}
         />
         <Wave />
@@ -90,7 +90,11 @@ export function HubCard({ icon, title, items, onPress }: HubCardProps) {
           </View>
         </View>
         <View style={styles.chevronContainer}>
-          <FontAwesome5 name="chevron-right" size={24} color="#6B6B6B" />
+          <FontAwesome5
+            name="chevron-right"
+            size={24}
+            color={colors.textSecondary}
+          />
         </View>
       </View>
     </Pressable>

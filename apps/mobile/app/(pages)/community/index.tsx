@@ -94,7 +94,7 @@ const CommunityScreen = () => {
       borderRadius: 12,
       backgroundColor: colors.card,
       elevation: 2,
-      shadowColor: '#000',
+      shadowColor: colors.shadow,
       shadowOffset: { width: 0, height: 1 },
       shadowOpacity: 0.05,
       shadowRadius: 4,

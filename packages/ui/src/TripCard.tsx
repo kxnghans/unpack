@@ -11,7 +11,7 @@ export interface TripCardProps {
 }
 
 export function TripCard({ location, date, image, onPress }: TripCardProps) {
-  const { typography } = useTheme();
+  const { colors, typography } = useTheme();
 
   const styles = StyleSheet.create({
     card: {
@@ -36,11 +36,11 @@ export function TripCard({ location, date, image, onPress }: TripCardProps) {
       padding: 12,
     },
     location: {
-      color: '#FFFFFF',
+      color: colors.textOnOverlay,
       ...typography.fonts.title,
     },
     date: {
-      color: '#FFFFFF',
+      color: colors.textOnOverlay,
       ...typography.fonts.subtitle,
     },
   });
@@ -49,7 +49,7 @@ export function TripCard({ location, date, image, onPress }: TripCardProps) {
     <Pressable onPress={onPress} style={styles.card}>
       <ImageBackground source={{ uri: image }} style={styles.imageBackground}>
         <LinearGradient
-          colors={['transparent', 'rgba(0,0,0,0.8)']}
+          colors={['transparent', colors.overlay]}
           style={styles.gradient}
         />
         <View style={styles.textContainer}>

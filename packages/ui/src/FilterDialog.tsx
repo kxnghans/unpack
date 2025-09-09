@@ -27,7 +27,7 @@ export const FilterDialog = ({
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      backgroundColor: colors.overlay,
     },
     dialogContainer: {
       backgroundColor: colors.background,
@@ -35,7 +35,7 @@ export const FilterDialog = ({
       padding: 20,
       width: '85%',
       maxHeight: '70%',
-      shadowColor: '#000',
+      shadowColor: colors.shadow,
       shadowOffset: { width: 0, height: 2 },
       shadowOpacity: 0.25,
       shadowRadius: 4,

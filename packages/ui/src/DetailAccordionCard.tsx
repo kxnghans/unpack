@@ -56,7 +56,7 @@ export function DetailAccordionCard({
       alignItems: 'center',
       justifyContent: 'space-between',
       padding: 16,
-      backgroundColor: colors.background,
+      backgroundColor: colors.surface,
     },
     headerLeft: {
       flexDirection: 'row',

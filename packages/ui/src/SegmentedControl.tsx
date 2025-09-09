@@ -15,43 +15,55 @@ if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental
   UIManager.setLayoutAnimationEnabledExperimental(true);
 }
 
-const AnimatedTab = ({ title, iconName, isActive, onPress }) => {
-  const { colors, typography } = useTheme();
-
-  // Determine colors based on active state and theme
-  const iconColor = isActive ? colors.primary : colors.textSecondary;
-  const textColor = isActive ? colors.primary : colors.textSecondary;
-
-  // Determine background style for the active tab
-  const activeTabStyle = {
-    backgroundColor: colors.background, // Use theme background for active tab
-  };
-
-  const tabStyle = isActive ? [styles.activeTab, activeTabStyle] : {};
-
-  return (
-    <TouchableOpacity onPress={onPress} style={[styles.tab, tabStyle]}>
-      <Feather name={iconName} size={16} color={iconColor} />
-      <Text style={[typography.fonts.title, { color: textColor, marginLeft: 8 }]}>{title}</Text>
-    </TouchableOpacity>
-  );
-};
-
 export const SegmentedControl = ({ tabs, activeTabKey, onTabPress }) => {
+  const { colors, typography } = useTheme(); // Get theme context
   const [internalActiveKey, setInternalActiveKey] = useState(activeTabKey);
 
+  const styles = StyleSheet.create({
+    tabContainer: {
+      flexDirection: 'row',
+      borderRadius: 20,
+      padding: 4,
+      backgroundColor: colors.surface,
+    },
+    tab: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingVertical: 8,
+      paddingHorizontal: 16,
+      borderRadius: 16,
+    },
+    activeTab: {
+      flex: 1,
+      backgroundColor: colors.background, // Use theme background for active tab
+      shadowColor: colors.shadow,
+      shadowOffset: { width: 0, height: 1 },
+      shadowOpacity: 0.1,
+      shadowRadius: 4,
+      elevation: 3,
+    },
+  });
+
+  const AnimatedTab = ({ title, iconName, isActive, onPress }) => {
+    const iconColor = isActive ? colors.primary : colors.textSecondary;
+    const textColor = isActive ? colors.primary : colors.textSecondary;
+
+    return (
+      <TouchableOpacity onPress={onPress} style={[styles.tab, isActive && styles.activeTab]}>
+        <Feather name={iconName} size={16} color={iconColor} />
+        <Text style={[typography.fonts.title, { color: textColor, marginLeft: 8 }]}>{title}</Text>
+      </TouchableOpacity>
+    );
+  };
+
   useEffect(() => {
-    // This effect syncs the internal state with the parent's prop
-    // in case the parent wants to control the component from the outside.
     setInternalActiveKey(activeTabKey);
   }, [activeTabKey]);
 
   const handlePress = (tabKey: string) => {
-    // Configure the animation before any state changes.
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-    // Update the internal state immediately for instant visual feedback.
     setInternalActiveKey(tabKey);
-    // Notify the parent component of the change.
     onTabPress(tabKey);
   };
 
@@ -62,34 +74,10 @@ export const SegmentedControl = ({ tabs, activeTabKey, onTabPress }) => {
           key={tab.key}
           title={tab.title}
           iconName={tab.iconName}
-          isActive={internalActiveKey === tab.key} // Use internal state for styling
+          isActive={internalActiveKey === tab.key}
           onPress={() => handlePress(tab.key)}
         />
       ))}
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  tabContainer: {
-    flexDirection: 'row',
-    borderRadius: 20,
-    padding: 4,
-  },
-  tab: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    borderRadius: 16,
-  },
-  activeTab: {
-    flex: 1,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
-  },
-});

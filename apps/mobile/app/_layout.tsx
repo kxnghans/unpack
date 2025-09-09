@@ -1,6 +1,15 @@
 import { Slot } from 'expo-router';
-import { ThemeProvider } from '@ui/ThemeProvider';
+import { ThemeProvider, useTheme } from '@ui';
 import { SafeAreaView } from 'react-native-safe-area-context';
+
+function ThemedSafeArea() {
+  const { colors } = useTheme();
+  return (
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }} edges={['top']}>
+      <Slot />
+    </SafeAreaView>
+  );
+}
 
 /**
  * The root layout for the entire app.
@@ -9,9 +18,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 export default function RootLayout() {
   return (
     <ThemeProvider>
-      <SafeAreaView style={{ flex: 1 }} edges={['top']}>
-        <Slot />
-      </SafeAreaView>
+      <ThemedSafeArea />
     </ThemeProvider>
   );
 }

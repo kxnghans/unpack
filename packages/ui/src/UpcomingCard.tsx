@@ -39,10 +39,10 @@ export function UpcomingCard({ color, icon, title, body, onPress }: UpcomingCard
       right: 0,
       height: 120,
       borderRadius: 16,
-      backgroundColor: 'white',
+      backgroundColor: colors.card,
       padding: 16,
       paddingTop: 40, // Adjust padding to make space for the overlay
-      shadowColor: '#000',
+      shadowColor: colors.shadow,
       shadowOffset: {
         width: 0,
         height: 4,

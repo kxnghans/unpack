@@ -28,12 +28,12 @@ export function HubItemCard({ title, imageUri }: HubItemCardProps) {
       justifyContent: 'flex-end',
     },
     overlay: {
-      backgroundColor: 'rgba(0, 0, 0, 0.4)',
+      backgroundColor: colors.overlay,
       padding: 16,
     },
     title: {
       ...typography.fonts.title,
-      color: '#FFFFFF',
+      color: colors.textOnOverlay,
     },
   });
 

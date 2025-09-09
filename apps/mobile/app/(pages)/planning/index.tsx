@@ -31,7 +31,7 @@ export default function PlanningScreen() {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#FFFFFF',
+      backgroundColor: colors.background,
     },
     headerContainer: {
       paddingHorizontal: 24,
@@ -58,7 +58,7 @@ export default function PlanningScreen() {
   const renderUpcomingItem = ({ item }) => (
     <UpcomingCard
       color={item.color}
-      icon={<FontAwesome5 name={iconMap[item.type]} size={24} color="white" />}
+      icon={<FontAwesome5 name={iconMap[item.type]} size={24} color={colors.textOnOverlay} />}
       title={item.title}
       body={item.body}
     />
@@ -74,7 +74,7 @@ export default function PlanningScreen() {
           {HUBS.map((hub) => (
             <HubCard
               key={hub.id}
-              icon={<FontAwesome5 name={hub.icon} size={48} color="#1A1A1A" />}
+              icon={<FontAwesome5 name={hub.icon} size={48} color={colors.text} />}
               title={hub.title}
               items={hub.items}
               onPress={() =>
