@@ -1,42 +1,51 @@
-import { TouchableOpacity, Text, StyleSheet } from "react-native";
-import { useTheme } from "./ThemeProvider";
+import React from 'react';
+import {
+  TouchableOpacity,
+  Text,
+  StyleSheet,
+  ActivityIndicator,
+  View,
+} from 'react-native';
+import { useTheme } from './ThemeProvider';
 
-/**
- * The props for the Button component.
- */
-type Props = {
-  /**
-   * The title of the button.
-   */
-  title: string;
-  /**
-   * The function to call when the button is pressed.
-   */
-  onPress: () => void;
-};
-
-/**
- * A reusable button component.
- */
-export function Button({ title, onPress }: Props) {
+export const Button = ({
+  title,
+  onPress,
+  variant = 'primary',
+  disabled = false,
+  loading = false,
+  ...props
+}) => {
   const { colors, typography } = useTheme();
 
   const styles = StyleSheet.create({
     button: {
-      backgroundColor: colors.primary,
-      padding: 12,
+      paddingVertical: 16,
+      paddingHorizontal: 32,
       borderRadius: 8,
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: colors.primary,
+      opacity: disabled ? 0.5 : 1,
     },
     text: {
-      color: colors.card,
-      textAlign: "center",
       ...typography.fonts.title,
+      color: colors.card,
     },
   });
 
   return (
-    <TouchableOpacity style={styles.button} onPress={onPress}>
-      <Text style={styles.text}>{title}</Text>
+    <TouchableOpacity
+      style={styles.button}
+      onPress={onPress}
+      disabled={disabled || loading}
+      {...props}
+    >
+      {loading ? (
+        <ActivityIndicator color={colors.card} />
+      ) : (
+        <Text style={styles.text}>{title}</Text>
+      )}
     </TouchableOpacity>
   );
-}
+};

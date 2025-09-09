@@ -1,16 +1,13 @@
 import React, { createContext, useContext, useState } from 'react';
 import { useColorScheme } from 'react-native';
-import { colors, typography, shadows, spacing } from './tokens';
+import { theme as defaultTheme } from './tokens';
 
 const ThemeContext = createContext({
   theme: 'light',
   themePreference: 'auto',
   setThemePreference: (theme: string) => {},
   toggleTheme: () => {},
-  colors: colors.light,
-  typography,
-  shadows,
-  spacing,
+  ...defaultTheme.light,
 });
 
 export const useTheme = () => useContext(ThemeContext);
@@ -25,10 +22,10 @@ export const ThemeProvider = ({ children }) => {
     setThemePreference(theme === 'light' ? 'dark' : 'light');
   };
 
-  const themeColors = theme === 'light' ? colors.light : colors.dark;
+  const currentTheme = theme === 'light' ? defaultTheme.light : defaultTheme.dark;
 
   return (
-    <ThemeContext.Provider value={{ theme, themePreference, setThemePreference, toggleTheme, colors: themeColors, typography, shadows, spacing }}>
+    <ThemeContext.Provider value={{ theme, themePreference, setThemePreference, toggleTheme, ...currentTheme }}>
       {children}
     </ThemeContext.Provider>
   );

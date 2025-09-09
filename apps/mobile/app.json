@@ -7,10 +7,12 @@
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
+    "backgroundColor": "#FFFFFF",
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#FFFFFF",
+      "backgroundColorDark": "#121212"
     },
     "ios": {
       "supportsTablet": true,
@@ -23,7 +25,8 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#FFFFFF",
+        "backgroundColorDark": "#121212"
       },
       "package": "com.anonymous.unpack-mobile",
       "config": {
@@ -47,6 +50,9 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "dark": {
+      "backgroundColor": "#121212"
     }
   }
 }

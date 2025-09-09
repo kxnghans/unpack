@@ -3,17 +3,18 @@ import { View, Text, StyleSheet, Pressable } from 'react-native';
 import React from 'react';
 import { useTheme } from './ThemeProvider';
 import { LinearGradient } from 'expo-linear-gradient';
+import { theme } from './tokens';
 
 export interface QuickAccessCardProps {
   title: string;
   subtitle: string;
   icon: React.ReactNode;
-  colors: string[];
+  gradient: keyof typeof theme.light.gradients;
   onPress?: () => void;
 }
 
-export function QuickAccessCard({ title, subtitle, icon, colors, onPress }: QuickAccessCardProps) {
-  const { typography } = useTheme();
+export function QuickAccessCard({ title, subtitle, icon, gradient, onPress }: QuickAccessCardProps) {
+  const { colors, typography, gradients } = useTheme();
 
   const styles = StyleSheet.create({
     card: {
@@ -24,11 +25,11 @@ export function QuickAccessCard({ title, subtitle, icon, colors, onPress }: Quic
       marginHorizontal: 8,
     },
     title: {
-      color: '#FFFFFF',
+      color: colors.textOnPrimary,
       ...typography.fonts.title,
     },
     subtitle: {
-      color: '#FFFFFF',
+      color: colors.textOnPrimary,
       ...typography.fonts.subtitle,
     },
     iconContainer: {
@@ -40,7 +41,7 @@ export function QuickAccessCard({ title, subtitle, icon, colors, onPress }: Quic
 
   return (
     <Pressable onPress={onPress}>
-      <LinearGradient colors={colors} style={styles.card}>
+      <LinearGradient colors={gradients[gradient]} style={styles.card}>
         <View style={styles.iconContainer}>{icon}</View>
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.subtitle}>{subtitle}</Text>

@@ -99,10 +99,10 @@ export const StatsHeader = ({ user, activeTab, onTabPress, isThemeExpanded, onTo
       color: colors.textSecondary,
     },
     premiumPlan: {
-      backgroundColor: '#E4D5C3', // A subtle gold
+      backgroundColor: colors.premiumBackground,
     },
     premiumPlanText: {
-      color: '#5C4033', // Dark brown
+      color: colors.textOnPremium,
     },
     editProfileButton: {
       paddingVertical: 8,
