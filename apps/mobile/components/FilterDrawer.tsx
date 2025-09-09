@@ -15,11 +15,23 @@ const FilterDrawer = ({ filters, onFilterPress }) => {
   const styles = StyleSheet.create({
     sidebarContainer: {
       backgroundColor: colors.background,
-      paddingTop: 20,
       paddingHorizontal: 5,
-      borderRightWidth: 1,
-      borderRightColor: colors.border,
+      paddingBottom: 5,
       width: 80,
+      flexDirection: 'row',
+    },
+    divider: {
+      width: 1,
+      height: '100%',
+      backgroundColor: colors.background,
+      shadowColor: '#000',
+      shadowOffset: {
+        width: 2,
+        height: 0,
+      },
+      shadowOpacity: 0.5,
+      shadowRadius: 2,
+      elevation: 5,
     },
     filterItem: {
       alignItems: 'center',
@@ -47,6 +59,7 @@ const FilterDrawer = ({ filters, onFilterPress }) => {
           </TouchableOpacity>
         ))}
       </ScrollView>
+      <View style={styles.divider} />
     </View>
   );
 };

@@ -7,7 +7,7 @@ export function Divider() {
   const styles = StyleSheet.create({
     divider: {
       height: 1,
-      backgroundColor: colors.card,
+      backgroundColor: colors.border,
       marginVertical: 16,
     },
   });

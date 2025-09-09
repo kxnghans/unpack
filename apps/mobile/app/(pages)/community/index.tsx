@@ -9,9 +9,10 @@ import {
   Platform,
   UIManager,
 } from 'react-native';
-import { useTheme, SegmentedControl, FilterDialog } from '@ui';
+import { useTheme, SegmentedControl, FilterDialog, HeartIcon } from '@ui';
 import { FontAwesome } from '@expo/vector-icons';
 import FilterDrawer from '../../../components/FilterDrawer';
+import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 
 if (
   Platform.OS === 'android' &&
@@ -24,7 +25,7 @@ if (
 const continents = ['Africa', 'Asia', 'Europe', 'North America', 'South America', 'Australia'];
 const tripTypes = ['Road Trip', 'Leisure / Vacation', 'Backpacking', 'Study Abroad', 'Business', 'Cruise', 'Adventure Travel'];
 const durations = ['1-3 Days', '4-7 Days', '1-2 Weeks', '2+ Weeks'];
-const budgets = ['Budget ($)', 'Mid-range ($)', 'Luxury ($$)'];
+const budgets = ['Budget ($)', 'Mid-range ($)', 'Luxury ($)'];
 const travelStyles = ['Foodie', 'Hiking', 'Museums', 'Nightlife', 'Relaxing', 'Adventure'];
 const groupTypes = ['Solo', 'Couple', 'Family', 'Friends'];
 
@@ -38,6 +39,27 @@ const CommunityScreen = () => {
   const [activeFilterId, setActiveFilterId] = useState(null);
   const [activeTab, setActiveTab] = useState('Trending');
   const { colors, typography } = useTheme();
+
+  const [guides, setGuides] = useState([
+    {
+      id: '1',
+      title: 'A Weekend in the Alps',
+      body: 'Discover the breathtaking beauty of the Swiss Alps in just 3 days.',
+      author: 'AdventurerKate',
+      image: 'https://picsum.photos/seed/picsum/400/300',
+      authorImage: 'https://randomuser.me/api/portraits/thumb/women/47.jpg',
+      liked: false,
+    },
+    {
+      id: '2',
+      title: 'Tokyo on a Budget',
+      body: 'Explore the vibrant streets of Tokyo without breaking the bank.',
+      author: 'JapanExplorer',
+      image: 'https://picsum.photos/seed/picsum2/400/300',
+      authorImage: 'https://randomuser.me/api/portraits/thumb/men/32.jpg',
+      liked: false,
+    },
+  ]);
 
   // --- State for each filter ---
   const [selectedContinents, setSelectedContinents] = useState([]);
@@ -90,23 +112,23 @@ const CommunityScreen = () => {
       paddingHorizontal: 24,
     },
     card: {
-      marginBottom: 20,
+      marginVertical: 15,
       borderRadius: 12,
       backgroundColor: colors.card,
-      elevation: 2,
-      shadowColor: colors.shadow,
-      shadowOffset: { width: 0, height: 1 },
-      shadowOpacity: 0.05,
-      shadowRadius: 4,
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+      elevation: 5,
     },
     cardImage: {
       width: '100%',
-      height: 150,
+      aspectRatio: 10 / 4,
       borderTopLeftRadius: 12,
       borderTopRightRadius: 12,
     },
     cardInfo: {
-      padding: 15,
+      padding: 12,
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
@@ -134,6 +156,11 @@ const CommunityScreen = () => {
       borderWidth: 2,
       borderColor: colors.background,
     },
+    heartIcon: {
+      position: 'absolute',
+      top: -10,
+      right: -10,
+    },
   });
 
   const filters = [
@@ -145,24 +172,13 @@ const CommunityScreen = () => {
     { id: 'groupType', title: 'Group Type', icon: 'users' },
   ];
 
-  const guides = [
-    {
-      id: '1',
-      title: 'A Weekend in the Alps',
-      body: 'Discover the breathtaking beauty of the Swiss Alps in just 3 days.',
-      author: 'AdventurerKate',
-      image: 'https://picsum.photos/seed/picsum/400/300',
-      authorImage: 'https://randomuser.me/api/portraits/thumb/women/47.jpg',
-    },
-    {
-      id: '2',
-      title: 'Tokyo on a Budget',
-      body: 'Explore the vibrant streets of Tokyo without breaking the bank.',
-      author: 'JapanExplorer',
-      image: 'https://picsum.photos/seed/picsum2/400/300',
-      authorImage: 'https://randomuser.me/api/portraits/thumb/men/32.jpg',
-    },
-  ];
+  const handleLike = (guideId) => {
+    setGuides((prevGuides) =>
+      prevGuides.map((guide) =>
+        guide.id === guideId ? { ...guide, liked: !guide.liked } : guide
+      )
+    );
+  };
 
   const handleFilterPress = (filterId) => {
     setActiveFilterId(filterId);
@@ -243,21 +259,37 @@ const CommunityScreen = () => {
           />
         )}
         <ScrollView style={styles.contentFeed}>
-          {guides.map((guide) => (
-            <View key={guide.id} style={styles.card}>
-              <Image source={{ uri: guide.image }} style={styles.cardImage} />
-              <View style={styles.cardInfo}>
-                <View style={styles.cardTextContainer}>
-                  <Text style={styles.cardTitle} numberOfLines={1}>{guide.title}</Text>
-                  <Text style={styles.cardBody} numberOfLines={1}>{guide.body}</Text>
+          {guides.map((guide) => {
+            const doubleTap = Gesture.Tap()
+              .numberOfTaps(2)
+              .onStart(() => {
+                handleLike(guide.id);
+              });
+
+            return (
+              <GestureDetector gesture={doubleTap}>
+                <View key={guide.id} style={styles.card}>
+                  <Image source={{ uri: guide.image }} style={styles.cardImage} />
+                  <View style={styles.cardInfo}>
+                    <View style={styles.cardTextContainer}>
+                      <Text style={styles.cardTitle} numberOfLines={1}>{guide.title}</Text>
+                      <Text style={styles.cardBody} numberOfLines={1}>{guide.body}</Text>
+                    </View>
+                    <View style={styles.authorContainer}>
+                      <Text style={styles.cardAuthorName}>{guide.author}</Text>
+                      <Image source={{ uri: guide.authorImage }} style={styles.authorImage} />
+                    </View>
+                  </View>
+                  <View style={styles.heartIcon}>
+                    <HeartIcon
+                      isLiked={guide.liked}
+                      onPress={() => handleLike(guide.id)}
+                    />
+                  </View>
                 </View>
-                <View style={styles.authorContainer}>
-                  <Text style={styles.cardAuthorName}>{guide.author}</Text>
-                  <Image source={{ uri: guide.authorImage }} style={styles.authorImage} />
-                </View>
-              </View>
-            </View>
-          ))}
+              </GestureDetector>
+            );
+          })}
         </ScrollView>
       </View>
 

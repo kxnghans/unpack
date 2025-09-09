@@ -5,6 +5,7 @@
   "private": true,
   "dependencies": {
     "expo-linear-gradient": "^14.1.5",
-    "react-native-svg": "^15.12.1"
+    "react-native-svg": "^15.12.1",
+    "react-native-reanimated": "3.17.4"
   }
 }

@@ -16,13 +16,16 @@ export function HubCard({ icon, title, items, onPress }: HubCardProps) {
   const { colors, typography } = useTheme();
 
   const styles = StyleSheet.create({
+    cardWrapper: {
+      marginVertical: 16,
+      borderRadius: 20,
+    },
     card: {
       width: 280,
       height: 160,
       borderRadius: 20,
       padding: 16,
-      marginHorizontal: 8,
-      overflow: 'hidden',
+      marginHorizontal: 16,
     },
     gradient: {
       ...StyleSheet.absoluteFillObject,
@@ -64,9 +67,29 @@ export function HubCard({ icon, title, items, onPress }: HubCardProps) {
       bottom: 16,
       right: 16,
     },
+    lightShadow: {
+      shadowColor: colors.shadow,
+      shadowOffset: {
+        width: 4,
+        height: 4,
+      },
+      shadowOpacity: 1,
+      shadowRadius: 8,
+      borderRadius: 20,
+    },
+    darkShadow: {
+      shadowColor: colors.highlight,
+      shadowOffset: {
+        width: -4,
+        height: -4,
+      },
+      shadowOpacity: 1,
+      shadowRadius: 8,
+      borderRadius: 20,
+    },
   });
 
-  return (
+  const cardContent = (
     <Pressable onPress={onPress}>
       <View style={styles.card}>
         <LinearGradient
@@ -98,5 +121,11 @@ export function HubCard({ icon, title, items, onPress }: HubCardProps) {
         </View>
       </View>
     </Pressable>
+  );
+
+  return (
+    <View style={[styles.darkShadow, styles.cardWrapper]}>
+      <View style={styles.lightShadow}>{cardContent}</View>
+    </View>
   );
 }

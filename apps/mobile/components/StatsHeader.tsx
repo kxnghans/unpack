@@ -50,10 +50,18 @@ export const StatsHeader = ({ user, activeTab, onTabPress, isThemeExpanded, onTo
       width: 40,
       height: 40,
       borderRadius: 20,
-      backgroundColor: colors.surface,
+      backgroundColor: colors.background,
       justifyContent: 'center',
       alignItems: 'center',
       marginRight: spacing.small,
+      shadowColor: '#000',
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+      elevation: 5,
     },
     expansionButton: {
       padding: spacing.small,
@@ -85,6 +93,7 @@ export const StatsHeader = ({ user, activeTab, onTabPress, isThemeExpanded, onTo
       paddingVertical: 4,
       paddingHorizontal: 10,
       borderRadius: 6,
+      marginBottom: spacing.small,
     },
     planTagText: {
       fontSize: 12,
@@ -93,16 +102,16 @@ export const StatsHeader = ({ user, activeTab, onTabPress, isThemeExpanded, onTo
       marginLeft: 4,
     },
     freePlan: {
-      backgroundColor: colors.surface,
+      backgroundColor: theme === 'light' ? '#E5E7EB' : '#374151',
     },
     freePlanText: {
-      color: colors.textSecondary,
+      color: theme === 'light' ? '#4B5563' : '#D1D5DB',
     },
     premiumPlan: {
-      backgroundColor: colors.premiumBackground,
+      backgroundColor: '#FBBF24',
     },
     premiumPlanText: {
-      color: colors.textOnPremium,
+      color: theme === 'light' ? '#FFFFFF' : '#111827',
     },
     editProfileButton: {
       paddingVertical: 8,
@@ -110,6 +119,9 @@ export const StatsHeader = ({ user, activeTab, onTabPress, isThemeExpanded, onTo
       borderRadius: 8,
       borderWidth: 1,
       borderColor: colors.primary,
+      flex: 1,
+      marginLeft: 16,
+      alignItems: 'center',
     },
     editProfileButtonText: {
       color: colors.primary,
@@ -121,8 +133,8 @@ export const StatsHeader = ({ user, activeTab, onTabPress, isThemeExpanded, onTo
     const isPremium = plan.toLowerCase() === 'premium';
     const tagStyle = isPremium ? styles.premiumPlan : styles.freePlan;
     const textStyle = isPremium ? styles.premiumPlanText : styles.freePlanText;
-    const iconName = isPremium ? 'award' : 'user'; // Changed crown to award
-    const iconColor = isPremium ? styles.premiumPlanText.color : styles.freePlanText.color;
+    const iconName = isPremium ? 'star' : 'shield';
+    const iconColor = isPremium ? textStyle.color : textStyle.color;
 
     return (
       <View style={[styles.planTag, tagStyle]}>
