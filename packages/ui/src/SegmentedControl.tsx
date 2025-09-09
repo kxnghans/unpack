@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -38,12 +38,21 @@ const AnimatedTab = ({ title, iconName, isActive, onPress }) => {
 };
 
 export const SegmentedControl = ({ tabs, activeTabKey, onTabPress }) => {
+  const [internalActiveKey, setInternalActiveKey] = useState(activeTabKey);
+
+  useEffect(() => {
+    // This effect syncs the internal state with the parent's prop
+    // in case the parent wants to control the component from the outside.
+    setInternalActiveKey(activeTabKey);
+  }, [activeTabKey]);
+
   const handlePress = (tabKey: string) => {
+    // Configure the animation before any state changes.
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-    // Use a timeout to ensure the animation is configured before the state update
-    setTimeout(() => {
-      onTabPress(tabKey);
-    }, 0);
+    // Update the internal state immediately for instant visual feedback.
+    setInternalActiveKey(tabKey);
+    // Notify the parent component of the change.
+    onTabPress(tabKey);
   };
 
   return (
@@ -53,7 +62,7 @@ export const SegmentedControl = ({ tabs, activeTabKey, onTabPress }) => {
           key={tab.key}
           title={tab.title}
           iconName={tab.iconName}
-          isActive={activeTabKey === tab.key}
+          isActive={internalActiveKey === tab.key} // Use internal state for styling
           onPress={() => handlePress(tab.key)}
         />
       ))}

@@ -17,7 +17,8 @@
       "bundleIdentifier": "com.anonymous.unpack-mobile",
       "infoPlist": {
         "NSLocationWhenInUseUsageDescription": "This app uses your location to show your position on the map."
-      }
+      },
+      "newArchEnabled": true
     },
     "android": {
       "adaptiveIcon": {
@@ -33,7 +34,8 @@
       "permissions": [
         "ACCESS_COARSE_LOCATION",
         "ACCESS_FINE_LOCATION"
-      ]
+      ],
+      "newArchEnabled": true
     },
     "web": {
       "bundler": "metro",
