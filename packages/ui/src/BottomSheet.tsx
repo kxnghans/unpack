@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useMemo, useEffect, useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -11,44 +11,61 @@ import { useTheme } from './ThemeProvider';
 import { Feather } from '@expo/vector-icons';
 
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
-const COLLAPSED_HEIGHT = 60; // Enough space for the handle and chevron
 
-export function BottomSheet({ children }) {
+export function BottomSheet({
+  children,
+  snapPoints: providedSnapPoints,
+  snapToIndex = 0,
+  onSnap,
+}) {
   const { colors } = useTheme();
-  const animatedHeight = useRef(new Animated.Value(COLLAPSED_HEIGHT)).current;
-  const lastHeight = useRef(COLLAPSED_HEIGHT);
-  const [isCollapsed, setIsCollapsed] = useState(true);
+  const [isCollapsed, setIsCollapsed] = useState(snapToIndex === 0);
 
+  const snapPoints = useMemo(
+    () => providedSnapPoints || [60, SCREEN_HEIGHT * 0.4, SCREEN_HEIGHT * 0.8],
+    [providedSnapPoints]
+  );
+
+  const animatedHeight = useRef(new Animated.Value(snapPoints[snapToIndex]))
+    .current;
+  const lastHeight = useRef(snapPoints[snapToIndex]);
+  const currentIndex = useRef(snapToIndex);
   const bounceValue = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    // Bouncing animation for the chevron
-    if (isCollapsed) {
-      const bounce = Animated.sequence([
-        Animated.timing(bounceValue, {
-          toValue: -10,
-          duration: 400,
-          easing: Easing.inOut(Easing.quad),
-          useNativeDriver: true,
-        }),
-        Animated.timing(bounceValue, {
-          toValue: 0,
-          duration: 400,
-          easing: Easing.inOut(Easing.quad),
-          useNativeDriver: true,
-        }),
-      ]);
-      Animated.loop(bounce).start();
-    } else {
-      bounceValue.stopAnimation();
-      bounceValue.setValue(0);
-    }
-  }, [isCollapsed, bounceValue]);
-
-  animatedHeight.addListener(({ value }) => {
-    lastHeight.current = value;
-    setIsCollapsed(value === COLLAPSED_HEIGHT);
-  });
+    lastHeight.current = snapPoints[snapToIndex];
+    currentIndex.current = snapToIndex;
+    Animated.spring(animatedHeight, {
+      toValue: snapPoints[snapToIndex],
+      friction: 9,
+      tension: 80,
+      useNativeDriver: false,
+    }).start(() => {
+      lastHeight.current = snapPoints[snapToIndex];
+      const isCurrentlyCollapsed = snapToIndex === 0;
+      setIsCollapsed(isCurrentlyCollapsed);
+      if (isCurrentlyCollapsed) {
+        const bounce = Animated.sequence([
+          Animated.timing(bounceValue, {
+            toValue: -10,
+            duration: 400,
+            easing: Easing.inOut(Easing.quad),
+            useNativeDriver: true,
+          }),
+          Animated.timing(bounceValue, {
+            toValue: 0,
+            duration: 400,
+            easing: Easing.inOut(Easing.quad),
+            useNativeDriver: true,
+          }),
+        ]);
+        Animated.loop(bounce).start();
+      } else {
+        bounceValue.stopAnimation();
+        bounceValue.setValue(0);
+      }
+    });
+  }, [snapToIndex, snapPoints, animatedHeight, bounceValue]);
 
   const panResponder = useRef(
     PanResponder.create({
@@ -63,30 +80,59 @@ export function BottomSheet({ children }) {
       onPanResponderRelease: (e, gestureState) => {
         animatedHeight.flattenOffset();
         const finalHeight = lastHeight.current - gestureState.dy;
+        
+        const nextSnapPointIndex = snapPoints.reduce((closestIndex, point, i) => {
+          const distance = Math.abs(finalHeight - point);
+          const closestDistance = Math.abs(
+            finalHeight - snapPoints[closestIndex]
+          );
+          return distance < closestDistance ? i : closestIndex;
+        }, 0);
 
-        // If dragged down below a threshold, snap back to collapsed state
-        if (finalHeight < COLLAPSED_HEIGHT * 2) {
-          Animated.spring(animatedHeight, {
-            toValue: COLLAPSED_HEIGHT,
-            useNativeDriver: false,
-          }).start();
-        } else { 
-          // Otherwise, stay where it is
-          // To prevent it from exceeding screen height
-          const clampedHeight = Math.min(finalHeight, SCREEN_HEIGHT - 100);
-          Animated.spring(animatedHeight, {
-            toValue: clampedHeight,
-            useNativeDriver: false,
-          }).start();
+        currentIndex.current = nextSnapPointIndex;
+        if (onSnap) {
+          onSnap(nextSnapPointIndex);
         }
+
+        lastHeight.current = snapPoints[nextSnapPointIndex];
+
+        Animated.spring(animatedHeight, {
+          toValue: snapPoints[nextSnapPointIndex],
+          friction: 9,
+          tension: 80,
+          useNativeDriver: false,
+        }).start(() => {
+          const isCurrentlyCollapsed = nextSnapPointIndex === 0;
+          setIsCollapsed(isCurrentlyCollapsed);
+          if (isCurrentlyCollapsed) {
+            const bounce = Animated.sequence([
+              Animated.timing(bounceValue, {
+                toValue: -10,
+                duration: 400,
+                easing: Easing.inOut(Easing.quad),
+                useNativeDriver: true,
+              }),
+              Animated.timing(bounceValue, {
+                toValue: 0,
+                duration: 400,
+                easing: Easing.inOut(Easing.quad),
+                useNativeDriver: true,
+              }),
+            ]);
+            Animated.loop(bounce).start();
+          } else {
+            bounceValue.stopAnimation();
+            bounceValue.setValue(0);
+          }
+        });
       },
     })
   ).current;
 
   const panelStyle = {
     height: animatedHeight.interpolate({
-      inputRange: [0, SCREEN_HEIGHT],
-      outputRange: [0, SCREEN_HEIGHT],
+      inputRange: [snapPoints[0], snapPoints[snapPoints.length - 1]],
+      outputRange: [snapPoints[0], snapPoints[snapPoints.length - 1]],
       extrapolate: 'clamp',
     }),
   };
@@ -107,7 +153,7 @@ export function BottomSheet({ children }) {
       elevation: 5,
     },
     handleContainer: {
-      height: COLLAPSED_HEIGHT,
+      height: 60,
       alignItems: 'center',
       justifyContent: 'center',
     },
@@ -120,19 +166,27 @@ export function BottomSheet({ children }) {
       top: 12,
     },
     chevronContainer: {
-        position: 'absolute',
-        top: 25,
-    }
+      position: 'absolute',
+      top: 25,
+    },
   });
 
   return (
-    <Animated.View style={[styles.container, panelStyle]} {...panResponder.panHandlers}>
+    <Animated.View
+      style={[styles.container, panelStyle]}
+      {...panResponder.panHandlers}
+    >
       <View style={styles.handleContainer}>
         <View style={styles.handle} />
         {isCollapsed && (
-            <Animated.View style={[styles.chevronContainer, { transform: [{ translateY: bounceValue }] }]}>
-                <Feather name="chevron-up" size={24} color={colors.text} />
-            </Animated.View>
+          <Animated.View
+            style={[
+              styles.chevronContainer,
+              { transform: [{ translateY: bounceValue }] },
+            ]}
+          >
+            <Feather name="chevron-up" size={24} color={colors.text} />
+          </Animated.View>
         )}
       </View>
       {children}

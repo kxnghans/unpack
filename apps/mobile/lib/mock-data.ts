@@ -250,4 +250,5 @@ export const MOCK_CREATOR_STATS = [
 export const MOCK_USER = {
   name: 'Kobby',
   image: 'https://i.pravatar.cc/150?u=kobby',
+  plan: 'Free',
 };
