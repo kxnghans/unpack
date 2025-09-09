@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { useTheme } from './ThemeProvider';
 import Animated, {
@@ -27,44 +27,56 @@ export const HeartIcon = ({ isLiked, onPress }) => {
 
   const styles = StyleSheet.create({
     container: {
-      width: 32,
-      height: 32,
-      borderRadius: 16,
+      width: 36,
+      height: 36,
+      borderRadius: 18,
       backgroundColor: colors.background,
       justifyContent: 'center',
       alignItems: 'center',
     },
-    outset: {
-      shadowColor: '#000',
-      shadowOffset: {
-        width: 2,
-        height: 2,
+    lightShadow: {
+        shadowColor: colors.shadow,
+        shadowOffset: {
+          width: 2,
+          height: 2,
+        },
+        shadowOpacity: 1,
+        shadowRadius: 2,
+        borderRadius: 16,
       },
-      shadowOpacity: 0.5,
-      shadowRadius: 2,
-      elevation: 5,
-    },
-    inset: {
-      shadowColor: '#000',
-      shadowOffset: {
-        width: -2,
-        height: -2,
+      darkShadow: {
+        shadowColor: colors.highlight,
+        shadowOffset: {
+          width: -2,
+          height: -2,
+        },
+        shadowOpacity: 1,
+        shadowRadius: 2,
+        borderRadius: 16,
       },
-      shadowOpacity: 0.5,
-      shadowRadius: 2,
-      elevation: 5,
+    heart: {
+      textShadowColor: colors.highlight,
+      textShadowOffset: { width: -1, height: -1 },
+      textShadowRadius: 1,
     },
   });
 
   return (
     <TouchableOpacity onPress={handlePress}>
-      <Animated.View style={[styles.container, isLiked ? styles.outset : styles.inset, animatedStyle]}>
-        <FontAwesome
-          name={isLiked ? 'heart' : 'heart-o'}
-          size={16}
-          color={isLiked ? 'red' : 'white'}
-        />
-      </Animated.View>
+        <Animated.View style={animatedStyle}>
+            <View style={styles.darkShadow}>
+                <View style={styles.lightShadow}>
+                    <View style={styles.container}>
+                        <FontAwesome
+                        name={isLiked ? 'heart' : 'heart-o'}
+                        size={16}
+                        color={isLiked ? 'red' : colors.text}
+                        style={isLiked && styles.heart}
+                        />
+                    </View>
+                </View>
+            </View>
+        </Animated.View>
     </TouchableOpacity>
   );
 };

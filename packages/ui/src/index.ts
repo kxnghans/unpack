@@ -21,4 +21,5 @@ export * from './TripCard';
 export * from './UpcomingCard';
 export * from './Wave';
 export * from './HeartIcon';
+export * from './VerticalDivider';
 
