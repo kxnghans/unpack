@@ -3,7 +3,7 @@
  */
 export * from './Button';
 export * from './BottomSheet';
-export * from './card';
+export * from './Card';
 export * from './Divider';
 export * from './FilterDialog';
 export * from './HubCard';
