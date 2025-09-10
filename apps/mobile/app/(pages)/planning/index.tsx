@@ -4,6 +4,7 @@ import {
   StyleSheet,
   FlatList,
   ScrollView,
+  Linking,
 } from 'react-native';
 import {
   HubCard,
@@ -62,6 +63,7 @@ export default function PlanningScreen() {
       icon={<FontAwesome5 name={iconMap[item.type]} size={24} color={colors.textOnOverlay} />}
       title={item.title}
       body={item.body}
+      onPress={() => item.url && Linking.openURL(item.url)}
     />
   );
 

@@ -76,6 +76,7 @@ export const UPCOMING_ITEMS = [
     title: 'Accra Night Drive',
     body: 'Highlife and Afrobeats for the journey',
     imageUrl: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    url: 'https://music.apple.com/us/playlist/top-100-ghana/pl.78f1974e882d4952b26ebfb8e017c933',
   },
   {
     id: '6',
@@ -94,6 +95,7 @@ export const WALLET_CARDS = [
     description: '3 used, 5 in progress, 3 unused',
     currentRedemption: 1800,
     targetRedemption: 700,
+    image: 'https://www.americanexpress.com/content/dam/amex/us/credit-cards/card-art/platinum-card-480x304.png',
   },
   {
     id: '2',
@@ -102,6 +104,7 @@ export const WALLET_CARDS = [
     description: '2 used, 4 in progress, 4 unused',
     currentRedemption: 300,
     targetRedemption: 550,
+    image: 'https://www.discover.com/credit-cards/student-credit-card/it-card/images/new/card-art-large.png',
   },
   {
     id: '3',
@@ -110,6 +113,7 @@ export const WALLET_CARDS = [
     description: '1 used, 3 in progress, 6 unused',
     currentRedemption: 400,
     targetRedemption: 395,
+    image: 'https://www.discover.com/credit-cards/student-credit-card/it-card/images/new/card-art-large.png',
   },
   {
     id: '4',
@@ -118,6 +122,7 @@ export const WALLET_CARDS = [
     description: '4 used, 2 in progress, 4 unused',
     currentRedemption: 250,
     targetRedemption: 250,
+    image: 'https://www.discover.com/credit-cards/student-credit-card/it-card/images/new/card-art-large.png',
   },
   {
     id: '5',
@@ -126,6 +131,7 @@ export const WALLET_CARDS = [
     description: '2 used, 2 in progress, 6 unused',
     currentRedemption: 10,
     targetRedemption: 95,
+    image: 'https://www.discover.com/credit-cards/student-credit-card/it-card/images/new/card-art-large.png',
   },
   {
     id: '6',
@@ -134,6 +140,7 @@ export const WALLET_CARDS = [
     description: '3 used, 1 in progress, 6 unused',
     currentRedemption: 70,
     targetRedemption: 95,
+    image: 'https://www.discover.com/credit-cards/student-credit-card/it-card/images/new/card-art-large.png',
   },
   {
     id: '7',
@@ -142,6 +149,7 @@ export const WALLET_CARDS = [
     description: '1 used, 2 in progress, 7 unused',
     currentRedemption: 95,
     targetRedemption: 95,
+    image: 'https://www.discover.com/credit-cards/student-credit-card/it-card/images/new/card-art-large.png',
   },
   {
     id: '8',
@@ -150,6 +158,7 @@ export const WALLET_CARDS = [
     description: '2 used, 3 in progress, 5 unused',
     currentRedemption: 100,
     targetRedemption: 95,
+    image: 'https://www.discover.com/credit-cards/student-credit-card/it-card/images/new/card-art-large.png',
   },
   {
     id: '9',
@@ -158,6 +167,7 @@ export const WALLET_CARDS = [
     description: '1 used, 1 in progress, 8 unused',
     currentRedemption: 500,
     targetRedemption: 400,
+    image: 'https://www.discover.com/credit-cards/student-credit-card/it-card/images/new/card-art-large.png',
   },
   {
     id: '10',
@@ -166,6 +176,7 @@ export const WALLET_CARDS = [
     description: '0 used, 2 in progress, 8 unused',
     currentRedemption: 0,
     targetRedemption: 0,
+    image: 'https://www.discover.com/credit-cards/student-credit-card/it-card/images/new/card-art-large.png',
   },
 ];
 
