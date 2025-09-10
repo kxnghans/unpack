@@ -30,7 +30,7 @@ const NeumorphicWrapper = ({ children }) => {
         height: -4,
       },
       shadowOpacity: 1,
-      shadowRadius: 8,
+      shadowRadius: 6,
     },
   });
 
@@ -52,7 +52,7 @@ export function UpcomingCard({ imageUrl, icon, title, body, onPress }: UpcomingC
     },
     imageContainer: {
       height: 140,
-      borderRadius: 16,
+      borderRadius: 20,
       overflow: 'hidden',
     },
     image: {

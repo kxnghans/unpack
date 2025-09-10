@@ -22,7 +22,7 @@ const NeumorphicWrapper = ({ children, style }) => {
         height: 4,
       },
       shadowOpacity: 1,
-      shadowRadius: 8,
+      shadowRadius: 6,
     },
     darkShadow: {
       shadowColor: colors.highlight,
@@ -114,7 +114,7 @@ export function HubCard({ icon, title, items, onPress }: HubCardProps) {
         height: 4,
       },
       shadowOpacity: 1,
-      shadowRadius: 8,
+      shadowRadius: 6,
       borderRadius: 20,
     },
     darkShadow: {
@@ -124,7 +124,7 @@ export function HubCard({ icon, title, items, onPress }: HubCardProps) {
         height: -4,
       },
       shadowOpacity: 1,
-      shadowRadius: 8,
+      shadowRadius: 5,
       borderRadius: 20,
     },
   });
