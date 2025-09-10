@@ -58,7 +58,7 @@ export default function PlanningScreen() {
 
   const renderUpcomingItem = ({ item }) => (
     <UpcomingCard
-      color={item.color}
+      imageUrl={item.imageUrl}
       icon={<FontAwesome5 name={iconMap[item.type]} size={24} color={colors.textOnOverlay} />}
       title={item.title}
       body={item.body}
@@ -66,9 +66,7 @@ export default function PlanningScreen() {
   );
 
   const ListHeader = () => (
-    <View style={styles.headerContainer}>
-      <Text style={styles.mainTitle}>Planning</Text>
-      <Divider />
+    <View>
       <Text style={styles.sectionTitle}>Hubs</Text>
       <View style={styles.hubsContainer}>
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
@@ -92,6 +90,10 @@ export default function PlanningScreen() {
 
   return (
     <View style={styles.container}>
+      <View style={styles.headerContainer}>
+        <Text style={styles.mainTitle}>Planning</Text>
+        <Divider />
+      </View>
       <FlatList
         data={UPCOMING_ITEMS}
         renderItem={renderUpcomingItem}

@@ -43,8 +43,8 @@ export function QuickAccessCard({ title, subtitle, icon, gradient, onPress }: Qu
     <Pressable onPress={onPress}>
       <LinearGradient colors={gradients[gradient]} style={styles.card}>
         <View style={styles.iconContainer}>{icon}</View>
-        <Text style={styles.title}>{title}</Text>
-        <Text style={styles.subtitle}>{subtitle}</Text>
+        <Text style={styles.title} numberOfLines={1}>{title}</Text>
+        <Text style={styles.subtitle} numberOfLines={1}>{subtitle}</Text>
       </LinearGradient>
     </Pressable>
   );

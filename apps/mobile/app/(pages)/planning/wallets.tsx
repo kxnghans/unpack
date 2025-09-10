@@ -48,8 +48,12 @@ export default function WalletsScreen() {
         renderItem={({ item }) => (
           <HubRow
             icon={<FontAwesome5 name="credit-card" size={24} color={colors.text} />}
-            title={<Text style={styles.cardTitle}>{item.name} <Text style={styles.fee}>${item.annualFee}</Text></Text>}
+            title={<Text style={styles.cardTitle}>{item.name} <Text style={styles.fee}>{item.subtitle}</Text></Text>}
             rewards={rewards}
+            progress={{
+              currentValue: item.currentRedemption,
+              targetValue: item.targetRedemption,
+            }}
             onPress={() => item.name === 'Amex Platinum' && router.push(`/planning/wallet/${item.id}`)}
           />
         )}

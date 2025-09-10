@@ -4,6 +4,7 @@ import React from 'react';
 import { useTheme } from './ThemeProvider';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { theme } from './tokens';
+import { ProgressBar } from './ProgressBar';
 
 export interface HubRowProps {
   icon: React.ReactNode;
@@ -13,10 +14,14 @@ export interface HubRowProps {
     icon: string;
     color: keyof typeof theme.light.colors;
   }[];
+  progress?: {
+    currentValue: number;
+    targetValue: number;
+  };
   onPress?: () => void;
 }
 
-export function HubRow({ icon, title, rewards, onPress }: HubRowProps) {
+export function HubRow({ icon, title, rewards, progress, onPress }: HubRowProps) {
   const { colors, typography } = useTheme();
 
   const styles = StyleSheet.create({
@@ -57,6 +62,12 @@ export function HubRow({ icon, title, rewards, onPress }: HubRowProps) {
       <View style={styles.iconContainer}>{icon}</View>
       <View style={styles.textContainer}>
         <View style={styles.titleContainer}>{title}</View>
+        {progress && (
+          <ProgressBar
+            currentValue={progress.currentValue}
+            targetValue={progress.targetValue}
+          />
+        )}
         {rewards && (
           <View style={styles.rewardsContainer}>
             {rewards.map((reward, index) => (

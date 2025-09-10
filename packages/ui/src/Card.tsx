@@ -71,8 +71,8 @@ export function Card({ title, subtitle, onPress }: CardProps) {
       <View style={styles.lightShadow}>
         <Pressable onPress={onPress} style={styles.card}>
           <View style={styles.cardInner}>
-            <Text style={styles.title}>{title}</Text>
-            {subtitle && <Text style={styles.subtitle}>{subtitle}</Text>}
+            <Text style={styles.title} numberOfLines={1}>{title}</Text>
+            {subtitle && <Text style={styles.subtitle} numberOfLines={1}>{subtitle}</Text>}
           </View>
         </Pressable>
       </View>
