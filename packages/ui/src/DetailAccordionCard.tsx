@@ -13,6 +13,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { useTheme } from './ThemeProvider';
 import { Divider } from './Divider';
 import { Swipeable } from 'react-native-gesture-handler';
+import { VerticalDivider } from './VerticalDivider';
 
 if (Platform.OS === 'android') {
   if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -29,8 +30,8 @@ const NeumorphicWrapper = ({ children, style }) => {
         width: 4,
         height: 4,
       },
-      shadowOpacity: 1,
-      shadowRadius: 8,
+      shadowOpacity:1,
+      shadowRadius: 4,
     },
     darkShadow: {
       shadowColor: colors.highlight,
@@ -39,7 +40,7 @@ const NeumorphicWrapper = ({ children, style }) => {
         height: -4,
       },
       shadowOpacity: 1,
-      shadowRadius: 8,
+      shadowRadius: 4,
     },
   });
 
@@ -86,20 +87,24 @@ export function DetailAccordionCard({
     swipeableRef.current?.close();
   };
 
+  const SimpleVerticalDivider = () => {
+    return <View style={{ width: 1, height: '100%', backgroundColor: colors.border }} />;
+  };
+
   const renderLeftActions = (progress, dragX) => {
     return (
-      <NeumorphicWrapper style={{ borderRadius: 8, marginHorizontal: 24 }}>
+      <NeumorphicWrapper style={{ borderRadius: 8, marginHorizontal: 24, marginVertical: 10 }}>
         <View style={[styles.leftActionContainer, { height: cardHeight, flexDirection: expanded ? 'column' : 'row' }]}>
           <TouchableOpacity onPress={() => handleStatusChange('used')} style={styles.actionButton}>
-            <FontAwesome5 name="check-circle" size={24} color={colors.success} />
+            <FontAwesome5 name="check-circle" size={20} color={colors.success} />
           </TouchableOpacity>
-          <Divider />
+          {expanded ? <Divider /> : <SimpleVerticalDivider />}
           <TouchableOpacity onPress={() => handleStatusChange('inProgress')} style={styles.actionButton}>
-            <FontAwesome5 name="spinner" size={24} color={colors.warning} />
+            <FontAwesome5 name="spinner" size={20} color={colors.warning} />
           </TouchableOpacity>
-          <Divider />
+          {expanded ? <Divider /> : <SimpleVerticalDivider />}
           <TouchableOpacity onPress={() => handleStatusChange('unused')} style={styles.actionButton}>
-            <FontAwesome5 name="times-circle" size={24} color={colors.danger} />
+            <FontAwesome5 name="times-circle" size={20} color={colors.danger} />
           </TouchableOpacity>
         </View>
       </NeumorphicWrapper>
@@ -109,9 +114,7 @@ export function DetailAccordionCard({
   const styles = StyleSheet.create({
     container: {
       borderRadius: 8,
-      marginBottom: 16,
       backgroundColor: colors.surface,
-      marginHorizontal: 24,
     },
     header: {
       flexDirection: 'row',
@@ -151,12 +154,12 @@ export function DetailAccordionCard({
     leftActionContainer: {
       backgroundColor: colors.surface,
       justifyContent: 'space-evenly',
-      borderRadius: 8,
+      borderRadius: 10,
     },
     actionButton: {
       alignItems: 'center',
       justifyContent: 'center',
-      padding: 20,
+      padding: 15,
     },
   });
 
@@ -190,7 +193,7 @@ export function DetailAccordionCard({
 
   return (
     <Swipeable ref={swipeableRef} renderLeftActions={renderLeftActions}>
-      <NeumorphicWrapper style={{ borderRadius: 8 }}>
+      <NeumorphicWrapper style={{ borderRadius: 8, marginHorizontal: 24, marginVertical: 10 }}>
         {cardContent}
       </NeumorphicWrapper>
     </Swipeable>
