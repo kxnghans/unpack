@@ -139,7 +139,7 @@ const CommunityScreen = () => {
       marginBottom: 4,
     },
     cardBody: {
-      ...typography.fonts.description,
+            ...typography.fonts.body,
       color: colors.textSecondary,
     },
     authorContainer: { flexDirection: 'row', alignItems: 'center' },

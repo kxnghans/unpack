@@ -9,6 +9,8 @@ export const theme = {
       text: '#333333',
       textSecondary: '#888888',
       primary: '#007bff',
+      secondary: '#6c757d',
+      tertiary: '#17a2b8',
       card: '#F8F9FF',
       shadow: 'rgba(0,0,0,0.2)',
       highlight: 'rgba(255,255,255,0.9)',
@@ -22,6 +24,10 @@ export const theme = {
       textOnPrimary: '#FFFFFF',
       premiumBackground: '#E4D5C3',
       textOnPremium: '#5C4033',
+      white: '#FFFFFF',
+      annual: '#D4E6F1',
+      monthly: '#D6DBDF',
+      asNeeded: '#D1F2EB',
     },
     gradients: {
       primary: ['#007bff', '#0056b3'],
@@ -74,6 +80,11 @@ export const theme = {
           fontSize: 14,
           fontWeight: '400',
         },
+        caption: {
+          fontFamily: 'Inter',
+          fontSize: 11,
+          fontWeight: '400',
+        },
         heading3: {
           fontFamily: 'NunitoSans',
           fontSize: 18,
@@ -97,6 +108,8 @@ export const theme = {
       text: '#E0E0E0',
       textSecondary: '#A0A0A0',
       primary: '#BB86FC',
+      secondary: '#03DAC6',
+      tertiary: '#03A9F4',
       card: '#2E2E2E',
       shadow: 'rgba(0,0,0,0.5)',
       highlight: 'rgba(255,255,255,0.08)',
@@ -110,6 +123,10 @@ export const theme = {
       textOnPrimary: '#FFFFFF',
       premiumBackground: '#B08D57',
       textOnPremium: '#FFFFFF',
+      white: '#FFFFFF',
+      annual: '#3E424B',
+      monthly: '#4B4B4B',
+      asNeeded: '#3E4B4B',
     },
     gradients: {
       primary: ['#BB86FC', '#3700B3'],
@@ -160,6 +177,11 @@ export const theme = {
         description: {
           fontFamily: 'Inter',
           fontSize: 14,
+          fontWeight: '400',
+        },
+        caption: {
+          fontFamily: 'Inter',
+          fontSize: 11,
           fontWeight: '400',
         },
         heading3: {
