@@ -94,21 +94,25 @@ export function ProgressBar({ currentValue, targetValue, variant = 'full' }: Pro
       left: `${(targetValue / maxProgress) * 100}%`,
       top: isSimplified ? 12 : 26,
       marginLeft: -targetLabelWidth / 2,
+      paddingVertical: 4,
     },
     targetValueLabel: {
       ...typography.fonts.caption,
       color: colors.textSecondary,
     },
-    percentageLabel: {
-      ...typography.fonts.caption,
-      color: colors.textSecondary,
-      marginLeft: 8,
+    infoContainer: {
+      marginTop: isSimplified ? 8 : 24,
     },
-    currentValueLabel: {
-        ...typography.fonts.caption,
-        color: colors.white,
-        paddingLeft: 8,
-    }
+    infoText: {
+      ...typography.fonts.subtitle,
+      color: colors.textSecondary,
+      textAlign: 'center',
+    },
+    emphasizedText: {
+      ...typography.fonts.subtitle,
+      color: colors.text,
+      fontWeight: 'bold',
+    },
   });
 
   return (
@@ -116,19 +120,25 @@ export function ProgressBar({ currentValue, targetValue, variant = 'full' }: Pro
       <View style={styles.progressBarContainer}>
         <NeumorphicWrapper style={{ borderRadius: 5, flex: 1 }}>
           <View style={styles.container}>
-            <View style={styles.bar}>
-             {!isSimplified && <Text style={styles.currentValueLabel}>${currentValue.toFixed(0)}</Text>}
-            </View>
+            <View style={styles.bar} />
             {progress >= 100 && <View style={styles.overTargetBar} />}
             {targetValue > 0 && <View style={styles.targetLine} />}
           </View>
           {!isSimplified && <View style={styles.targetValueLabelContainer}>
-            <Text onLayout={(e) => setTargetLabelWidth(e.nativeEvent.layout.width)} style={styles.targetValueLabel}>${targetValue.toFixed(0)}</Text>
+            <Text onLayout={(e) => setTargetLabelWidth(e.nativeEvent.layout.width)} style={styles.targetValueLabel}>Target: ${targetValue.toFixed(0)}</Text>
           </View>}
         </NeumorphicWrapper>
-        <Text style={styles.percentageLabel}>
-          {isSimplified ? `${progress.toFixed(0)}%` : `${progress.toFixed(0)}%`}
-        </Text>
+      </View>
+      <View style={styles.infoContainer}>
+        {isSimplified ? (
+          <Text style={styles.infoText}>
+            Redeemed <Text style={styles.emphasizedText}>{progress.toFixed(0)}%</Text> of target worth <Text style={styles.emphasizedText}>${currentValue.toFixed(0)}</Text>
+          </Text>
+        ) : (
+          <Text style={styles.infoText}>
+            Now redeemed <Text style={styles.emphasizedText}>{progress.toFixed(0)}%</Text> of target worth <Text style={styles.emphasizedText}>${currentValue.toFixed(0)}</Text> in value
+          </Text>
+        )}
       </View>
     </View>
   );

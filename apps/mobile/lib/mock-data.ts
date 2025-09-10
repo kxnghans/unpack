@@ -95,7 +95,7 @@ export const WALLET_CARDS = [
     description: '3 used, 5 in progress, 3 unused',
     currentRedemption: 1800,
     targetRedemption: 700,
-    image: 'https://www.americanexpress.com/content/dam/amex/us/credit-cards/card-art/platinum-card-480x304.png',
+    image: 'https://icm.aexp-static.com/acquisition/card-art/NUS000000237_480x304_straight_withname.png',
   },
   {
     id: '2',

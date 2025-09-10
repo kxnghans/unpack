@@ -177,29 +177,31 @@ export function DetailAccordionCard({
       alignItems: 'center',
       justifyContent: 'space-between',
       padding: 16,
+      gap: 10
     },
-    headerLeft: {
-      flexDirection: 'row',
+    iconContainer: {
+      width: 20,
       alignItems: 'center',
-      flex: 1,
-    },
-    statusIcon: {
-      marginRight: 12,
     },
     titleContainer: {
-      flex: 1,
-      marginRight: 8,
+      width: '55%',
     },
     title: {
       ...typography.fonts.subtitle,
       color: colors.text,
+      textAlign: 'left',
     },
-    estimatedValueContainer: {
+    valueContainer: {
+      width: 95,
       alignItems: 'center',
     },
     estimatedValue: {
       ...typography.fonts.subtitle,
       color: colors.textSecondary,
+    },
+    chevronContainer: {
+      width: 15,
+      alignItems: 'center',
     },
     body: {
       padding: 16,
@@ -260,19 +262,21 @@ export function DetailAccordionCard({
     <View onLayout={(event) => setCardHeight(event.nativeEvent.layout.height)} style={styles.container}>
       <TouchableOpacity onPress={onPress}>
         <View style={styles.header}>
-          <View style={styles.headerLeft}>
-            <FontAwesome5 name={statusIcon} size={20} color={statusColor} style={styles.statusIcon} />
-            <View style={styles.titleContainer}>
-              <Text style={styles.title} numberOfLines={2}>{title}</Text>
-            </View>
+          <View style={styles.iconContainer}>
+            <FontAwesome5 name={statusIcon} size={20} color={statusColor} />
+          </View>
+          <View style={styles.titleContainer}>
+            <Text style={styles.title} numberOfLines={2}>{title}</Text>
           </View>
           {estimatedValue && (
-            <View style={styles.estimatedValueContainer}>
+            <View style={styles.valueContainer}>
               <Text style={styles.estimatedValue}>{estimatedValue}</Text>
               {rewardType && <RewardTypeLabel rewardType={rewardType} />}
             </View>
           )}
-          <FontAwesome5 name={expanded ? 'chevron-up' : 'chevron-down'} size={16} color={colors.text} />
+          <View style={styles.chevronContainer}>
+            <FontAwesome5 name={expanded ? 'chevron-up' : 'chevron-down'} size={16} color={colors.text} />
+          </View>
         </View>
       </TouchableOpacity>
       {expanded && (

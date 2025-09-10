@@ -37,16 +37,17 @@ export const PillButton = ({ children, onPress }) => {
 
   const styles = StyleSheet.create({
     container: {
-      paddingVertical: 16,
-      paddingHorizontal: 32,
+      paddingVertical: 10,
+      paddingHorizontal: 20,
       borderRadius: 30,
       alignItems: 'center',
       justifyContent: 'center',
       alignSelf: 'flex-start',
+      backgroundColor: colors.primary,
     },
     text: {
-      ...typography.fonts.subtitle,
-      color: colors.text,
+      ...typography.fonts.title,
+      color: colors.white,
     },
   });
 

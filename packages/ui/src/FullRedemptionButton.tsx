@@ -37,16 +37,16 @@ export const FullRedemptionButton = ({ onPress }) => {
 
   const styles = StyleSheet.create({
     container: {
-      paddingVertical: 12,
-      paddingHorizontal: 16,
+      paddingVertical: 8,
+      paddingHorizontal: 12,
       borderRadius: 10,
       alignItems: 'center',
       justifyContent: 'center',
-      backgroundColor: colors.primary,
+      backgroundColor: colors.mediumGrey,
     },
     text: {
-      ...typography.fonts.body,
-      color: colors.white,
+      ...typography.fonts.caption,
+      color: colors.text,
     },
   });
 

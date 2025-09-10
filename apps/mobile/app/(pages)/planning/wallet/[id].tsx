@@ -5,6 +5,36 @@ import { useTheme, DetailAccordionCard, ProgressBar, PillButton } from '@ui';
 import { WALLET_CARDS } from '../../../../lib/mock-data';
 import { amexRewards as initialAmexRewards } from '../../../../lib/amex-rewards';
 
+const NeumorphicWrapper = ({ children, style }) => {
+  const { colors } = useTheme();
+  const styles = StyleSheet.create({
+    lightShadow: {
+      shadowColor: colors.shadow,
+      shadowOffset: {
+        width: 4,
+        height: 4,
+      },
+      shadowOpacity:0.75,
+      shadowRadius: 4,
+    },
+    darkShadow: {
+      shadowColor: colors.highlight,
+      shadowOffset: {
+        width: -4,
+        height: -4,
+      },
+      shadowOpacity: 0.7,
+      shadowRadius: 4,
+    },
+  });
+
+  return (
+    <View style={[styles.darkShadow, style]}>
+      <View style={styles.lightShadow}>{children}</View>
+    </View>
+  );
+};
+
 export default function WalletItemDetailPage() {
   const { id } = useLocalSearchParams();
   const { colors, typography } = useTheme();
@@ -86,12 +116,15 @@ export default function WalletItemDetailPage() {
     contentContainer: {
       paddingVertical: 24,
     },
+    cardImageContainer: {
+      borderRadius: 16,
+      marginHorizontal: 24,
+      marginBottom: 24,
+    },
     cardImage: {
       width: '100%',
       aspectRatio: 1.586, // Standard credit card aspect ratio
       borderRadius: 16,
-      marginBottom: 24,
-      paddingHorizontal: 24,
     },
     sectionTitle: {
       ...typography.fonts.sectionHeader,
@@ -126,7 +159,11 @@ export default function WalletItemDetailPage() {
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-      <Image source={{ uri: WALLET_CARDS.find(c => c.name === 'Amex Platinum').image }} style={styles.cardImage} />
+      <View style={styles.cardImageContainer}>
+        <NeumorphicWrapper style={{ borderRadius: 16 }}>
+          <Image source={{ uri: WALLET_CARDS.find(c => c.name === 'Amex Platinum').image }} style={styles.cardImage} />
+        </NeumorphicWrapper>
+      </View>
 
       <View style={{ paddingHorizontal: 24 }}>
         <ProgressBar currentValue={card.currentRedemption} targetValue={card.targetRedemption} variant="full" />
