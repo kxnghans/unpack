@@ -32,29 +32,29 @@ const NeumorphicWrapper = ({ children, style }) => {
   );
 };
 
-export const PillButton = ({ children, onPress }) => {
+export const FullRedemptionButton = ({ onPress }) => {
   const { colors, typography } = useTheme();
 
   const styles = StyleSheet.create({
     container: {
-      paddingVertical: 16,
-      paddingHorizontal: 32,
-      borderRadius: 30,
+      paddingVertical: 12,
+      paddingHorizontal: 16,
+      borderRadius: 10,
       alignItems: 'center',
       justifyContent: 'center',
-      alignSelf: 'flex-start',
+      backgroundColor: colors.primary,
     },
     text: {
-      ...typography.fonts.subtitle,
-      color: colors.text,
+      ...typography.fonts.body,
+      color: colors.white,
     },
   });
 
   return (
     <TouchableOpacity onPress={onPress}>
-      <NeumorphicWrapper style={{ borderRadius: 30 }}>
+      <NeumorphicWrapper style={{ borderRadius: 10 }}>
         <View style={styles.container}>
-          <Text style={styles.text}>{children}</Text>
+          <Text style={styles.text}>Full Redemption Received</Text>
         </View>
       </NeumorphicWrapper>
     </TouchableOpacity>

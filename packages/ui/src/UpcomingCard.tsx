@@ -1,5 +1,5 @@
 
-import { View, Text, StyleSheet, ImageBackground } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { useTheme } from './ThemeProvider';
 
@@ -95,7 +95,7 @@ export function UpcomingCard({ imageUrl, icon, title, body, onPress }: UpcomingC
   });
 
   return (
-    <View style={styles.card}>
+    <TouchableOpacity onPress={onPress} style={styles.card}>
       <View style={{ zIndex: 1, marginTop: 14 }}>
         <NeumorphicWrapper>
           <View style={styles.imageContainer}>
@@ -114,6 +114,6 @@ export function UpcomingCard({ imageUrl, icon, title, body, onPress }: UpcomingC
           </View>
         </NeumorphicWrapper>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }

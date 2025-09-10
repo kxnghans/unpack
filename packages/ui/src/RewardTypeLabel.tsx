@@ -4,7 +4,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { useTheme } from './ThemeProvider';
 
 export interface RewardTypeLabelProps {
-  rewardType: 'annual' | 'monthly' | 'asNeeded';
+  rewardType: 'annual' | 'monthly' | 'asNeeded' | 'multiYear' | 'quarterly' | 'semiannual' | 'oneTime';
 }
 
 export function RewardTypeLabel({ rewardType }: RewardTypeLabelProps) {
@@ -18,6 +18,14 @@ export function RewardTypeLabel({ rewardType }: RewardTypeLabelProps) {
         return { icon: 'calendar-plus', color: colors.monthly, text: 'Monthly' };
       case 'asNeeded':
         return { icon: 'calendar-day', color: colors.asNeeded, text: 'As Needed' };
+      case 'multiYear':
+        return { icon: 'calendar-alt', color: colors.multiYear, text: 'Multi-Year' };
+      case 'quarterly':
+        return { icon: 'calendar-times', color: colors.quarterly, text: 'Quarterly' };
+      case 'semiannual':
+        return { icon: 'calendar-check', color: colors.semiannual, text: 'Semi-Annual' };
+      case 'oneTime':
+        return { icon: 'star', color: colors.oneTime, text: 'One Time' };
       default:
         return { icon: '', color: '', text: '' };
     }

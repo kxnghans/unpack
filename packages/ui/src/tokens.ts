@@ -28,6 +28,10 @@ export const theme = {
       annual: '#D4E6F1',
       monthly: '#D6DBDF',
       asNeeded: '#D1F2EB',
+      multiYear: '#E8DAEF',
+      quarterly: '#FADBD8',
+      semiannual: '#FEF9E7',
+      oneTime: '#D5F5E3',
     },
     gradients: {
       primary: ['#007bff', '#0056b3'],
@@ -127,6 +131,10 @@ export const theme = {
       annual: '#3E424B',
       monthly: '#4B4B4B',
       asNeeded: '#3E4B4B',
+      multiYear: '#4A3E4B',
+      quarterly: '#4B3E3E',
+      semiannual: '#4B4A3E',
+      oneTime: '#3E4B40',
     },
     gradients: {
       primary: ['#BB86FC', '#3700B3'],
