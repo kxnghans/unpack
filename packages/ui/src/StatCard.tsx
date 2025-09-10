@@ -20,7 +20,6 @@ export const StatCard = ({ label, value, unit, icon }: StatCardProps) => {
       borderRadius: spacing.medium,
       alignItems: 'center',
       justifyContent: 'center',
-      minHeight: 120,
     },
     iconContainer: {
       marginBottom: spacing.small,
