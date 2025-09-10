@@ -1,7 +1,7 @@
-import { View, Text, StyleSheet, ScrollView, Image } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Image, Linking } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { useLocalSearchParams } from 'expo-router';
-import { useTheme, DetailAccordionCard, ProgressBar } from '@ui';
+import { useTheme, DetailAccordionCard, ProgressBar, PillButton } from '@ui';
 import { WALLET_CARDS } from '../../../../lib/mock-data';
 import { amexRewards as initialAmexRewards } from '../../../../lib/amex-rewards';
 
@@ -74,6 +74,10 @@ export default function WalletItemDetailPage() {
     );
   };
 
+  const handleRedemptionChange = (value: string) => {
+    console.log('Redemption value:', value);
+  };
+
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -105,6 +109,11 @@ export default function WalletItemDetailPage() {
       ...typography.fonts.body,
       color: colors.text,
     },
+    buttonContainer: {
+      paddingHorizontal: 24,
+      marginTop: 24,
+      alignItems: 'center',
+    },
   });
 
   if (!card) {
@@ -123,6 +132,10 @@ export default function WalletItemDetailPage() {
         <ProgressBar currentValue={card.currentRedemption} targetValue={card.targetRedemption} variant="full" />
       </View>
 
+      <View style={styles.buttonContainer}>
+        <PillButton onPress={() => Linking.openURL('https://www.americanexpress.com/us/credit-cards/card/platinum/')}>See {card.name} Details</PillButton>
+      </View>
+
       <Text style={styles.sectionTitle}>Rewards Used</Text>
       {amexRewards.used.map((reward, index) => (
         <DetailAccordionCard
@@ -131,7 +144,8 @@ export default function WalletItemDetailPage() {
           expanded={expandedAccordion === reward.title}
           onPress={() => handleAccordionPress(reward.title)}
           onStatusChange={(newStatus) => handleStatusChange({ ...reward, status: 'used' }, newStatus)}
-          rewardType="annual"
+          rewardType={reward.rewardType}
+          onRedemptionChange={handleRedemptionChange}
         />
       ))}
 
@@ -143,9 +157,10 @@ export default function WalletItemDetailPage() {
           expanded={expandedAccordion === reward.title}
           onPress={() => handleAccordionPress(reward.title)}
           onStatusChange={(newStatus) => handleStatusChange({ ...reward, status: 'inProgress' }, newStatus)}
-          rewardType="monthly"
+          rewardType={reward.rewardType}
           usedMonths={usedMonths}
           onToggleMonth={handleToggleMonth}
+          onRedemptionChange={handleRedemptionChange}
         />
       ))}
 
@@ -157,7 +172,8 @@ export default function WalletItemDetailPage() {
           expanded={expandedAccordion === reward.title}
           onPress={() => handleAccordionPress(reward.title)}
           onStatusChange={(newStatus) => handleStatusChange({ ...reward, status: 'unused' }, newStatus)}
-          rewardType="asNeeded"
+          rewardType={reward.rewardType}
+          onRedemptionChange={handleRedemptionChange}
         />
       ))}
     </ScrollView>

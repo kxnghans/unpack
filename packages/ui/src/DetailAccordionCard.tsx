@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   View,
   Text,
@@ -17,6 +17,8 @@ import { Swipeable } from 'react-native-gesture-handler';
 import { VerticalDivider } from './VerticalDivider';
 import { RewardTypeLabel } from './RewardTypeLabel';
 import { MonthTile } from './MonthTile';
+import { InsetNeumorphicInput } from './InsetNeumorphicInput';
+import { FullRedemptionButton } from './FullRedemptionButton';
 
 if (Platform.OS === 'android') {
   if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -65,10 +67,11 @@ export interface DetailAccordionCardProps {
   onStatusChange?: (status: 'used' | 'inProgress' | 'unused') => void;
   expanded: boolean;
   onPress: () => void;
-  rewardType?: 'annual' | 'monthly' | 'asNeeded';
+  rewardType?: 'annual' | 'monthly' | 'asNeeded' | 'multiYear' | 'quarterly' | 'semiannual' | 'oneTime';
   usedMonths?: string[];
   onToggleMonth?: (month: string) => void;
   currentMonth: number;
+  onRedemptionChange?: (value: string) => void;
 }
 
 export function DetailAccordionCard({ 
@@ -86,14 +89,54 @@ export function DetailAccordionCard({
   usedMonths,
   onToggleMonth,
   currentMonth,
+  onRedemptionChange,
 }: DetailAccordionCardProps) {
   const [cardHeight, setCardHeight] = useState(0);
+  const [redemptionValue, setRedemptionValue] = useState('');
+  const [showLeftChevron, setShowLeftChevron] = useState(false);
+  const [showRightChevron, setShowRightChevron] = useState(true);
   const { colors, typography } = useTheme();
   const swipeableRef = useRef<Swipeable>(null);
+  const scrollViewRef = useRef<ScrollView>(null);
+
+  useEffect(() => {
+    if (onRedemptionChange) {
+      onRedemptionChange(redemptionValue);
+    }
+  }, [redemptionValue]);
 
   const handleStatusChange = (status: 'used' | 'inProgress' | 'unused') => {
     onStatusChange(status);
     swipeableRef.current?.close();
+  };
+
+  const handleFullRedemption = () => {
+    setRedemptionValue(estimatedValue.replace(/[^\d.]/g, ''));
+    handleStatusChange('used');
+  };
+
+  const handleScroll = (event) => {
+    const scrollX = event.nativeEvent.contentOffset.x;
+    const contentWidth = event.nativeEvent.contentSize.width;
+    const layoutWidth = event.nativeEvent.layoutMeasurement.width;
+
+    if (scrollX > 0) {
+      setShowLeftChevron(true);
+    } else {
+      setShowLeftChevron(false);
+    }
+
+    if (scrollX < contentWidth - layoutWidth - 1) {
+      setShowRightChevron(true);
+    } else {
+      setShowRightChevron(false);
+    }
+  };
+
+  const scroll = (amount) => {
+    if (scrollViewRef.current) {
+      scrollViewRef.current.scrollTo({ x: amount, animated: true });
+    }
   };
 
   const SimpleVerticalDivider = () => {
@@ -138,16 +181,20 @@ export function DetailAccordionCard({
     headerLeft: {
       flexDirection: 'row',
       alignItems: 'center',
+      flex: 1,
     },
     statusIcon: {
       marginRight: 12,
+    },
+    titleContainer: {
+      flex: 1,
+      marginRight: 8,
     },
     title: {
       ...typography.fonts.subtitle,
       color: colors.text,
     },
     estimatedValueContainer: {
-      marginLeft: 20,
       alignItems: 'center',
     },
     estimatedValue: {
@@ -182,9 +229,32 @@ export function DetailAccordionCard({
       marginBottom: 16,
       paddingVertical: 8,
     },
+    redemptionContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      marginBottom: 16,
+    },
+    redemptionInputContainer: {
+      flex: 1,
+    },
+    orText: {
+      ...typography.fonts.body,
+      color: colors.textSecondary,
+      marginHorizontal: 8,
+    },
+    scrollViewContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    chevron: {
+      padding: 8,
+    },
   });
 
   const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+  const quarters = ['JAN-MAR', 'APR-JUN', 'JUL-SEP', 'OCT-DEC'];
+  const semiAnnuals = ['JAN-JUN', 'JUL-DEC'];
 
   const cardContent = (
     <View onLayout={(event) => setCardHeight(event.nativeEvent.layout.height)} style={styles.container}>
@@ -192,14 +262,16 @@ export function DetailAccordionCard({
         <View style={styles.header}>
           <View style={styles.headerLeft}>
             <FontAwesome5 name={statusIcon} size={20} color={statusColor} style={styles.statusIcon} />
-            <Text style={styles.title}>{title}</Text>
-            {estimatedValue && (
-              <View style={styles.estimatedValueContainer}>
-                <Text style={styles.estimatedValue}>{estimatedValue}</Text>
-                {rewardType && <RewardTypeLabel rewardType={rewardType} />}
-              </View>
-            )}
+            <View style={styles.titleContainer}>
+              <Text style={styles.title} numberOfLines={2}>{title}</Text>
+            </View>
           </View>
+          {estimatedValue && (
+            <View style={styles.estimatedValueContainer}>
+              <Text style={styles.estimatedValue}>{estimatedValue}</Text>
+              {rewardType && <RewardTypeLabel rewardType={rewardType} />}
+            </View>
+          )}
           <FontAwesome5 name={expanded ? 'chevron-up' : 'chevron-down'} size={16} color={colors.text} />
         </View>
       </TouchableOpacity>
@@ -207,19 +279,120 @@ export function DetailAccordionCard({
         <>
           <Divider />
           <View style={styles.body}>
-            {rewardType === 'monthly' && (
-              <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.monthsContainer}>
-                {months.map((month, index) => (
-                  <MonthTile
-                    key={index}
-                    month={month}
-                    isUsed={usedMonths.includes(month)}
-                    estimatedValue={estimatedValue}
-                    onToggle={() => onToggleMonth(month)}
-                    currentMonth={currentMonth}
-                  />
-                ))}
-              </ScrollView>
+            {rewardType !== 'oneTime' && (
+              <>
+                <Text style={styles.sectionTitle}>Redemption</Text>
+                {rewardType === 'monthly' && (
+                  <View style={styles.scrollViewContainer}>
+                    {showLeftChevron && (
+                      <TouchableOpacity onPress={() => scroll(0)} style={styles.chevron}>
+                        <FontAwesome5 name="chevron-left" size={16} color={colors.text} />
+                      </TouchableOpacity>
+                    )}
+                    <ScrollView
+                      ref={scrollViewRef}
+                      horizontal
+                      showsHorizontalScrollIndicator={false}
+                      style={styles.monthsContainer}
+                      onScroll={handleScroll}
+                      scrollEventThrottle={16}
+                    >
+                      {months.map((month, index) => (
+                        <MonthTile
+                          key={index}
+                          month={month}
+                          isUsed={usedMonths.includes(month)}
+                          estimatedValue={estimatedValue}
+                          onToggle={() => onToggleMonth(month)}
+                          currentMonth={currentMonth}
+                        />
+                      ))}
+                    </ScrollView>
+                    {showRightChevron && (
+                      <TouchableOpacity onPress={() => scroll(500)} style={styles.chevron}>
+                        <FontAwesome5 name="chevron-right" size={16} color={colors.text} />
+                      </TouchableOpacity>
+                    )}
+                  </View>
+                )}
+                {rewardType === 'quarterly' && (
+                  <View style={styles.scrollViewContainer}>
+                    {showLeftChevron && (
+                      <TouchableOpacity onPress={() => scroll(0)} style={styles.chevron}>
+                        <FontAwesome5 name="chevron-left" size={16} color={colors.text} />
+                      </TouchableOpacity>
+                    )}
+                    <ScrollView
+                      ref={scrollViewRef}
+                      horizontal
+                      showsHorizontalScrollIndicator={false}
+                      style={styles.monthsContainer}
+                      onScroll={handleScroll}
+                      scrollEventThrottle={16}
+                    >
+                      {quarters.map((quarter, index) => (
+                        <MonthTile
+                          key={index}
+                          label={quarter}
+                          isUsed={usedMonths.includes(quarter)}
+                          onToggle={() => onToggleMonth(quarter)}
+                          periodType="quarterly"
+                        />
+                      ))}
+                    </ScrollView>
+                    {showRightChevron && (
+                      <TouchableOpacity onPress={() => scroll(500)} style={styles.chevron}>
+                        <FontAwesome5 name="chevron-right" size={16} color={colors.text} />
+                      </TouchableOpacity>
+                    )}
+                  </View>
+                )}
+                {rewardType === 'semiannual' && (
+                  <View style={styles.scrollViewContainer}>
+                    {showLeftChevron && (
+                      <TouchableOpacity onPress={() => scroll(0)} style={styles.chevron}>
+                        <FontAwesome5 name="chevron-left" size={16} color={colors.text} />
+                      </TouchableOpacity>
+                    )}
+                    <ScrollView
+                      ref={scrollViewRef}
+                      horizontal
+                      showsHorizontalScrollIndicator={false}
+                      style={styles.monthsContainer}
+                      onScroll={handleScroll}
+                      scrollEventThrottle={16}
+                    >
+                      {semiAnnuals.map((semi, index) => (
+                        <MonthTile
+                          key={index}
+                          label={semi}
+                          isUsed={usedMonths.includes(semi)}
+                          onToggle={() => onToggleMonth(semi)}
+                          periodType="semiannual"
+                        />
+                      ))}
+                    </ScrollView>
+                    {showRightChevron && (
+                      <TouchableOpacity onPress={() => scroll(500)} style={styles.chevron}>
+                        <FontAwesome5 name="chevron-right" size={16} color={colors.text} />
+                      </TouchableOpacity>
+                    )}
+                  </View>
+                )}
+                {rewardType !== 'monthly' && rewardType !== 'quarterly' && rewardType !== 'semiannual' && (
+                  <View style={styles.redemptionContainer}>
+                    <View style={styles.redemptionInputContainer}>
+                      <InsetNeumorphicInput
+                        value={redemptionValue}
+                        onChangeText={setRedemptionValue}
+                        placeholder="0.00"
+                      />
+                    </View>
+                    <Text style={styles.orText}>or</Text>
+                    <FullRedemptionButton onPress={handleFullRedemption} />
+                  </View>
+                )}
+              </>
             )}
             <Text style={styles.sectionTitle}>Description</Text>
             <Text style={styles.bodyText}>{description}</Text>
