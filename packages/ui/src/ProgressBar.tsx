@@ -56,7 +56,6 @@ export function ProgressBar({ currentValue, targetValue, variant = 'full' }: Pro
   const styles = StyleSheet.create({
     wrapper: {
       marginTop: 8,
-      marginBottom: 8,
     },
     progressBarContainer: {
       flexDirection: 'row',

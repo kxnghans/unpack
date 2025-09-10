@@ -12,7 +12,6 @@ import {
 import { useTheme, SegmentedControl, FilterDialog, HeartIcon } from '@ui';
 import { FontAwesome } from '@expo/vector-icons';
 import FilterDrawer from '../../../components/FilterDrawer';
-import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 
 if (
   Platform.OS === 'android' &&
@@ -172,14 +171,6 @@ const CommunityScreen = () => {
     { id: 'groupType', title: 'Group Type', icon: 'users' },
   ];
 
-  const handleDoubleClick = (guideId) => {
-    setGuides((prevGuides) =>
-      prevGuides.map((guide) =>
-        guide.id === guideId ? { ...guide, liked: true } : guide
-      )
-    );
-  };
-
   const handleHeartPress = (guideId) => {
     setGuides((prevGuides) =>
       prevGuides.map((guide) =>
@@ -267,37 +258,27 @@ const CommunityScreen = () => {
           />
         )}
         <ScrollView style={styles.contentFeed}>
-          {guides.map((guide) => {
-            const doubleTap = Gesture.Tap()
-              .numberOfTaps(2)
-              .onStart(() => {
-                handleDoubleClick(guide.id);
-              });
-
-            return (
-              <GestureDetector gesture={doubleTap} key={guide.id}>
-                <View style={styles.card}>
-                  <Image source={{ uri: guide.image }} style={styles.cardImage} />
-                  <View style={styles.cardInfo}>
-                    <View style={styles.cardTextContainer}>
-                      <Text style={styles.cardTitle} numberOfLines={1}>{guide.title}</Text>
-                      <Text style={styles.cardBody} numberOfLines={1}>{guide.body}</Text>
-                    </View>
-                    <View style={styles.authorContainer}>
-                      <Text style={styles.cardAuthorName}>{guide.author}</Text>
-                      <Image source={{ uri: guide.authorImage }} style={styles.authorImage} />
-                    </View>
-                  </View>
-                  <View style={styles.heartIcon}>
-                    <HeartIcon
-                      isLiked={guide.liked}
-                      onPress={() => handleHeartPress(guide.id)}
-                    />
-                  </View>
+          {guides.map((guide) => (
+            <View style={styles.card} key={guide.id}>
+              <Image source={{ uri: guide.image }} style={styles.cardImage} />
+              <View style={styles.cardInfo}>
+                <View style={styles.cardTextContainer}>
+                  <Text style={styles.cardTitle} numberOfLines={1}>{guide.title}</Text>
+                  <Text style={styles.cardBody} numberOfLines={1}>{guide.body}</Text>
                 </View>
-              </GestureDetector>
-            );
-          })}
+                <View style={styles.authorContainer}>
+                  <Text style={styles.cardAuthorName}>{guide.author}</Text>
+                  <Image source={{ uri: guide.authorImage }} style={styles.authorImage} />
+                </View>
+              </View>
+              <View style={styles.heartIcon}>
+                <HeartIcon
+                  isLiked={guide.liked}
+                  onPress={() => handleHeartPress(guide.id)}
+                />
+              </View>
+            </View>
+          ))}
         </ScrollView>
       </View>
 
