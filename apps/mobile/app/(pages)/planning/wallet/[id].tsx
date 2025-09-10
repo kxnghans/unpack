@@ -1,15 +1,33 @@
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import React from 'react';
+import { View, Text, StyleSheet, ScrollView, Image } from 'react-native';
+import React, { useState } from 'react';
 import { useLocalSearchParams } from 'expo-router';
-import { useTheme, HubItemCard, DetailAccordionCard } from '@ui';
+import { useTheme, DetailAccordionCard } from '@ui';
 import { WALLET_CARDS } from '../../../../lib/mock-data';
-import { amexRewards } from '../../../../lib/amex-rewards';
+import { amexRewards as initialAmexRewards } from '../../../../lib/amex-rewards';
 
 export default function WalletItemDetailPage() {
   const { id } = useLocalSearchParams();
   const { colors, typography } = useTheme();
+  const [amexRewards, setAmexRewards] = useState(initialAmexRewards);
 
   const card = WALLET_CARDS.find((c) => c.id === id);
+
+  const handleStatusChange = (reward, newStatus) => {
+    const oldStatus = reward.status;
+
+    if (oldStatus === newStatus) return;
+
+    setAmexRewards((prevRewards) => {
+      const oldStatusRewards = prevRewards[oldStatus].filter((r) => r.title !== reward.title);
+      const newStatusRewards = [...prevRewards[newStatus], { ...reward, status: newStatus }];
+
+      return {
+        ...prevRewards,
+        [oldStatus]: oldStatusRewards,
+        [newStatus]: newStatusRewards,
+      };
+    });
+  };
 
   const styles = StyleSheet.create({
     container: {
@@ -17,13 +35,21 @@ export default function WalletItemDetailPage() {
       backgroundColor: colors.background,
     },
     contentContainer: {
-      padding: 24,
+      paddingVertical: 24,
+    },
+    cardImage: {
+      width: '100%',
+      aspectRatio: 1.586, // Standard credit card aspect ratio
+      borderRadius: 16,
+      marginBottom: 24,
+      paddingHorizontal: 24,
     },
     sectionTitle: {
       ...typography.fonts.sectionHeader,
       color: colors.text,
       marginBottom: 16,
       marginTop: 24,
+      paddingHorizontal: 24,
     },
     notFoundContainer: {
       flex: 1,
@@ -46,21 +72,33 @@ export default function WalletItemDetailPage() {
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-      <HubItemCard title={card.name} imageUri={card.image} />
+      <Image source={{ uri: card.image }} style={styles.cardImage} />
 
       <Text style={styles.sectionTitle}>Rewards Used</Text>
       {amexRewards.used.map((reward, index) => (
-        <DetailAccordionCard key={index} {...reward} />
+        <DetailAccordionCard
+          key={index}
+          {...reward}
+          onStatusChange={(newStatus) => handleStatusChange({ ...reward, status: 'used' }, newStatus)}
+        />
       ))}
 
       <Text style={styles.sectionTitle}>Rewards In Progress</Text>
       {amexRewards.inProgress.map((reward, index) => (
-        <DetailAccordionCard key={index} {...reward} />
+        <DetailAccordionCard
+          key={index}
+          {...reward}
+          onStatusChange={(newStatus) => handleStatusChange({ ...reward, status: 'inProgress' }, newStatus)}
+        />
       ))}
 
       <Text style={styles.sectionTitle}>Rewards Unused</Text>
       {amexRewards.unused.map((reward, index) => (
-        <DetailAccordionCard key={index} {...reward} />
+        <DetailAccordionCard
+          key={index}
+          {...reward}
+          onStatusChange={(newStatus) => handleStatusChange({ ...reward, status: 'unused' }, newStatus)}
+        />
       ))}
     </ScrollView>
   );
