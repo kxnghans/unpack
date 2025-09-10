@@ -15,7 +15,7 @@ export default function PackingLists() {
       alignItems: 'center',
     },
     text: {
-      ...typography.fonts.description,
+            ...typography.fonts.body,
       color: colors.text,
     },
   });

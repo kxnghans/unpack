@@ -90,7 +90,7 @@ export function UpcomingCard({ imageUrl, icon, title, body, onPress }: UpcomingC
     body: {
       color: colors.text,
       textAlign: 'center',
-      ...typography.fonts.description,
+            ...typography.fonts.body,
     },
   });
 

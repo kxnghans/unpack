@@ -8,12 +8,15 @@ import {
   Platform,
   UIManager,
   Animated,
+  ScrollView,
 } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useTheme } from './ThemeProvider';
 import { Divider } from './Divider';
 import { Swipeable } from 'react-native-gesture-handler';
 import { VerticalDivider } from './VerticalDivider';
+import { RewardTypeLabel } from './RewardTypeLabel';
+import { MonthTile } from './MonthTile';
 
 if (Platform.OS === 'android') {
   if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -62,6 +65,10 @@ export interface DetailAccordionCardProps {
   onStatusChange?: (status: 'used' | 'inProgress' | 'unused') => void;
   expanded: boolean;
   onPress: () => void;
+  rewardType?: 'annual' | 'monthly' | 'asNeeded';
+  usedMonths?: string[];
+  onToggleMonth?: (month: string) => void;
+  currentMonth: number;
 }
 
 export function DetailAccordionCard({ 
@@ -74,7 +81,11 @@ export function DetailAccordionCard({
   conditions, 
   onStatusChange,
   expanded,
-  onPress
+  onPress,
+  rewardType,
+  usedMonths,
+  onToggleMonth,
+  currentMonth,
 }: DetailAccordionCardProps) {
   const [cardHeight, setCardHeight] = useState(0);
   const { colors, typography } = useTheme();
@@ -135,10 +146,13 @@ export function DetailAccordionCard({
       ...typography.fonts.subtitle,
       color: colors.text,
     },
+    estimatedValueContainer: {
+      marginLeft: 20,
+      alignItems: 'center',
+    },
     estimatedValue: {
       ...typography.fonts.subtitle,
       color: colors.textSecondary,
-      marginLeft: 20,
     },
     body: {
       padding: 16,
@@ -149,7 +163,7 @@ export function DetailAccordionCard({
       marginBottom: 8,
     },
     bodyText: {
-      ...typography.fonts.description,
+      ...typography.fonts.body,
       color: colors.textSecondary,
       marginBottom: 12,
     },
@@ -164,7 +178,13 @@ export function DetailAccordionCard({
       justifyContent: 'center',
       padding: 16,
     },
+    monthsContainer: {
+      marginBottom: 16,
+      paddingVertical: 8,
+    },
   });
+
+  const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
 
   const cardContent = (
     <View onLayout={(event) => setCardHeight(event.nativeEvent.layout.height)} style={styles.container}>
@@ -173,7 +193,12 @@ export function DetailAccordionCard({
           <View style={styles.headerLeft}>
             <FontAwesome5 name={statusIcon} size={20} color={statusColor} style={styles.statusIcon} />
             <Text style={styles.title}>{title}</Text>
-            {estimatedValue && <Text style={styles.estimatedValue}>{estimatedValue}</Text>}
+            {estimatedValue && (
+              <View style={styles.estimatedValueContainer}>
+                <Text style={styles.estimatedValue}>{estimatedValue}</Text>
+                {rewardType && <RewardTypeLabel rewardType={rewardType} />}
+              </View>
+            )}
           </View>
           <FontAwesome5 name={expanded ? 'chevron-up' : 'chevron-down'} size={16} color={colors.text} />
         </View>
@@ -182,6 +207,20 @@ export function DetailAccordionCard({
         <>
           <Divider />
           <View style={styles.body}>
+            {rewardType === 'monthly' && (
+              <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.monthsContainer}>
+                {months.map((month, index) => (
+                  <MonthTile
+                    key={index}
+                    month={month}
+                    isUsed={usedMonths.includes(month)}
+                    estimatedValue={estimatedValue}
+                    onToggle={() => onToggleMonth(month)}
+                    currentMonth={currentMonth}
+                  />
+                ))}
+              </ScrollView>
+            )}
             <Text style={styles.sectionTitle}>Description</Text>
             <Text style={styles.bodyText}>{description}</Text>
             <Text style={styles.sectionTitle}>Activation</Text>

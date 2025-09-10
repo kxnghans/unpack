@@ -96,8 +96,7 @@ export const StatsHeader = ({ user, activeTab, onTabPress, isThemeExpanded, onTo
       marginBottom: spacing.small,
     },
     planTagText: {
-      fontSize: 12,
-      fontWeight: 'bold',
+      ...typography.fonts.caption,
       textTransform: 'uppercase',
       marginLeft: 4,
     },

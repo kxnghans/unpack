@@ -15,7 +15,7 @@ export function Packing() {
       alignItems: "center",
     },
     text: {
-      ...typography.fonts.description,
+            ...typography.fonts.body,
       color: colors.text,
     },
   });

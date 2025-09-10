@@ -91,7 +91,7 @@ export function HubCard({ icon, title, items, onPress }: HubCardProps) {
     },
     item: {
       color: colors.text,
-      ...typography.fonts.description,
+            ...typography.fonts.body,
       marginBottom: 4,
     },
     chevronContainer: {

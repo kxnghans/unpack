@@ -38,7 +38,7 @@ const FilterDrawer = ({ filters, onFilterPress }) => {
       paddingVertical: 15,
     },
     filterTitle: {
-      ...typography.fonts.subtitle,
+      ...typography.fonts.caption,
       color: colors.text,
       marginTop: 4,
       textAlign: 'center',
@@ -54,7 +54,7 @@ const FilterDrawer = ({ filters, onFilterPress }) => {
             style={styles.filterItem}
             onPress={() => onFilterPress(filter.id)}
           >
-            <FontAwesome name={filter.icon} size={24} color={colors.text} />
+            <FontAwesome name={filter.icon} size={20} color={colors.text} />
             <Text style={styles.filterTitle}>{filter.title}</Text>
           </TouchableOpacity>
         ))}
