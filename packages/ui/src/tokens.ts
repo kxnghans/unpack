@@ -32,6 +32,7 @@ export const theme = {
       quarterly: '#FADBD8',
       semiannual: '#FEF9E7',
       oneTime: '#D5F5E3',
+      mediumGrey: '#E0E0E0',
     },
     gradients: {
       primary: ['#007bff', '#0056b3'],
@@ -135,6 +136,7 @@ export const theme = {
       quarterly: '#4B3E3E',
       semiannual: '#4B4A3E',
       oneTime: '#3E4B40',
+      mediumGrey: '#2E2E2E',
     },
     gradients: {
       primary: ['#BB86FC', '#3700B3'],
