@@ -1,10 +1,10 @@
 
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground } from 'react-native';
 import React from 'react';
 import { useTheme } from './ThemeProvider';
 
 export interface UpcomingCardProps {
-  color: string;
+  imageUrl: string;
   icon: React.ReactNode;
   title: string;
   body: string;
@@ -41,7 +41,7 @@ const NeumorphicWrapper = ({ children }) => {
   );
 };
 
-export function UpcomingCard({ color, icon, title, body, onPress }: UpcomingCardProps) {
+export function UpcomingCard({ imageUrl, icon, title, body, onPress }: UpcomingCardProps) {
   const { colors, typography, spacing } = useTheme();
 
   const styles = StyleSheet.create({
@@ -50,22 +50,20 @@ export function UpcomingCard({ color, icon, title, body, onPress }: UpcomingCard
       margin: spacing.medium,
       flex: 1,
     },
-    colorBlockWrapper: {
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      right: 0,
+    imageContainer: {
       height: 140,
       borderRadius: 16,
-      zIndex: 1, // Ensure color block is on top
+      overflow: 'hidden',
     },
-    colorBlock: {
-      height: '100%',
-      width: '100%',
-      borderRadius: 16,
+    image: {
+      flex: 1,
       justifyContent: 'flex-end',
       alignItems: 'flex-end',
       padding: 12,
+    },
+    overlay: {
+      ...StyleSheet.absoluteFillObject,
+      backgroundColor: 'rgba(0, 0, 0, 0.3)',
     },
     whiteBlockWrapper: {
       position: 'absolute',
@@ -98,10 +96,13 @@ export function UpcomingCard({ color, icon, title, body, onPress }: UpcomingCard
 
   return (
     <View style={styles.card}>
-      <View style={styles.colorBlockWrapper}>
+      <View style={{ zIndex: 1, marginTop: 14 }}>
         <NeumorphicWrapper>
-          <View style={[styles.colorBlock, { backgroundColor: color }]}>
-            {icon}
+          <View style={styles.imageContainer}>
+            <ImageBackground source={{ uri: imageUrl }} style={styles.image}>
+              <View style={styles.overlay} />
+              {icon}
+            </ImageBackground>
           </View>
         </NeumorphicWrapper>
       </View>
@@ -109,7 +110,7 @@ export function UpcomingCard({ color, icon, title, body, onPress }: UpcomingCard
         <NeumorphicWrapper>
           <View style={styles.whiteBlock}>
             <Text style={styles.title}>{title}</Text>
-            <Text style={styles.body}>{body}</Text>
+            <Text style={styles.body} numberOfLines={2}>{body}</Text>
           </View>
         </NeumorphicWrapper>
       </View>

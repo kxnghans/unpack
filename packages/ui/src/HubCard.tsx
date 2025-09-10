@@ -12,6 +12,36 @@ export interface HubCardProps {
   onPress?: () => void;
 }
 
+const NeumorphicWrapper = ({ children, style }) => {
+  const { colors } = useTheme();
+  const styles = StyleSheet.create({
+    lightShadow: {
+      shadowColor: colors.shadow,
+      shadowOffset: {
+        width: 4,
+        height: 4,
+      },
+      shadowOpacity: 1,
+      shadowRadius: 8,
+    },
+    darkShadow: {
+      shadowColor: colors.highlight,
+      shadowOffset: {
+        width: -4,
+        height: -4,
+      },
+      shadowOpacity: 1,
+      shadowRadius: 8,
+    },
+  });
+
+  return (
+    <View style={[styles.darkShadow, style]}>
+      <View style={styles.lightShadow}>{children}</View>
+    </View>
+  );
+};
+
 export function HubCard({ icon, title, items, onPress }: HubCardProps) {
   const { colors, typography } = useTheme();
 
@@ -26,9 +56,11 @@ export function HubCard({ icon, title, items, onPress }: HubCardProps) {
       borderRadius: 20,
       padding: 16,
       marginHorizontal: 16,
+      overflow: 'hidden',
     },
     gradient: {
       ...StyleSheet.absoluteFillObject,
+      borderRadius: 20,
     },
     contentContainer: {
       flex: 1,
@@ -67,6 +99,14 @@ export function HubCard({ icon, title, items, onPress }: HubCardProps) {
       bottom: 16,
       right: 16,
     },
+    chevronPlate: {
+      width: 32,
+      height: 32,
+      borderRadius: 16,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: colors.card,
+    },
     lightShadow: {
       shadowColor: colors.shadow,
       shadowOffset: {
@@ -102,10 +142,10 @@ export function HubCard({ icon, title, items, onPress }: HubCardProps) {
             <View style={styles.iconContainer}>{icon}</View>
           </View>
           <View style={styles.rightColumn}>
-            <Text style={styles.title}>{title}</Text>
+            <Text style={styles.title} numberOfLines={1}>{title}</Text>
             <View style={styles.body}>
               {items.slice(0, 2).map((item, index) => (
-                <Text key={index} style={styles.item}>
+                <Text key={index} style={styles.item} numberOfLines={1}>
                   {item}
                 </Text>
               ))}
@@ -113,11 +153,15 @@ export function HubCard({ icon, title, items, onPress }: HubCardProps) {
           </View>
         </View>
         <View style={styles.chevronContainer}>
-          <FontAwesome5
-            name="chevron-right"
-            size={24}
-            color={colors.textSecondary}
-          />
+          <NeumorphicWrapper style={{ borderRadius: 16 }}>
+            <View style={styles.chevronPlate}>
+              <FontAwesome5
+                name="chevron-right"
+                size={16}
+                color={colors.textSecondary}
+              />
+            </View>
+          </NeumorphicWrapper>
         </View>
       </View>
     </Pressable>

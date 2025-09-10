@@ -71,7 +71,7 @@ export const StatCard = ({ label, value, unit, icon }: StatCardProps) => {
           {value}
           {unit && <Text style={styles.unit}> {unit}</Text>}
         </Text>
-        <Text style={styles.label}>{label}</Text>
+        <Text style={styles.label} numberOfLines={2}>{label}</Text>
       </View>
     </TouchableOpacity>
   );

@@ -41,7 +41,7 @@ export function HubItemCard({ title, imageUri }: HubItemCardProps) {
     <View style={styles.container}>
       <ImageBackground source={{ uri: imageUri }} style={styles.image}>
         <View style={styles.overlay}>
-          <Text style={styles.title}>{title}</Text>
+          <Text style={styles.title} numberOfLines={1}>{title}</Text>
         </View>
       </ImageBackground>
     </View>
