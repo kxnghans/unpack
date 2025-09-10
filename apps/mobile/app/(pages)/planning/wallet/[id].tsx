@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, ScrollView, Image } from 'react-native';
 import React, { useState } from 'react';
 import { useLocalSearchParams } from 'expo-router';
-import { useTheme, DetailAccordionCard } from '@ui';
+import { useTheme, DetailAccordionCard, ProgressBar } from '@ui';
 import { WALLET_CARDS } from '../../../../lib/mock-data';
 import { amexRewards as initialAmexRewards } from '../../../../lib/amex-rewards';
 
@@ -9,8 +9,22 @@ export default function WalletItemDetailPage() {
   const { id } = useLocalSearchParams();
   const { colors, typography } = useTheme();
   const [amexRewards, setAmexRewards] = useState(initialAmexRewards);
+  const [expandedAccordion, setExpandedAccordion] = useState<string | null>(null);
 
   const card = WALLET_CARDS.find((c) => c.id === id);
+
+  const getStatusAttributes = (status) => {
+    switch (status) {
+      case 'used':
+        return { icon: 'check-circle', color: '#2ECC71' };
+      case 'inProgress':
+        return { icon: 'spinner', color: '#F1C40F' };
+      case 'unused':
+        return { icon: 'times-circle', color: '#E74C3C' };
+      default:
+        return { icon: '', color: '' };
+    }
+  };
 
   const handleStatusChange = (reward, newStatus) => {
     const oldStatus = reward.status;
@@ -19,7 +33,16 @@ export default function WalletItemDetailPage() {
 
     setAmexRewards((prevRewards) => {
       const oldStatusRewards = prevRewards[oldStatus].filter((r) => r.title !== reward.title);
-      const newStatusRewards = [...prevRewards[newStatus], { ...reward, status: newStatus }];
+      
+      const statusAttributes = getStatusAttributes(newStatus);
+      const newReward = { 
+        ...reward, 
+        status: newStatus,
+        statusIcon: statusAttributes.icon,
+        statusColor: statusAttributes.color,
+      };
+      
+      const newStatusRewards = [...prevRewards[newStatus], newReward];
 
       return {
         ...prevRewards,
@@ -27,6 +50,10 @@ export default function WalletItemDetailPage() {
         [newStatus]: newStatusRewards,
       };
     });
+  };
+
+  const handleAccordionPress = (title: string) => {
+    setExpandedAccordion((prev) => (prev === title ? null : title));
   };
 
   const styles = StyleSheet.create({
@@ -72,13 +99,19 @@ export default function WalletItemDetailPage() {
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-      <Image source={{ uri: card.image }} style={styles.cardImage} />
+      <Image source={{ uri: WALLET_CARDS.find(c => c.name === 'Amex Platinum').image }} style={styles.cardImage} />
+
+      <View style={{ paddingHorizontal: 24 }}>
+        <ProgressBar currentValue={card.currentRedemption} targetValue={card.targetRedemption} variant="full" />
+      </View>
 
       <Text style={styles.sectionTitle}>Rewards Used</Text>
       {amexRewards.used.map((reward, index) => (
         <DetailAccordionCard
           key={index}
           {...reward}
+          expanded={expandedAccordion === reward.title}
+          onPress={() => handleAccordionPress(reward.title)}
           onStatusChange={(newStatus) => handleStatusChange({ ...reward, status: 'used' }, newStatus)}
         />
       ))}
@@ -88,6 +121,8 @@ export default function WalletItemDetailPage() {
         <DetailAccordionCard
           key={index}
           {...reward}
+          expanded={expandedAccordion === reward.title}
+          onPress={() => handleAccordionPress(reward.title)}
           onStatusChange={(newStatus) => handleStatusChange({ ...reward, status: 'inProgress' }, newStatus)}
         />
       ))}
@@ -97,6 +132,8 @@ export default function WalletItemDetailPage() {
         <DetailAccordionCard
           key={index}
           {...reward}
+          expanded={expandedAccordion === reward.title}
+          onPress={() => handleAccordionPress(reward.title)}
           onStatusChange={(newStatus) => handleStatusChange({ ...reward, status: 'unused' }, newStatus)}
         />
       ))}
