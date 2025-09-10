@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import { useTheme } from './ThemeProvider';
 
 export interface ProgressBarProps {
   currentValue: number;
   targetValue: number;
+  variant?: 'simplified' | 'full';
 }
 
 const NeumorphicWrapper = ({ children, style }) => {
@@ -37,11 +38,14 @@ const NeumorphicWrapper = ({ children, style }) => {
   );
 };
 
-export function ProgressBar({ currentValue, targetValue }: ProgressBarProps) {
+export function ProgressBar({ currentValue, targetValue, variant = 'full' }: ProgressBarProps) {
   const { colors, typography } = useTheme();
+  const [targetLabelWidth, setTargetLabelWidth] = useState(0);
   const progress = targetValue > 0 ? (currentValue / targetValue) * 100 : 0;
-  const maxProgress = targetValue > 0 ? (targetValue * 1.1) : 1.1;
+  const maxProgress = currentValue > targetValue * 1.1 ? currentValue : (targetValue > 0 ? (targetValue * 1.1) : 1.1);
   const displayProgress = maxProgress > 0 ? (currentValue / maxProgress) * 100 : 0;
+
+  const isSimplified = variant === 'simplified';
 
   const getBarColor = () => {
     if (progress < 20) return colors.danger;
@@ -52,17 +56,25 @@ export function ProgressBar({ currentValue, targetValue }: ProgressBarProps) {
   const styles = StyleSheet.create({
     wrapper: {
       marginTop: 8,
+      marginBottom: 8,
+    },
+    progressBarContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
     },
     container: {
-      height: 10,
+      height: isSimplified ? 10 : 24,
       backgroundColor: colors.surface,
       borderRadius: 5,
       overflow: 'hidden',
+      flex: 1,
+      justifyContent: 'center',
     },
     bar: {
       height: '100%',
       width: `${displayProgress > 100 ? 100 : displayProgress}%`,
       backgroundColor: getBarColor(),
+      justifyContent: 'center',
     },
     overTargetBar: {
       height: '100%',
@@ -75,33 +87,49 @@ export function ProgressBar({ currentValue, targetValue }: ProgressBarProps) {
       position: 'absolute',
       height: '100%',
       width: 2,
-      backgroundColor: colors.border,
+      backgroundColor: progress < 100 ? colors.text : colors.background,
       left: `${(targetValue / maxProgress) * 100}%`,
     },
-    labelContainer: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      marginTop: 4,
+    targetValueLabelContainer: {
+      position: 'absolute',
+      left: `${(targetValue / maxProgress) * 100}%`,
+      top: isSimplified ? 12 : 26,
+      marginLeft: -targetLabelWidth / 2,
     },
-    label: {
+    targetValueLabel: {
       ...typography.fonts.caption,
       color: colors.textSecondary,
     },
+    percentageLabel: {
+      ...typography.fonts.caption,
+      color: colors.textSecondary,
+      marginLeft: 8,
+    },
+    currentValueLabel: {
+        ...typography.fonts.caption,
+        color: colors.white,
+        paddingLeft: 8,
+    }
   });
 
   return (
     <View style={styles.wrapper}>
-      <NeumorphicWrapper style={{ borderRadius: 5 }}>
-        <View style={styles.container}>
-          <View style={styles.bar} />
-          {progress >= 100 && <View style={styles.overTargetBar} />}
-          {targetValue > 0 && <View style={styles.targetLine} />}
-        </View>
-      </NeumorphicWrapper>
-      <View style={styles.labelContainer}>
-        <Text style={styles.label}>${currentValue.toFixed(2)}</Text>
-        <Text style={styles.label}>{progress.toFixed(0)}%</Text>
-        <Text style={styles.label}>${targetValue.toFixed(2)}</Text>
+      <View style={styles.progressBarContainer}>
+        <NeumorphicWrapper style={{ borderRadius: 5, flex: 1 }}>
+          <View style={styles.container}>
+            <View style={styles.bar}>
+             {!isSimplified && <Text style={styles.currentValueLabel}>${currentValue.toFixed(0)}</Text>}
+            </View>
+            {progress >= 100 && <View style={styles.overTargetBar} />}
+            {targetValue > 0 && <View style={styles.targetLine} />}
+          </View>
+          {!isSimplified && <View style={styles.targetValueLabelContainer}>
+            <Text onLayout={(e) => setTargetLabelWidth(e.nativeEvent.layout.width)} style={styles.targetValueLabel}>${targetValue.toFixed(0)}</Text>
+          </View>}
+        </NeumorphicWrapper>
+        <Text style={styles.percentageLabel}>
+          {isSimplified ? `${progress.toFixed(0)}%` : `${progress.toFixed(0)}%`}
+        </Text>
       </View>
     </View>
   );

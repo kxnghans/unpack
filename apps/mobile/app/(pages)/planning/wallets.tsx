@@ -53,6 +53,7 @@ export default function WalletsScreen() {
             progress={{
               currentValue: item.currentRedemption,
               targetValue: item.targetRedemption,
+              variant: 'simplified',
             }}
             onPress={() => item.name === 'Amex Platinum' && router.push(`/planning/wallet/${item.id}`)}
           />

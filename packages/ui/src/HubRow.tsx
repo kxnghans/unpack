@@ -1,10 +1,9 @@
-
 import { View, Text, StyleSheet, Pressable } from 'react-native';
 import React from 'react';
 import { useTheme } from './ThemeProvider';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { theme } from './tokens';
-import { ProgressBar } from './ProgressBar';
+import { ProgressBar, ProgressBarProps } from './ProgressBar';
 
 export interface HubRowProps {
   icon: React.ReactNode;
@@ -17,6 +16,7 @@ export interface HubRowProps {
   progress?: {
     currentValue: number;
     targetValue: number;
+    variant?: ProgressBarProps['variant'];
   };
   onPress?: () => void;
 }
@@ -66,6 +66,7 @@ export function HubRow({ icon, title, rewards, progress, onPress }: HubRowProps)
           <ProgressBar
             currentValue={progress.currentValue}
             targetValue={progress.targetValue}
+            variant={progress.variant}
           />
         )}
         {rewards && (

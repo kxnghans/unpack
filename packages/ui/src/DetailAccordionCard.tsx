@@ -30,7 +30,7 @@ const NeumorphicWrapper = ({ children, style }) => {
         width: 4,
         height: 4,
       },
-      shadowOpacity:1,
+      shadowOpacity:0.75,
       shadowRadius: 4,
     },
     darkShadow: {
@@ -39,7 +39,7 @@ const NeumorphicWrapper = ({ children, style }) => {
         width: -4,
         height: -4,
       },
-      shadowOpacity: 1,
+      shadowOpacity: 0.7,
       shadowRadius: 4,
     },
   });
@@ -60,6 +60,8 @@ export interface DetailAccordionCardProps {
   activation: string;
   conditions: string;
   onStatusChange?: (status: 'used' | 'inProgress' | 'unused') => void;
+  expanded: boolean;
+  onPress: () => void;
 }
 
 export function DetailAccordionCard({ 
@@ -70,17 +72,13 @@ export function DetailAccordionCard({
   description, 
   activation, 
   conditions, 
-  onStatusChange 
+  onStatusChange,
+  expanded,
+  onPress
 }: DetailAccordionCardProps) {
-  const [expanded, setExpanded] = useState(false);
   const [cardHeight, setCardHeight] = useState(0);
   const { colors, typography } = useTheme();
   const swipeableRef = useRef<Swipeable>(null);
-
-  const toggleExpand = () => {
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-    setExpanded(!expanded);
-  };
 
   const handleStatusChange = (status: 'used' | 'inProgress' | 'unused') => {
     onStatusChange(status);
@@ -91,6 +89,10 @@ export function DetailAccordionCard({
     return <View style={{ width: 1, height: '100%', backgroundColor: colors.border }} />;
   };
 
+  const SimpleDivider = () => {
+    return <View style={{ height: 1, width: '100%', backgroundColor: colors.border }} />;
+  };
+
   const renderLeftActions = (progress, dragX) => {
     return (
       <NeumorphicWrapper style={{ borderRadius: 8, marginHorizontal: 24, marginVertical: 10 }}>
@@ -98,11 +100,11 @@ export function DetailAccordionCard({
           <TouchableOpacity onPress={() => handleStatusChange('used')} style={styles.actionButton}>
             <FontAwesome5 name="check-circle" size={20} color={colors.success} />
           </TouchableOpacity>
-          {expanded ? <Divider /> : <SimpleVerticalDivider />}
+          {expanded ? <SimpleDivider /> : <SimpleVerticalDivider />}
           <TouchableOpacity onPress={() => handleStatusChange('inProgress')} style={styles.actionButton}>
             <FontAwesome5 name="spinner" size={20} color={colors.warning} />
           </TouchableOpacity>
-          {expanded ? <Divider /> : <SimpleVerticalDivider />}
+          {expanded ? <SimpleDivider /> : <SimpleVerticalDivider />}
           <TouchableOpacity onPress={() => handleStatusChange('unused')} style={styles.actionButton}>
             <FontAwesome5 name="times-circle" size={20} color={colors.danger} />
           </TouchableOpacity>
@@ -136,7 +138,7 @@ export function DetailAccordionCard({
     estimatedValue: {
       ...typography.fonts.subtitle,
       color: colors.textSecondary,
-      marginLeft: 8,
+      marginLeft: 20,
     },
     body: {
       padding: 16,
@@ -154,18 +156,19 @@ export function DetailAccordionCard({
     leftActionContainer: {
       backgroundColor: colors.surface,
       justifyContent: 'space-evenly',
+      alignItems: 'center',
       borderRadius: 10,
     },
     actionButton: {
       alignItems: 'center',
       justifyContent: 'center',
-      padding: 15,
+      padding: 16,
     },
   });
 
   const cardContent = (
     <View onLayout={(event) => setCardHeight(event.nativeEvent.layout.height)} style={styles.container}>
-      <TouchableOpacity onPress={toggleExpand}>
+      <TouchableOpacity onPress={onPress}>
         <View style={styles.header}>
           <View style={styles.headerLeft}>
             <FontAwesome5 name={statusIcon} size={20} color={statusColor} style={styles.statusIcon} />
@@ -192,7 +195,7 @@ export function DetailAccordionCard({
   );
 
   return (
-    <Swipeable ref={swipeableRef} renderLeftActions={renderLeftActions}>
+    <Swipeable ref={swipeableRef} renderLeftActions={renderLeftActions} leftThreshold={0.1}>
       <NeumorphicWrapper style={{ borderRadius: 8, marginHorizontal: 24, marginVertical: 10 }}>
         {cardContent}
       </NeumorphicWrapper>
