@@ -8,7 +8,7 @@
     "userInterfaceStyle": "automatic",
     "backgroundColor": "#FFFFFF",
     "splash": {
-      "image": "./assets/images/splash.png",
+      "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#FFFFFF",
       "backgroundColorDark": "#121212"
@@ -22,7 +22,7 @@
       "newArchEnabled": true
     },
     "android": {
-      "package": "com.anonymous.unpack-mobile",
+      "package": "dev.unpack.mobile",
       "config": {
         "googleMaps": {
           "apiKey": "YOUR_GOOGLE_MAPS_API_KEY_HERE"
@@ -39,13 +39,11 @@
       "output": "static"
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      "expo-font"
     ],
     "experiments": {
       "typedRoutes": true
-    },
-    "dark": {
-      "backgroundColor": "#121212"
     }
   }
 }
