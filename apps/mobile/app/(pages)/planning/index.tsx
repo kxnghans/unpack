@@ -78,7 +78,7 @@ export default function PlanningScreen() {
               icon={<FontAwesome5 name={hub.icon} size={48} color={colors.text} />}
               title={hub.title}
               items={hub.items}
-              onPress={() => {
+                            onPress={() => {
                 if (hub.title === 'Wallets') {
                   router.push('/planning/wallets');
                 }
@@ -87,6 +87,9 @@ export default function PlanningScreen() {
                 }
                 if (hub.title === 'Music') {
                   router.push('/planning/music');
+                }
+                if (hub.title === 'Packing') {
+                  router.push('/planning/packing-lists');
                 }
               }}
             />

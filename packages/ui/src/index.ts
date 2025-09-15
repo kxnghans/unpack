@@ -4,6 +4,7 @@
 export * from './BottomSheet';
 export * from './Button';
 export * from './Card';
+export * from './ChecklistRow';
 export * from './DetailAccordionCard';
 export * from './Divider';
 export * from './FilterDialog';
@@ -14,6 +15,7 @@ export * from './HubItemCard';
 export * from './HubRow';
 export * from './InsetNeumorphicInput';
 export * from './MonthTile';
+export * from './NeumorphicButton';
 export * from './PieChart';
 export * from './PillButton';
 export * from './ProgressBar';

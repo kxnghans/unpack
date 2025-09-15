@@ -362,4 +362,31 @@ export const MUSIC_DATA = [
     imageUrl: 'https://picsum.photos/seed/music5/400/300',
     url: 'https://music.apple.com/us/playlist/acoustic-covers/pl.klmno',
   },
-];''
+];
+
+export const PACKING_LISTS = [
+  {
+    id: '1',
+    name: 'Weekend Getaway',
+    items: [
+      { id: '1', name: 'T-shirts', packed: true },
+      { id: '2', name: 'Jeans', packed: true },
+      { id: '3', name: 'Socks', packed: false },
+    ],
+  },
+  {
+    id: '2',
+    name: 'Business Trip',
+    items: [
+      { id: '4', name: 'Laptop', packed: true },
+      { id: '5', name: 'Charger', packed: false },
+      { id: '6', name: 'Business cards', packed: false },
+    ],
+  },
+];
+
+export const MANDATORY_ITEMS = [
+  { id: 'mand-1', name: 'Passport', packed: false, isMandatory: true },
+  { id: 'mand-2', name: 'Phone Charger', packed: false, isMandatory: true },
+  { id: 'mand-3', name: 'House Keys', packed: false, isMandatory: true },
+];

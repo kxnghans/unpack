@@ -1,6 +1,6 @@
 import { Stack, useRouter } from 'expo-router';
 import { useTheme } from '@ui/ThemeProvider';
-import { WALLET_CARDS } from '../../../lib/mock-data';
+import { WALLET_CARDS, PACKING_LISTS } from '../../../lib/mock-data';
 import { View, Pressable, StyleSheet } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 
@@ -67,6 +67,32 @@ export default function PlanningLayout() {
       />
       <Stack.Screen name="add-card" options={{ title: 'Add New Card', headerTitleStyle: { ...typography.fonts.title } }} />
       <Stack.Screen name="add-document" options={{ title: 'Add a Document', headerTitleStyle: { ...typography.fonts.title } }} />
+      <Stack.Screen
+        name="music"
+        options={{
+          title: 'Music Hub',
+        }}
+      />
+      <Stack.Screen
+        name="packing-lists"
+        options={{
+          title: 'Packing Hub',
+          headerRight: () => <NeumorphicAddButton href="/planning/add-packing-list" />,
+        }}
+      />
+      <Stack.Screen name="add-packing-list" options={{ title: 'Add New Packing List', headerTitleStyle: { ...typography.fonts.title } }} />
+      <Stack.Screen
+        name="packing/[id]"
+        options={({ route }) => {
+          const { id } = route.params;
+          const list = PACKING_LISTS.find((l) => l.id === id);
+          return {
+            title: list ? list.name : 'Packing List',
+            headerTitleStyle: { ...typography.fonts.title },
+          };
+        }}
+      />
+      <Stack.Screen name="mandatory-items" options={{ title: 'Mandatory Items', headerTitleStyle: { ...typography.fonts.title } }} />
     </Stack>
   );
 }
