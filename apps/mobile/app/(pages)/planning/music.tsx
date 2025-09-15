@@ -16,17 +16,9 @@ export default function MusicScreen() {
       flex: 1,
       backgroundColor: colors.background,
     },
-    headerContainer: {
-      paddingHorizontal: 24,
-      paddingTop: 24,
-    },
     listContentContainer: {
       paddingHorizontal: 24,
-    },
-    mainTitle: {
-      color: colors.text,
-      marginBottom: 16,
-      ...typography.fonts.pageHeader,
+      paddingTop: 24, // Add padding to the top of the list
     },
   });
 
@@ -42,10 +34,6 @@ export default function MusicScreen() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.headerContainer}>
-        <Text style={styles.mainTitle}>Music</Text>
-        <Divider />
-      </View>
       <FlatList
         data={MUSIC_DATA}
         renderItem={renderMusicItem}
