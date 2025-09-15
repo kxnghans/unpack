@@ -6,7 +6,7 @@ import { useTheme } from './ThemeProvider';
 export interface UpcomingCardProps {
   imageUrl: string;
   icon: React.ReactNode;
-  title: string;
+  title: React.ReactNode;
   body: string;
   onPress?: () => void;
 }
@@ -109,7 +109,7 @@ export function UpcomingCard({ imageUrl, icon, title, body, onPress }: UpcomingC
       <View style={styles.whiteBlockWrapper}>
         <NeumorphicWrapper>
           <View style={styles.whiteBlock}>
-            <Text style={styles.title}>{title}</Text>
+            {typeof title === 'string' ? <Text style={styles.title}>{title}</Text> : title}
             <Text style={styles.body} numberOfLines={2}>{body}</Text>
           </View>
         </NeumorphicWrapper>
