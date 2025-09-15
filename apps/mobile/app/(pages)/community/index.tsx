@@ -108,9 +108,10 @@ const CommunityScreen = () => {
     },
     contentFeed: {
       flex: 1,
-      paddingHorizontal: 24,
+      paddingLeft: 40,
     },
     card: {
+      aspectRatio: 3 / 2,
       marginVertical: 15,
       borderRadius: 12,
       backgroundColor: colors.card,
@@ -121,12 +122,13 @@ const CommunityScreen = () => {
       elevation: 5,
     },
     cardImage: {
+      flex: 0.8,
       width: '100%',
-      aspectRatio: 10 / 4,
       borderTopLeftRadius: 12,
       borderTopRightRadius: 12,
     },
     cardInfo: {
+      flex: 0.2,
       padding: 12,
       flexDirection: 'row',
       justifyContent: 'space-between',
@@ -134,17 +136,17 @@ const CommunityScreen = () => {
     },
     cardTextContainer: { flex: 1, marginRight: 10 },
     cardTitle: {
-      ...typography.fonts.title,
+      ...typography.fonts.subtitle,
       color: colors.text,
       marginBottom: 4,
     },
     cardBody: {
-            ...typography.fonts.body,
+            ...typography.fonts.caption,
       color: colors.textSecondary,
     },
     authorContainer: { flexDirection: 'row', alignItems: 'center' },
     cardAuthorName: {
-      ...typography.fonts.subtitle,
+      ...typography.fonts.body,
       color: colors.textSecondary,
       marginRight: 8,
     },
@@ -257,7 +259,10 @@ const CommunityScreen = () => {
             onFilterPress={handleFilterPress}
           />
         )}
-        <ScrollView style={styles.contentFeed}>
+                <ScrollView
+          style={{ flex: 1 }}
+          contentContainerStyle={styles.contentFeed}
+        >
           {guides.map((guide) => (
             <View style={styles.card} key={guide.id}>
               <Image source={{ uri: guide.image }} style={styles.cardImage} />

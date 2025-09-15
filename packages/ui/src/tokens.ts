@@ -33,6 +33,7 @@ export const theme = {
       semiannual: '#FEF9E7',
       oneTime: '#D5F5E3',
       mediumGrey: '#E0E0E0',
+      disabled: '#D3D3D3',
     },
     gradients: {
       primary: ['#007bff', '#0056b3'],
@@ -80,24 +81,14 @@ export const theme = {
           fontSize: 14,
           fontWeight: '500',
         },
-        description: {
+        body: {
           fontFamily: 'Inter',
           fontSize: 14,
           fontWeight: '400',
         },
         caption: {
           fontFamily: 'Inter',
-          fontSize: 11,
-          fontWeight: '400',
-        },
-        heading3: {
-          fontFamily: 'NunitoSans',
-          fontSize: 18,
-          fontWeight: '700',
-        },
-        body: {
-          fontFamily: 'Inter',
-          fontSize: 16,
+          fontSize: 11.5,
           fontWeight: '400',
         },
       },
@@ -137,6 +128,7 @@ export const theme = {
       semiannual: '#4B4A3E',
       oneTime: '#3E4B40',
       mediumGrey: '#2E2E2E',
+      disabled: '#3A3A3A',
     },
     gradients: {
       primary: ['#BB86FC', '#3700B3'],
@@ -184,7 +176,7 @@ export const theme = {
           fontSize: 14,
           fontWeight: '500',
         },
-        description: {
+        body: {
           fontFamily: 'Inter',
           fontSize: 14,
           fontWeight: '400',
@@ -192,16 +184,6 @@ export const theme = {
         caption: {
           fontFamily: 'Inter',
           fontSize: 11,
-          fontWeight: '400',
-        },
-        heading3: {
-          fontFamily: 'NunitoSans',
-          fontSize: 18,
-          fontWeight: '700',
-        },
-        body: {
-          fontFamily: 'Inter',
-          fontSize: 16,
           fontWeight: '400',
         },
       },
