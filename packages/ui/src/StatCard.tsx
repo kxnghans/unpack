@@ -25,7 +25,7 @@ export const StatCard = ({ label, value, unit, icon }: StatCardProps) => {
       marginBottom: spacing.small,
     },
     value: {
-      ...typography.fonts.heading3,
+      ...typography.fonts.title,
       textAlign: 'center',
       color: colors.text,
     },

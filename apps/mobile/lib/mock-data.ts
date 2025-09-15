@@ -2,6 +2,8 @@
  * Mock data for the app.
  */
 
+import { nanoid } from 'nanoid/non-secure';
+
 export const HUBS = [
   {
     id: '1',
@@ -283,3 +285,81 @@ export const MOCK_USER = {
   image: 'https://i.pravatar.cc/150?u=kobby',
   plan: 'Free',
 };
+
+export const POPULAR_DOCUMENTS = [
+  { id: '1', name: 'Passport' },
+  { id: '2', name: 'Visa' },
+  { id: '3', name: 'ID' },
+  { id: '4', name: 'Immunizations' },
+  { id: '5', name: 'Other', isCustom: true },
+];
+
+export const MOCK_UPLOADED_DOCUMENTS = [
+  {
+    id: nanoid(),
+    type: { id: '1', name: 'Passport' },
+    status: 'Uploaded' as const,
+    customName: '',
+    uploadedAt: new Date(),
+    uri: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
+  },
+  {
+    id: nanoid(),
+    type: { id: '2', name: 'Visa' },
+    status: 'Uploaded' as const,
+    customName: '',
+    uploadedAt: new Date(),
+    uri: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
+  },
+  {
+    id: nanoid(),
+    type: { id: '5', name: 'Other', isCustom: true },
+    status: 'Uploaded' as const,
+    customName: 'Drivers License',
+    uploadedAt: new Date(),
+    uri: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
+  },
+];
+
+export const MUSIC_DATA = [
+  {
+    id: '1',
+    type: 'playlist',
+    title: 'Chill Vibes',
+    body: 'Relax and unwind with these calming tracks.',
+    imageUrl: 'https://picsum.photos/seed/music1/400/300',
+    url: 'https://music.apple.com/us/playlist/chill-vibes/pl.12345',
+  },
+  {
+    id: '2',
+    type: 'playlist',
+    title: 'Workout Hits',
+    body: 'Get pumped up with these high-energy anthems.',
+    imageUrl: 'https://picsum.photos/seed/music2/400/300',
+    url: 'https://music.apple.com/us/playlist/workout-hits/pl.67890',
+  },
+  {
+    id: '3',
+    type: 'playlist',
+    title: 'Indie Folk',
+    body: 'Discover new and emerging indie folk artists.',
+    imageUrl: 'https://picsum.photos/seed/music3/400/300',
+    url: 'https://music.apple.com/us/playlist/indie-folk/pl.abcde',
+  },
+  {
+    id: '4',
+    type: 'playlist',
+    title: 'Throwback Jams',
+    body: 'Relive the good old days with these classic hits.',
+    imageUrl: 'https://picsum.photos/seed/music4/400/300',
+    url: 'https://music.apple.com/us/playlist/throwback-jams/pl.fghij',
+  },
+  {
+    id: '5',
+    type: 'playlist',
+    title: 'Acoustic Covers',
+    body: 'Your favorite songs, reimagined.',
+    imageUrl: 'https://picsum.photos/seed/music5/400/300',
+    url: 'https://music.apple.com/us/playlist/acoustic-covers/pl.klmno',
+  },
+];''

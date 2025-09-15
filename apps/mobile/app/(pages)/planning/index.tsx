@@ -78,9 +78,17 @@ export default function PlanningScreen() {
               icon={<FontAwesome5 name={hub.icon} size={48} color={colors.text} />}
               title={hub.title}
               items={hub.items}
-              onPress={() =>
-                hub.title === 'Wallets' && router.push('/planning/wallets')
-              }
+              onPress={() => {
+                if (hub.title === 'Wallets') {
+                  router.push('/planning/wallets');
+                }
+                if (hub.title === 'Documents') {
+                  router.push('/planning/documents');
+                }
+                if (hub.title === 'Music') {
+                  router.push('/planning/music');
+                }
+              }}
             />
           ))}
         </ScrollView>

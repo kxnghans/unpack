@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TextInput, StyleSheet, Text } from 'react-native';
+import { View, TextInput, StyleSheet, Text, KeyboardTypeOptions } from 'react-native';
 import { useTheme } from './ThemeProvider';
 
 const InsetNeumorphicWrapper = ({ children, style }) => {
@@ -31,7 +31,19 @@ const InsetNeumorphicWrapper = ({ children, style }) => {
   );
 };
 
-export const InsetNeumorphicInput = ({ value, onChangeText, placeholder }) => {
+export const InsetNeumorphicInput = ({
+  value,
+  onChangeText,
+  placeholder,
+  showDollarSign = true,
+  keyboardType = 'numeric',
+}: {
+  value: string;
+  onChangeText: (text: string) => void;
+  placeholder: string;
+  showDollarSign?: boolean;
+  keyboardType?: KeyboardTypeOptions;
+}) => {
   const { colors, typography } = useTheme();
 
   const styles = StyleSheet.create({
@@ -56,13 +68,13 @@ export const InsetNeumorphicInput = ({ value, onChangeText, placeholder }) => {
   return (
     <InsetNeumorphicWrapper>
       <View style={styles.container}>
-        <Text style={styles.dollarSign}>$</Text>
+        {showDollarSign && <Text style={styles.dollarSign}>$</Text>}
         <TextInput
           style={styles.input}
           value={value}
           onChangeText={onChangeText}
           placeholder={placeholder}
-          keyboardType="numeric"
+          keyboardType={keyboardType}
         />
       </View>
     </InsetNeumorphicWrapper>
