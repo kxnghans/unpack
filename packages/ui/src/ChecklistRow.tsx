@@ -1,22 +1,66 @@
+/**
+ * This file defines the ChecklistRow component, which is a single row in a checklist.
+ * It includes a checkbox, a text input, and a delete button, with support for mandatory items.
+ */
 import React, { forwardRef } from 'react';
 import { View, TextInput, StyleSheet, TouchableOpacity, Text } from 'react-native';
 import { useTheme } from './ThemeProvider';
 import { FontAwesome, FontAwesome5, Feather } from '@expo/vector-icons';
 
+/**
+ * The props for the ChecklistRow component.
+ */
 export interface ChecklistRowProps {
+  /**
+   * The text of the checklist item.
+   */
   text: string;
+  /**
+   * Whether the item is checked.
+   */
   checked: boolean;
+  /**
+   * A function to call when the checked state is toggled.
+   */
   onToggle: () => void;
+  /**
+   * A function to call when the text is changed.
+   */
   onChangeText: (text: string) => void;
+  /**
+   * A function to call when the item is deleted.
+   */
   onDelete: () => void;
+  /**
+   * Whether the item is currently active (e.g., being edited).
+   */
   isActive?: boolean;
+  /**
+   * A function to call when the item is focused.
+   */
   onFocus: () => void;
+  /**
+   * A function to call when the item is blurred.
+   */
   onBlur: () => void;
+  /**
+   * Whether the item is mandatory.
+   */
   isMandatory?: boolean;
+  /**
+   * Whether the mandatory item can be edited.
+   */
   allowMandatoryEdit?: boolean;
+  /**
+   * Whether the toggle is disabled.
+   */
   isToggleDisabled?: boolean;
 }
 
+/**
+ * A wrapper component that creates an inset neumorphic effect.
+ * This is used to give the active text input a "pressed in" look.
+ */
 const InsetNeumorphicWrapper = ({ children, style }) => {
   const { colors } = useTheme();
   const styles = StyleSheet.create({
@@ -46,6 +90,10 @@ const InsetNeumorphicWrapper = ({ children, style }) => {
   );
 };
 
+/**
+ * A tag to indicate that a checklist item is mandatory.
+ * It's a small, styled component with a shield icon.
+ */
 const MandatoryTag = () => {
   const { colors, typography } = useTheme();
   const styles = StyleSheet.create({
@@ -74,6 +122,10 @@ const MandatoryTag = () => {
   );
 };
 
+/**
+ * A component that represents a single row in a checklist.
+ * It's a forwardRef component to allow the parent to focus the TextInput.
+ */
 export const ChecklistRow = forwardRef<TextInput, ChecklistRowProps>(
   (
     {
@@ -155,6 +207,7 @@ export const ChecklistRow = forwardRef<TextInput, ChecklistRowProps>(
 
     return (
       <View style={styles.container}>
+        {/* The checkbox or a static icon if the toggle is disabled. */}
         {isToggleDisabled ? (
           <View style={styles.staticIconContainer}>
             <FontAwesome5 name="suitcase" size={16} color={colors.textSecondary} />
@@ -169,13 +222,16 @@ export const ChecklistRow = forwardRef<TextInput, ChecklistRowProps>(
             )}
           </TouchableOpacity>
         )}
+        {/* The main content of the row, including the text input. */}
         <View style={{ flex: 1 }}>
+          {/* The input is wrapped in a neumorphic wrapper when it's active. */}
           {isActive ? (
             <InsetNeumorphicWrapper>{inputContent}</InsetNeumorphicWrapper>
           ) : (
             inputContent
           )}
         </View>
+        {/* The delete button on the right side of the row. */}
         <TouchableOpacity onPress={onDelete} style={styles.deleteButton}>
           <FontAwesome name="trash" size={20} color={colors.textSecondary} />
         </TouchableOpacity>

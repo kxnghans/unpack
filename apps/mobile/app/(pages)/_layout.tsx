@@ -1,3 +1,6 @@
+/**
+ * This file defines the layout for the main tab navigator of the app.
+ */
 import { Tabs } from 'expo-router';
 import React from 'react';
 import { Feather } from '@expo/vector-icons';
@@ -22,6 +25,7 @@ export default function TabLayout() {
           paddingBottom: 0,
         },
       }}>
+      {/* The Planning tab. */}
       <Tabs.Screen
         name="planning"
         options={{
@@ -31,6 +35,7 @@ export default function TabLayout() {
           ),
         }}
       />
+      {/* The Community tab. */}
       <Tabs.Screen
         name="community"
         options={{
@@ -40,6 +45,7 @@ export default function TabLayout() {
           ),
         }}
       />
+      {/* The Personal tab. */}
       <Tabs.Screen
         name="personal"
         options={{
@@ -52,3 +58,4 @@ export default function TabLayout() {
     </Tabs>
   );
 }
+

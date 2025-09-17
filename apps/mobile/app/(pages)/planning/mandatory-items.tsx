@@ -9,11 +9,19 @@ import {
 import { useTheme, ChecklistRow } from '@ui';
 import { MANDATORY_ITEMS } from '../../../lib/mock-data';
 
+/**
+ * Screen for managing mandatory packing list items.
+ */
 export default function MandatoryItemsScreen() {
   const { colors, typography } = useTheme();
   const [items, setItems] = useState(MANDATORY_ITEMS);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
+  /**
+   * Handles changes to the text of a mandatory item.
+   * @param {string} itemId - The ID of the item to change.
+   * @param {string} newText - The new text for the item.
+   */
   const handleChangeText = (itemId, newText) => {
     setItems((prevItems) =>
       prevItems.map((item) =>
@@ -22,10 +30,17 @@ export default function MandatoryItemsScreen() {
     );
   };
 
+  /**
+   * Deletes a mandatory item.
+   * @param {string} itemId - The ID of the item to delete.
+   */
   const handleDelete = (itemId) => {
     setItems((prevItems) => prevItems.filter((item) => item.id !== itemId));
   };
 
+  /**
+   * Adds a new mandatory item.
+   */
   const handleAddItem = () => {
     const newItem = { id: Date.now().toString(), name: '', packed: false, isMandatory: true };
     setItems((prevItems) => {
@@ -62,6 +77,9 @@ export default function MandatoryItemsScreen() {
     },
   });
 
+  /**
+   * Renders the footer component for the FlatList.
+   */
   const renderFooter = () => (
     <View style={styles.buttonContainer}>
       <TouchableOpacity

@@ -1,6 +1,13 @@
+/**
+ * This file defines the Onboarding screen, which is a placeholder for the
+ * app's onboarding flow.
+ */
 import { View, Text, StyleSheet } from "react-native";
 import { useTheme } from "@ui/ThemeProvider";
 
+/**
+ * The onboarding screen.
+ */
 export default function Onboarding() {
   const { typography } = useTheme();
 

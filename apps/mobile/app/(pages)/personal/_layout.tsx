@@ -1,3 +1,6 @@
+/**
+ * This file defines the layout for the personal section of the app.
+ */
 import { Stack } from 'expo-router';
 import { useTheme } from '@ui/ThemeProvider';
 
@@ -20,6 +23,7 @@ export default function PersonalLayout() {
         },
       }}
     >
+      {/* The index screen of the personal tab. */}
       <Stack.Screen name="index" options={{ headerShown: false }} />
     </Stack>
   );

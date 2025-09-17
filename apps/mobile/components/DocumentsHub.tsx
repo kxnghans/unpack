@@ -1,3 +1,7 @@
+/**
+ * This file defines the DocumentsHub component, which allows users to manage
+ * and upload their travel documents.
+ */
 import React, { useState } from 'react';
 import {
   View,
@@ -15,6 +19,13 @@ import { useDocumentUploader } from '../lib/hooks/useDocumentUploader';
 import { useRouter } from 'expo-router';
 import { Feather } from '@expo/vector-icons';
 
+/**
+ * A component that displays a single document item, with a button to upload it.
+ * @param {object} props - The component props.
+ * @param {UserDocument} props.document - The document to display.
+ * @param {() => void} props.onUpload - A function to call when the upload button is pressed.
+ * @param {boolean} props.disabled - Whether the upload button is disabled.
+ */
 const DocumentItem = ({
   document,
   onUpload,
@@ -63,6 +74,7 @@ const DocumentItem = ({
         style={styles.uploadButton}
         disabled={isUploaded || disabled}
       >
+        {/* Show a loading indicator when the upload is in progress. */}
         {disabled && !isUploaded ? (
           <ActivityIndicator size="small" color={colors.white} />
         ) : (
@@ -75,6 +87,12 @@ const DocumentItem = ({
   );
 };
 
+/**
+ * A component that allows the user to upload a custom document with a custom name.
+ * @param {object} props - The component props.
+ * @param {(customName: string) => void} props.onUpload - A function to call when the upload button is pressed.
+ * @param {boolean} props.disabled - Whether the upload button is disabled.
+ */
 const OtherDocumentItem = ({
   onUpload,
   disabled,
@@ -132,6 +150,9 @@ const OtherDocumentItem = ({
     },
   });
 
+  /**
+   * Handles the upload of a custom document, then resets the state.
+   */
   const handleUpload = () => {
     onUpload(customName);
     setCustomName('');
@@ -142,6 +163,7 @@ const OtherDocumentItem = ({
     <View style={styles.container}>
       <View style={styles.row}>
         <Text style={styles.name}>Other</Text>
+        {/* The plus/minus button toggles the visibility of the custom input field. */}
         <TouchableOpacity
           onPress={() => setIsAddingOther(!isAddingOther)}
           style={styles.iconButton}
@@ -149,6 +171,7 @@ const OtherDocumentItem = ({
           <Feather name={isAddingOther ? 'minus-circle' : 'plus-circle'} size={24} color={colors.primary} />
         </TouchableOpacity>
       </View>
+      {/* The custom input field is only shown when isAddingOther is true. */}
       {isAddingOther && (
         <View style={styles.inputContainer}>
           <Text style={styles.asterisk}>*</Text>
@@ -178,11 +201,16 @@ const OtherDocumentItem = ({
   );
 };
 
+/**
+ * A component that displays a list of documents and allows the user to upload them.
+ * It manages the state of pending and uploaded documents.
+ */
 export const DocumentsHub = () => {
   const { colors, typography } = useTheme();
   const router = useRouter();
   const { uploadDocument, loading } = useDocumentUploader();
 
+  // The list of documents that have not yet been uploaded.
   const [pendingDocuments, setPendingDocuments] = useState<UserDocument[]>(
     POPULAR_DOCUMENTS.filter((doc) => !doc.isCustom).map((doc) => ({
       id: nanoid(),
@@ -191,20 +219,31 @@ export const DocumentsHub = () => {
       customName: '',
     }))
   );
+  // The list of documents that have been successfully uploaded.
   const [uploadedDocuments, setUploadedDocuments] = useState<UserDocument[]>([]);
 
+  /**
+   * Handles the upload of a document.
+   * @param {UserDocument} docToUpload - The document to upload.
+   */
   const handleUpload = async (docToUpload: UserDocument) => {
     const result = await uploadDocument(docToUpload);
     if (result.success) {
       const uploadedDoc = { ...docToUpload, status: 'Uploaded' as const };
+      // Move the document from the pending list to the uploaded list.
       setUploadedDocuments((docs) => [...docs, uploadedDoc]);
       setPendingDocuments((docs) =>
         docs.filter((d) => d.id !== docToUpload.id)
       );
+      // Navigate back to the previous screen after a short delay.
       setTimeout(() => router.back(), 500);
     }
   };
 
+  /**
+   * Handles the upload of a custom document.
+   * @param {string} customName - The name of the custom document.
+   */
   const handleOtherUpload = async (customName: string) => {
     const otherDocType = POPULAR_DOCUMENTS.find((doc) => doc.isCustom);
     if (otherDocType) {
@@ -243,6 +282,7 @@ export const DocumentsHub = () => {
     <View style={styles.card}>
       <Text style={styles.title}>Documents</Text>
       <ScrollView>
+        {/* Display the list of uploaded documents. */}
         {uploadedDocuments.map((doc) => (
           <UpcomingCard
             key={doc.id}
@@ -252,6 +292,7 @@ export const DocumentsHub = () => {
             icon={<Feather name="check-circle" size={24} color="white" />}
           />
         ))}
+        {/* Display the list of pending documents. */}
         {pendingDocuments.map((doc) => (
           <DocumentItem
             key={doc.id}
@@ -260,6 +301,7 @@ export const DocumentsHub = () => {
             disabled={loading}
           />
         ))}
+        {/* The component for uploading a custom document. */}
         <OtherDocumentItem onUpload={handleOtherUpload} disabled={loading} />
       </ScrollView>
     </View>

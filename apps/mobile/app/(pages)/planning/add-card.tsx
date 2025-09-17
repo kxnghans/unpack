@@ -1,9 +1,17 @@
+/**
+ * This file defines the AddCardScreen, a form for adding a new wallet card
+ * to the user's collection.
+ */
 import { View, Text, StyleSheet, TextInput, FlatList, Pressable } from 'react-native';
 import React, { useState } from 'react';
 import { useTheme } from '@ui';
 import { WALLET_CARDS } from '../../../lib/mock-data';
 import { FontAwesome5 } from '@expo/vector-icons';
 
+/**
+ * A wrapper component that creates an inset neumorphic effect for inputs.
+ * This gives the input a "pressed in" look.
+ */
 const InsetNeumorphicInput = ({ children }) => {
   const { colors } = useTheme();
   const styles = StyleSheet.create({
@@ -51,6 +59,9 @@ const InsetNeumorphicInput = ({ children }) => {
   );
 };
 
+/**
+ * A neumorphic button component for submitting the form.
+ */
 const NeumorphicButton = ({ title, onPress }) => {
   const { colors, typography } = useTheme();
   const styles = StyleSheet.create({
@@ -99,6 +110,11 @@ const NeumorphicButton = ({ title, onPress }) => {
   );
 };
 
+/**
+ * Screen for adding a new wallet card.
+ * It includes a searchable dropdown for selecting a card and a field for entering
+ * the annual redemption value.
+ */
 export default function AddCardScreen() {
   const { colors, typography } = useTheme();
   const [searchTerm, setSearchTerm] = useState('');
@@ -106,6 +122,7 @@ export default function AddCardScreen() {
   const [annualValue, setAnnualValue] = useState('');
   const [isDropdownVisible, setDropdownVisible] = useState(false);
 
+  // Filter the list of wallet cards based on the user's search term.
   const filteredCards = WALLET_CARDS.filter((card) =>
     card.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -147,12 +164,20 @@ export default function AddCardScreen() {
     },
   });
 
+  /**
+   * Handles the selection of a card from the dropdown list.
+   * @param {object} card - The selected card object.
+   */
   const handleSelectCard = (card) => {
     setSelectedCard(card);
     setSearchTerm(card.name);
     setDropdownVisible(false);
   };
 
+  /**
+   * Handles the submission of the form.
+   * In a real app, this would likely involve making an API call.
+   */
   const handleSubmit = () => {
     console.log('Selected Card:', selectedCard);
     console.log('Annual Value:', annualValue);
@@ -160,6 +185,7 @@ export default function AddCardScreen() {
 
   return (
     <View style={styles.container}>
+      {/* The card selection form element. */}
       <View style={styles.formElement}>
         <Text style={styles.label}>Select a Card</Text>
         <InsetNeumorphicInput>
@@ -179,6 +205,7 @@ export default function AddCardScreen() {
             <FontAwesome5 name="chevron-down" size={16} color={colors.textSecondary} />
           </Pressable>
         </InsetNeumorphicInput>
+        {/* The dropdown list of filtered cards. */}
         {isDropdownVisible && filteredCards.length > 0 && !selectedCard && (
           <View style={styles.dropdown}>
             <FlatList
@@ -194,6 +221,7 @@ export default function AddCardScreen() {
         )}
       </View>
 
+      {/* The annual redemption value form element. */}
       <View style={styles.formElement}>
         <Text style={styles.label}>Past Annual Redemption Value</Text>
         <InsetNeumorphicInput>
@@ -209,6 +237,7 @@ export default function AddCardScreen() {
         </InsetNeumorphicInput>
       </View>
 
+      {/* The submit button. */}
       <NeumorphicButton title="Submit" onPress={handleSubmit} />
     </View>
   );

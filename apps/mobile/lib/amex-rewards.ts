@@ -1,3 +1,8 @@
+/**
+ * This file contains mock data for American Express rewards, categorized by
+ * their status (used, inProgress, unused). This data is used for populating
+ * the rewards and benefits sections of the app.
+ */
 export const amexRewards = {
   used: [
     {

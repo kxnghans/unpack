@@ -1,3 +1,7 @@
+/**
+ * This file defines the DocumentsScreen, which displays a list of the user's
+ * uploaded documents.
+ */
 import React, { useState, useCallback } from 'react';
 import { View, StyleSheet, Text, Linking } from 'react-native';
 import { useFocusEffect } from 'expo-router';
@@ -7,13 +11,20 @@ import { UserDocument } from '@utils';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { MOCK_UPLOADED_DOCUMENTS } from '../../../lib/mock-data';
 
+/**
+ * Screen that displays a list of uploaded documents.
+ * It uses a simple in-memory store to persist documents across screen navigations.
+ */
 export default function DocumentsScreen() {
   const { colors, typography } = useTheme();
   const [uploadedDocs, setUploadedDocs] = useState<UserDocument[]>(MOCK_UPLOADED_DOCUMENTS);
 
+  // The useFocusEffect hook runs when the screen comes into focus.
+  // It's used here to load documents from the store and subscribe to updates.
   useFocusEffect(
     useCallback(() => {
       const storeDocs = documentStore.getDocuments();
+      // Merge the documents from the store with the existing documents in state, avoiding duplicates.
       setUploadedDocs(prevDocs => {
         const allDocs = [...prevDocs];
         storeDocs.forEach(storeDoc => {
@@ -24,7 +35,7 @@ export default function DocumentsScreen() {
         return allDocs;
       });
 
-      // Subscribe to future updates while the screen is focused
+      // Subscribe to future updates to the document store.
       const unsubscribe = documentStore.subscribe(() => {
         const storeDocs = documentStore.getDocuments();
         setUploadedDocs(prevDocs => {
@@ -38,10 +49,15 @@ export default function DocumentsScreen() {
         });
       });
 
+      // Unsubscribe from the document store when the screen goes out of focus.
       return () => unsubscribe();
     }, [])
   );
 
+  /**
+   * Handles pressing on a document card by opening the document's URI.
+   * @param {string} uri - The URI of the document to open.
+   */
   const handlePressDocument = (uri: string) => {
     Linking.canOpenURL(uri).then(supported => {
       if (supported) {
@@ -68,6 +84,7 @@ export default function DocumentsScreen() {
     },
   });
 
+  // If there are no uploaded documents, display a placeholder message.
   if (uploadedDocs.length === 0) {
     return (
       <View style={styles.placeholderContainer}>
@@ -78,6 +95,7 @@ export default function DocumentsScreen() {
 
   return (
     <View style={styles.container}>
+      {/* The CardGrid component is used to display the documents in a grid format. */}
       <CardGrid
         data={uploadedDocs}
         keyExtractor={(item) => item.id}
@@ -94,3 +112,4 @@ export default function DocumentsScreen() {
     </View>
   );
 }
+
