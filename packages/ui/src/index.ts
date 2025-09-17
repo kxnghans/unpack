@@ -4,6 +4,7 @@
 export * from './BottomSheet';
 export * from './Button';
 export * from './Card';
+export * from './CardGrid';
 export * from './ChecklistRow';
 export * from './DetailAccordionCard';
 export * from './Divider';

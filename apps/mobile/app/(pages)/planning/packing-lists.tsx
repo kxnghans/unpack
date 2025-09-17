@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet, FlatList } from 'react-native';
-import { UpcomingCard, useTheme } from '@ui';
+import { View, Text, StyleSheet } from 'react-native';
+import { UpcomingCard, useTheme, CardGrid } from '@ui';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { PACKING_LISTS, MANDATORY_ITEMS } from '../../../lib/mock-data';
 import { useRouter } from 'expo-router';
@@ -22,10 +22,6 @@ export default function PackingListsScreen() {
     container: {
       flex: 1,
       backgroundColor: colors.background,
-    },
-    listContentContainer: {
-      paddingHorizontal: 24,
-      paddingTop: 24,
     },
     titleContainer: {
       flexDirection: 'row',
@@ -81,12 +77,10 @@ export default function PackingListsScreen() {
 
   return (
     <View style={styles.container}>
-      <FlatList
+      <CardGrid
         data={allLists}
         renderItem={renderPackingListItem}
         keyExtractor={(item) => item.id}
-        numColumns={2}
-        contentContainerStyle={styles.listContentContainer}
       />
     </View>
   );

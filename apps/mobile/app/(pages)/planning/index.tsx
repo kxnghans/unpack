@@ -2,7 +2,6 @@ import {
   View,
   Text,
   StyleSheet,
-  FlatList,
   ScrollView,
   Linking,
 } from 'react-native';
@@ -11,6 +10,7 @@ import {
   UpcomingCard,
   useTheme,
   Divider,
+  CardGrid,
 } from '@ui';
 import { HUBS, UPCOMING_ITEMS } from '../../../lib/mock-data';
 import { FontAwesome5 } from '@expo/vector-icons';
@@ -37,9 +37,6 @@ export default function PlanningScreen() {
     headerContainer: {
       paddingHorizontal: 24,
       paddingTop: 24,
-    },
-    listContentContainer: {
-      paddingHorizontal: 24,
     },
     mainTitle: {
       color: colors.text,
@@ -107,13 +104,11 @@ export default function PlanningScreen() {
         <Text style={styles.mainTitle}>Planning</Text>
         <Divider />
       </View>
-      <FlatList
+      <CardGrid
         data={UPCOMING_ITEMS}
         renderItem={renderUpcomingItem}
         keyExtractor={(item) => item.id}
-        numColumns={2}
         ListHeaderComponent={ListHeader}
-        contentContainerStyle={styles.listContentContainer}
       />
     </View>
   );
