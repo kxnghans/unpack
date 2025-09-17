@@ -1,3 +1,7 @@
+/**
+ * This file defines the FilterDrawer component, a sidebar drawer that displays
+ * a list of filters.
+ */
 import React from 'react';
 import {
   View,
@@ -9,6 +13,12 @@ import {
 import { useTheme } from '@ui/ThemeProvider';
 import { FontAwesome } from '@expo/vector-icons';
 
+/**
+ * A drawer that displays a list of filters.
+ * @param {object} props - The component props.
+ * @param {Array<object>} props.filters - An array of filters to display.
+ * @param {(id: string) => void} props.onFilterPress - A function to call when a filter is pressed.
+ */
 const FilterDrawer = ({ filters, onFilterPress }) => {
   const { colors, typography } = useTheme();
 
@@ -59,6 +69,7 @@ const FilterDrawer = ({ filters, onFilterPress }) => {
           </TouchableOpacity>
         ))}
       </ScrollView>
+      {/* A vertical divider with a shadow to separate the drawer from the main content. */}
       <View style={styles.divider} />
     </View>
   );

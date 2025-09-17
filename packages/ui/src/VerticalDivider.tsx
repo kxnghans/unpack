@@ -1,6 +1,14 @@
+/**
+ * This file defines the VerticalDivider component, a vertical line used to
+ * separate content, with a neumorphic design.
+ */
 import { View, StyleSheet } from 'react-native';
 import { useTheme } from './ThemeProvider';
 
+/**
+ * A vertical line to separate content.
+ * It features a neumorphic design to give it a sense of depth.
+ */
 export function VerticalDivider() {
   const { colors } = useTheme();
 
@@ -31,6 +39,7 @@ export function VerticalDivider() {
   });
 
   return (
+    // The neumorphic effect is created by nesting two views with different shadows.
     <View style={styles.darkShadow}>
         <View style={styles.lightShadow}>
             <View style={styles.container} />
@@ -38,3 +47,4 @@ export function VerticalDivider() {
   </View>
   )
 }
+

@@ -1,19 +1,39 @@
+/**
+ * This file defines the StatsHeader component, which is the header for the
+ * stats screen. It includes user information, theme selection, and tabs for
+ * switching between personal and creator stats.
+ */
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { useTheme, SegmentedControl } from '@ui';
 import { Feather } from '@expo/vector-icons';
 
+/**
+ * The tabs for the main segmented control (Personal vs. Creator).
+ */
 const TABS = [
   { key: 'personal', title: 'Personal', iconName: 'user' },
   { key: 'creator', title: 'Creator', iconName: 'edit-3' },
 ];
 
+/**
+ * The tabs for the theme segmented control (Auto, Light, Dark).
+ */
 const THEME_TABS = [
   { key: 'auto', title: 'Auto', iconName: 'cpu' },
   { key: 'light', title: 'Light', iconName: 'sun' },
   { key: 'dark', title: 'Dark', iconName: 'moon' },
 ];
 
+/**
+ * The header component for the stats screen.
+ * @param {object} props - The component props.
+ * @param {object} props.user - The user object.
+ * @param {string} props.activeTab - The currently active tab.
+ * @param {(key: string) => void} props.onTabPress - A function to call when a tab is pressed.
+ * @param {boolean} props.isThemeExpanded - Whether the theme selection is expanded.
+ * @param {() => void} props.onToggleThemeExpanded - A function to call when the theme selection is toggled.
+ */
 export const StatsHeader = ({ user, activeTab, onTabPress, isThemeExpanded, onToggleThemeExpanded }) => {
   const { colors, typography, spacing, theme, themePreference, setThemePreference, toggleTheme } = useTheme();
 
@@ -128,6 +148,11 @@ export const StatsHeader = ({ user, activeTab, onTabPress, isThemeExpanded, onTo
     },
   });
 
+  /**
+   * A component that displays a tag for the user's plan (e.g., Free or Premium).
+   * @param {object} props - The component props.
+   * @param {string} props.plan - The user's plan.
+   */
   const PlanTag = ({ plan }) => {
     const isPremium = plan.toLowerCase() === 'premium';
     const tagStyle = isPremium ? styles.premiumPlan : styles.freePlan;
@@ -145,19 +170,22 @@ export const StatsHeader = ({ user, activeTab, onTabPress, isThemeExpanded, onTo
 
   return (
     <View style={styles.headerContainer}>
-      {/* Row 1 */}
+      {/* Row 1: Title and theme controls */}
       <View style={styles.row1}>
         <Text style={styles.statsTitle}>My Stats</Text>
         <View style={styles.themeControlContainer}>
+          {/* A button to quickly toggle between light and dark mode. */}
           <TouchableOpacity style={styles.themeToggleButton} onPress={toggleTheme}>
             <Feather name={theme === 'light' ? 'moon' : 'sun'} size={20} color={colors.text} />
           </TouchableOpacity>
+          {/* A button to expand or collapse the theme selection segmented control. */}
           <TouchableOpacity style={styles.expansionButton} onPress={onToggleThemeExpanded}>
             <Feather name={isThemeExpanded ? 'chevron-up' : 'chevron-down'} size={24} color={colors.text} />
           </TouchableOpacity>
         </View>
       </View>
 
+      {/* The expanded theme selection segmented control, shown only when isThemeExpanded is true. */}
       {isThemeExpanded && (
         <View style={styles.expandedThemeContainer} onStartShouldSetResponder={() => true}>
           <SegmentedControl
@@ -168,7 +196,7 @@ export const StatsHeader = ({ user, activeTab, onTabPress, isThemeExpanded, onTo
         </View>
       )}
 
-      {/* Row 2 */}
+      {/* Row 2: User info and edit profile button */}
       <View style={styles.row2}>
         <View style={styles.userInfoContainer}>
           <Image source={{ uri: user.image }} style={styles.avatar} />
@@ -182,7 +210,7 @@ export const StatsHeader = ({ user, activeTab, onTabPress, isThemeExpanded, onTo
         </TouchableOpacity>
       </View>
 
-      {/* Row 3 */}
+      {/* Row 3: Main segmented control for switching between stats views */}
       <View style={styles.row3}>
         <SegmentedControl
           tabs={TABS}

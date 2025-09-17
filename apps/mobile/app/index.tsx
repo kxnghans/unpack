@@ -1,3 +1,7 @@
+/**
+ * This file defines the root index page of the app, which redirects the user
+ * to the main planning screen.
+ */
 import { Redirect } from 'expo-router';
 
 /**
@@ -7,3 +11,4 @@ import { Redirect } from 'expo-router';
 export default function RootIndex() {
   return <Redirect href="/planning" />;
 }
+

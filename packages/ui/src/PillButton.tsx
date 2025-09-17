@@ -1,7 +1,15 @@
+/**
+ * This file defines the PillButton component, a pill-shaped button with a
+ * neumorphic design.
+ */
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet, View } from 'react-native';
 import { useTheme } from './ThemeProvider';
 
+/**
+ * A wrapper component that creates a neumorphic effect by combining two shadows.
+ * This gives the component a sense of depth.
+ */
 const NeumorphicWrapper = ({ children, style }) => {
   const { colors } = useTheme();
   const styles = StyleSheet.create({
@@ -32,6 +40,12 @@ const NeumorphicWrapper = ({ children, style }) => {
   );
 };
 
+/**
+ * A pill-shaped button with a neumorphic design.
+ * @param {object} props - The component props.
+ * @param {React.ReactNode} props.children - The content of the button.
+ * @param {() => void} props.onPress - A function to call when the button is pressed.
+ */
 export const PillButton = ({ children, onPress }) => {
   const { colors, typography } = useTheme();
 
@@ -53,6 +67,7 @@ export const PillButton = ({ children, onPress }) => {
 
   return (
     <TouchableOpacity onPress={onPress}>
+      {/* The neumorphic effect is created by nesting two views with different shadows. */}
       <NeumorphicWrapper style={{ borderRadius: 30 }}>
         <View style={styles.container}>
           <Text style={styles.text}>{children}</Text>

@@ -1,3 +1,7 @@
+/**
+ * This file defines the Packing component, which is a placeholder for
+ * displaying the user's smart packing list.
+ */
 import { View, Text, StyleSheet } from "react-native";
 import React from 'react';
 import { useTheme } from "@ui/ThemeProvider";

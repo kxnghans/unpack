@@ -1,13 +1,33 @@
+/**
+ * This file defines the ProgressBar component, a progress bar with a neumorphic
+ * design, used to track progress towards a target value.
+ */
 import React, { useState } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import { useTheme } from './ThemeProvider';
 
+/**
+ * The props for the ProgressBar component.
+ */
 export interface ProgressBarProps {
+  /**
+   * The current value of the progress bar.
+   */
   currentValue: number;
+  /**
+   * The target value of the progress bar.
+   */
   targetValue: number;
+  /**
+   * The variant of the progress bar.
+   */
   variant?: 'simplified' | 'full';
 }
 
+/**
+ * A wrapper component that creates a neumorphic effect by combining two shadows.
+ * This gives the component a sense of depth.
+ */
 const NeumorphicWrapper = ({ children, style }) => {
   const { colors } = useTheme();
   const styles = StyleSheet.create({
@@ -38,15 +58,24 @@ const NeumorphicWrapper = ({ children, style }) => {
   );
 };
 
+/**
+ * A progress bar component with a neumorphic design.
+ * It can be used to visualize progress towards a target, with different variants for display.
+ */
 export function ProgressBar({ currentValue, targetValue, variant = 'full' }: ProgressBarProps) {
   const { colors, typography } = useTheme();
   const [targetLabelWidth, setTargetLabelWidth] = useState(0);
   const progress = targetValue > 0 ? (currentValue / targetValue) * 100 : 0;
+  // The max progress is used to scale the bar when the current value exceeds the target.
   const maxProgress = currentValue > targetValue * 1.1 ? currentValue : (targetValue > 0 ? (targetValue * 1.1) : 1.1);
   const displayProgress = maxProgress > 0 ? (currentValue / maxProgress) * 100 : 0;
 
   const isSimplified = variant === 'simplified';
 
+  /**
+   * Returns the color of the progress bar based on the progress percentage.
+   * @returns The color of the progress bar.
+   */
   const getBarColor = () => {
     if (progress < 20) return colors.danger;
     if (progress < 60) return colors.warning;
@@ -120,15 +149,20 @@ export function ProgressBar({ currentValue, targetValue, variant = 'full' }: Pro
       <View style={styles.progressBarContainer}>
         <NeumorphicWrapper style={{ borderRadius: 5, flex: 1 }}>
           <View style={styles.container}>
+            {/* The main progress bar. */}
             <View style={styles.bar} />
+            {/* An additional bar to show progress over the target. */}
             {progress >= 100 && <View style={styles.overTargetBar} />}
+            {/* A line to indicate the target value. */}
             {targetValue > 0 && <View style={styles.targetLine} />}
           </View>
+          {/* The label for the target value, shown only in the full variant. */}
           {!isSimplified && <View style={styles.targetValueLabelContainer}>
             <Text onLayout={(e) => setTargetLabelWidth(e.nativeEvent.layout.width)} style={styles.targetValueLabel}>Target: ${targetValue.toFixed(0)}</Text>
           </View>}
         </NeumorphicWrapper>
       </View>
+      {/* The informational text below the progress bar. */}
       <View style={styles.infoContainer}>
         {isSimplified ? (
           <Text style={styles.infoText}>

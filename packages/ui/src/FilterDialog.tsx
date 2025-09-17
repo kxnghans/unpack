@@ -1,3 +1,7 @@
+/**
+ * This file defines the FilterDialog component, a modal dialog that allows
+ * users to select multiple options from a list for filtering content.
+ */
 import React from 'react';
 import {
   Modal,
@@ -10,6 +14,18 @@ import {
 import { PillButton } from './PillButton';
 import { useTheme } from './ThemeProvider';
 
+/**
+ * A dialog that allows the user to select multiple options from a list.
+ * @param {object} props - The component props.
+ * @param {boolean} props.isVisible - Whether the dialog is visible.
+ * @param {() => void} props.onClose - A function to call when the dialog is closed.
+ * @param {string} props.title - The title of the dialog.
+ * @param {string[]} props.options - The options to display.
+ * @param {string[]} props.selectedOptions - The currently selected options.
+ * @param {(option: string) => void} props.onSelectionChange - A function to call when an option is selected or deselected.
+ * @param {() => void} props.onClearAll - A function to call when the "Clear All" button is pressed.
+ * @param {() => void} props.onSelectAll - A function to call when the "Select All" button is pressed.
+ */
 export const FilterDialog = ({
   isVisible,
   onClose,
@@ -68,7 +84,9 @@ export const FilterDialog = ({
       onRequestClose={onClose}
       animationType="fade"
     >
+      {/* The modal overlay closes the dialog when pressed. */}
       <TouchableOpacity style={styles.modalOverlay} activeOpacity={1} onPressOut={onClose}>
+        {/* This View prevents the dialog from closing when the user interacts with it. */}
         <View style={styles.dialogContainer} onStartShouldSetResponder={() => true}>
           <View style={styles.header}>
             <Text style={styles.title}>{title}</Text>
@@ -81,6 +99,7 @@ export const FilterDialog = ({
               </TouchableOpacity>
             </View>
           </View>
+          {/* The options are displayed in a scrollable view. */}
           <ScrollView>
             {options.map((option) => (
               <PillButton

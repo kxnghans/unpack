@@ -1,3 +1,7 @@
+/**
+ * This file defines the screen for displaying the details of a specific
+ * packing list. It's a dynamic route that uses the [id] parameter from the URL.
+ */
 import { View, Text } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
 
@@ -14,3 +18,4 @@ export default function PackingListDetails() {
     </View>
   );
 }
+

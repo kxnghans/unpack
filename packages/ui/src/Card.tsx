@@ -1,3 +1,7 @@
+/**
+ * This file defines a reusable Card component.
+ * It's used to display a title and an optional subtitle in a styled container.
+ */
 import { View, Text, StyleSheet, Pressable } from 'react-native';
 import React from 'react';
 import { useTheme } from './ThemeProvider';
@@ -23,6 +27,7 @@ export interface CardProps {
 /**
  * A reusable card component.
  * This component can be used to display a title, subtitle, and handle a press event.
+ * It uses a double View structure to create a neumorphic shadow effect.
  */
 export function Card({ title, subtitle, onPress }: CardProps) {
   const { colors, typography, theme } = useTheme();
@@ -67,11 +72,14 @@ export function Card({ title, subtitle, onPress }: CardProps) {
   });
 
   return (
+    // The outer View creates the darker part of the shadow.
     <View style={styles.darkShadow}>
+      {/* The inner View creates the lighter part of the shadow. */}
       <View style={styles.lightShadow}>
         <Pressable onPress={onPress} style={styles.card}>
           <View style={styles.cardInner}>
             <Text style={styles.title} numberOfLines={1}>{title}</Text>
+            {/* Conditionally render the subtitle if it exists. */}
             {subtitle && <Text style={styles.subtitle} numberOfLines={1}>{subtitle}</Text>}
           </View>
         </Pressable>

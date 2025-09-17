@@ -1,15 +1,38 @@
+/**
+ * This file defines the TripCard component, a card used for displaying a trip
+ * with a location, date, and background image.
+ */
 import { View, Text, StyleSheet, Pressable, ImageBackground } from 'react-native';
 import React from 'react';
 import { useTheme } from './ThemeProvider';
 import { LinearGradient } from 'expo-linear-gradient';
 
+/**
+ * The props for the TripCard component.
+ */
 export interface TripCardProps {
+  /**
+   * The location of the trip.
+   */
   location: string;
+  /**
+   * The date of the trip.
+   */
   date: string;
+  /**
+   * The image to display for the trip.
+   */
   image: string;
+  /**
+   * A function to call when the card is pressed.
+   */
   onPress?: () => void;
 }
 
+/**
+ * A card that displays information about a trip.
+ * It features a background image with a gradient overlay for text readability.
+ */
 export function TripCard({ location, date, image, onPress }: TripCardProps) {
   const { colors, typography } = useTheme();
 
@@ -48,6 +71,7 @@ export function TripCard({ location, date, image, onPress }: TripCardProps) {
   return (
     <Pressable onPress={onPress} style={styles.card}>
       <ImageBackground source={{ uri: image }} style={styles.imageBackground}>
+        {/* A gradient overlay to make the text more readable against the image. */}
         <LinearGradient
           colors={['transparent', colors.overlay]}
           style={styles.gradient}

@@ -1,3 +1,8 @@
+/**
+ * This file defines the CommunityScreen, which is the main screen for the
+ * community tab. It displays a list of travel guides and allows users to
+ * filter and search for guides.
+ */
 import React, { useState } from 'react';
 import {
   View,
@@ -13,6 +18,7 @@ import { useTheme, SegmentedControl, FilterDialog, HeartIcon } from '@ui';
 import { FontAwesome } from '@expo/vector-icons';
 import FilterDrawer from '../../../components/FilterDrawer';
 
+// Enable layout animations on Android for a smoother user experience.
 if (
   Platform.OS === 'android' &&
   UIManager.setLayoutAnimationEnabledExperimental
@@ -20,7 +26,10 @@ if (
   UIManager.setLayoutAnimationEnabledExperimental(true);
 }
 
-// --- Data --- 
+// --- Mock Data ---
+// In a real application, this data would likely come from an API.
+
+// Filter options for the community screen.
 const continents = ['Africa', 'Asia', 'Europe', 'North America', 'South America', 'Australia'];
 const tripTypes = ['Road Trip', 'Leisure / Vacation', 'Backpacking', 'Study Abroad', 'Business', 'Cruise', 'Adventure Travel'];
 const durations = ['1-3 Days', '4-7 Days', '1-2 Weeks', '2+ Weeks'];
@@ -28,17 +37,25 @@ const budgets = ['Budget ($)', 'Mid-range ($)', 'Luxury ($)'];
 const travelStyles = ['Foodie', 'Hiking', 'Museums', 'Nightlife', 'Relaxing', 'Adventure'];
 const groupTypes = ['Solo', 'Couple', 'Family', 'Friends'];
 
+// Tabs for the main segmented control on the community screen.
 const COMMUNITY_TABS = [
   { key: 'Trending', title: 'Trending', iconName: 'trending-up' },
   { key: 'Search', title: 'Search', iconName: 'search' },
 ];
 
+/**
+ * The main community screen, displaying trending guides and allowing filtering.
+ */
 const CommunityScreen = () => {
+  // State for the visibility of the filter drawer.
   const [drawerVisible, setDrawerVisible] = useState(true);
+  // State for the currently active filter, which determines which filter dialog to show.
   const [activeFilterId, setActiveFilterId] = useState(null);
+  // State for the currently active tab in the main segmented control.
   const [activeTab, setActiveTab] = useState('Trending');
   const { colors, typography } = useTheme();
 
+  // State for the list of guides, including their liked status.
   const [guides, setGuides] = useState([
     {
       id: '1',
@@ -60,7 +77,7 @@ const CommunityScreen = () => {
     },
   ]);
 
-  // --- State for each filter ---
+  // --- State for each filter category ---
   const [selectedContinents, setSelectedContinents] = useState([]);
   const [selectedTripTypes, setSelectedTripTypes] = useState([]);
   const [selectedDurations, setSelectedDurations] = useState([]);
@@ -173,6 +190,10 @@ const CommunityScreen = () => {
     { id: 'groupType', title: 'Group Type', icon: 'users' },
   ];
 
+  /**
+   * Toggles the liked state of a guide.
+   * @param {string} guideId - The ID of the guide to like/unlike.
+   */
   const handleHeartPress = (guideId) => {
     setGuides((prevGuides) =>
       prevGuides.map((guide) =>
@@ -181,14 +202,26 @@ const CommunityScreen = () => {
     );
   };
 
+  /**
+   * Sets the active filter ID to open the corresponding filter dialog.
+   * @param {string} filterId - The ID of the filter to activate.
+   */
   const handleFilterPress = (filterId) => {
     setActiveFilterId(filterId);
   };
 
+  /**
+   * Closes the currently open filter dialog by setting the active filter ID to null.
+   */
   const handleCloseDialog = () => {
     setActiveFilterId(null);
   };
 
+  /**
+   * Returns the configuration for the active filter dialog based on the activeFilterId.
+   * This includes the title, options, selected options, and selection handlers.
+   * @returns {object | null} The filter configuration or null if no filter is active.
+   */
   const getFilterConfig = () => {
     switch (activeFilterId) {
       case 'continent':
@@ -206,10 +239,14 @@ const CommunityScreen = () => {
           onClearAll: () => setSelectedContinents([]),
           onSelectAll: () => setSelectedContinents(continents),
         };
-      // ... other cases
+      // ... other cases for other filters would go here
     }
   };
 
+  /**
+   * Renders the appropriate filter dialog based on the active filter ID.
+   * @returns {React.ReactElement | null} The filter dialog component or null if no filter is active.
+   */
   const renderFilterDialog = () => {
     const config = getFilterConfig();
     if (!config) return null;
@@ -225,9 +262,11 @@ const CommunityScreen = () => {
 
   return (
     <View style={styles.container}>
+      {/* The header of the screen, containing the title, filter button, and segmented control. */}
       <View style={styles.headerContent}>
         <Text style={styles.mainTitle}>Community</Text>
         <View style={styles.filterAndTabsContainer}>
+          {/* The button to toggle the filter drawer. */}
           <TouchableOpacity
             style={[
               styles.filterIconContainer,
@@ -242,6 +281,7 @@ const CommunityScreen = () => {
             />
           </TouchableOpacity>
 
+          {/* The main segmented control for switching between "Trending" and "Search". */}
           <View style={styles.tabContainer}>
             <SegmentedControl
               tabs={COMMUNITY_TABS}
@@ -252,14 +292,17 @@ const CommunityScreen = () => {
         </View>
       </View>
 
+      {/* The main content of the screen, containing the filter drawer and the list of guides. */}
       <View style={styles.mainContent}>
+        {/* The filter drawer, which is shown or hidden based on the drawerVisible state. */}
         {drawerVisible && (
           <FilterDrawer
             filters={filters}
             onFilterPress={handleFilterPress}
           />
         )}
-                <ScrollView
+        {/* The scrollable list of guides. */}
+        <ScrollView
           style={{ flex: 1 }}
           contentContainerStyle={styles.contentFeed}
         >
@@ -276,6 +319,7 @@ const CommunityScreen = () => {
                   <Image source={{ uri: guide.authorImage }} style={styles.authorImage} />
                 </View>
               </View>
+              {/* The heart icon for liking a guide. */}
               <View style={styles.heartIcon}>
                 <HeartIcon
                   isLiked={guide.liked}
@@ -287,6 +331,7 @@ const CommunityScreen = () => {
         </ScrollView>
       </View>
 
+      {/* The filter dialog, which is rendered based on the active filter. */}
       {renderFilterDialog()}
     </View>
   );

@@ -1,4 +1,8 @@
 
+/**
+ * This file defines the WalletsScreen, which displays a list of the user's
+ * wallet cards and their redemption progress.
+ */
 import {
   View,
   Text,
@@ -12,6 +16,9 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { amexRewards } from '../../../lib/amex-rewards';
 
+/**
+ * The wallets screen, displaying a list of wallet cards.
+ */
 export default function WalletsScreen() {
   const { colors, typography } = useTheme();
   const router = useRouter();
@@ -34,6 +41,7 @@ export default function WalletsScreen() {
     },
   });
 
+  // Calculate the number of rewards in each status category.
   const rewards = [
     { text: `${amexRewards.used.length} used`, icon: 'check-circle', color: 'success' },
     { text: `${amexRewards.inProgress.length} in progress`, icon: 'spinner', color: 'warning' },
@@ -55,6 +63,7 @@ export default function WalletsScreen() {
               targetValue: item.targetRedemption,
               variant: 'simplified',
             }}
+            // Only the Amex Platinum card is pressable in this mock data.
             onPress={() => item.name === 'Amex Platinum' && router.push(`/planning/wallet/${item.id}`)}
           />
         )}

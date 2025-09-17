@@ -1,3 +1,7 @@
+/**
+ * This file defines the Itinerary component, which is a placeholder for
+ * displaying the user's travel itinerary.
+ */
 import { View, Text, StyleSheet } from "react-native";
 import React from 'react';
 import { useTheme } from "@ui/ThemeProvider";

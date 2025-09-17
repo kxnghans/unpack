@@ -1,8 +1,16 @@
+/**
+ * This file defines the Wave component, a decorative, wave-like background
+ * element used for adding visual interest to components like the HubCard.
+ */
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Svg, Path } from 'react-native-svg';
 import { useTheme } from './ThemeProvider';
 
+/**
+ * A wave-like background component.
+ * It's a decorative element that uses an SVG path to create a wave shape.
+ */
 export function Wave() {
   const { colors } = useTheme();
 
@@ -14,6 +22,7 @@ export function Wave() {
         viewBox="0 0 1440 320"
         style={styles.svg}
       >
+        {/* The SVG path that creates the wave shape. */}
         <Path
           fill={colors.primary}
           fillOpacity="0.1"
