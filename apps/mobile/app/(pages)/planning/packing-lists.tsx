@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { UpcomingCard, useTheme, CardGrid } from '@ui';
+import { UpcomingCard, useTheme, CardGrid, PieChart, Card } from '@ui';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { PACKING_LISTS, MANDATORY_ITEMS } from '../../../lib/mock-data';
 import { useRouter } from 'expo-router';
@@ -32,7 +32,8 @@ export default function PackingListsScreen() {
       color: colors.text,
       textAlign: 'center',
       ...typography.fonts.title,
-      marginHorizontal: spacing.small,
+      marginHorizontal: 5,
+      flexShrink: 1,
     },
     star: {
       color: '#FBBF24',
@@ -41,19 +42,11 @@ export default function PackingListsScreen() {
 
   const renderPackingListItem = ({ item }) => {
     if (item.isMandatoryCard) {
-      const titleComponent = (
-        <View style={styles.titleContainer}>
-          <FontAwesome5 name="star" solid size={16} style={styles.star} />
-          <Text style={styles.title}>{item.name}</Text>
-          <FontAwesome5 name="star" solid size={16} style={styles.star} />
-        </View>
-      );
-
       return (
         <UpcomingCard
           imageUrl="https://picsum.photos/seed/mandatory/400/300" // Placeholder image
-          icon={<FontAwesome5 name="compass" size={24} color={colors.textOnOverlay} />}
-          title={titleComponent}
+          icon={<FontAwesome5 name="suitcase" solid size={24} color={'#FBBF24'} />}
+          title={item.name}
           body={`${item.items.length} items`}
           onPress={() => router.push('/planning/mandatory-items')}
         />

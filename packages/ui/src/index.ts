@@ -23,6 +23,7 @@ export * from './ProgressBar';
 export * from './QuickAccessCard';
 export * from './RewardTypeLabel';
 export * from './SegmentedControl';
+export * from './SectionHeader';
 export * from './StatCard';
 export * from './ThemeProvider';
 export * from './tokens';

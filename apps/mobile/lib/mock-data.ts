@@ -3,6 +3,7 @@
  */
 
 import { nanoid } from 'nanoid/non-secure';
+import { SavingsGoal } from '@utils';
 
 export const HUBS = [
   {
@@ -69,7 +70,8 @@ export const UPCOMING_ITEMS = [
     id: '4',
     type: 'savings',
     title: 'Ghana Savings Goal',
-    body: '$150 / $1500',
+    currentAmount: 150,
+    totalAmount: 1500,
     imageUrl: 'https://images.unsplash.com/photo-1622219999459-ab5b14e5f45a?q=80&w=3864&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
@@ -389,4 +391,35 @@ export const MANDATORY_ITEMS = [
   { id: 'mand-1', name: 'Passport', packed: false, isMandatory: true },
   { id: 'mand-2', name: 'Phone Charger', packed: false, isMandatory: true },
   { id: 'mand-3', name: 'House Keys', packed: false, isMandatory: true },
+];
+
+export const SAVINGS_GOALS: SavingsGoal[] = [
+  {
+    id: '1',
+    name: 'Ghana Trip',
+    currentAmount: 150,
+    totalAmount: 1500,
+    status: 'In Progress',
+  },
+  {
+    id: '2',
+    name: 'New Camera',
+    currentAmount: 300,
+    totalAmount: 300,
+    status: 'Completed',
+  },
+  {
+    id: '3',
+    name: 'Summer Festival',
+    currentAmount: 500,
+    totalAmount: 500,
+    status: 'Completed',
+  },
+  {
+    id: '4',
+    name: 'Birthday Gift',
+    currentAmount: 2000,
+    totalAmount: 2000,
+    status: 'Completed',
+  },
 ];

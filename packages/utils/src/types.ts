@@ -14,3 +14,13 @@ export interface UserDocument {
   customName?: string;
   uri?: string; // Add uri to store the file path
 }
+
+export interface SavingsGoal {
+    id: string;
+    name: string;
+    currentAmount?: number;
+    totalAmount?: number;
+    status: 'In Progress' | 'Completed';
+    completedDate?: Date;
+    imageUrl?: string;
+}

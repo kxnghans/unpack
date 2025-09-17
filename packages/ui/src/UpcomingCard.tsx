@@ -4,9 +4,10 @@ import React from 'react';
 import { useTheme } from './ThemeProvider';
 
 export interface UpcomingCardProps {
-  imageUrl: string;
-  icon: React.ReactNode;
-  title: React.ReactNode;
+  imageUrl?: string;
+  imageComponent?: React.ReactNode;
+  icon?: React.ReactNode;
+  title: string;
   body: string;
   onPress?: () => void;
 }
@@ -41,7 +42,7 @@ const NeumorphicWrapper = ({ children }) => {
   );
 };
 
-export function UpcomingCard({ imageUrl, icon, title, body, onPress }: UpcomingCardProps) {
+export function UpcomingCard({ imageUrl, imageComponent, icon, title, body, onPress }: UpcomingCardProps) {
   const { colors, typography, spacing } = useTheme();
 
   const styles = StyleSheet.create({
@@ -54,11 +55,17 @@ export function UpcomingCard({ imageUrl, icon, title, body, onPress }: UpcomingC
       height: 140,
       borderRadius: 20,
       overflow: 'hidden',
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: colors.card,
     },
     image: {
       flex: 1,
       justifyContent: 'flex-end',
       alignItems: 'flex-end',
+      width: '100%',
+    },
+    iconContainer: {
       padding: 12,
     },
     overlay: {
@@ -99,17 +106,21 @@ export function UpcomingCard({ imageUrl, icon, title, body, onPress }: UpcomingC
       <View style={{ zIndex: 1, marginTop: 14 }}>
         <NeumorphicWrapper>
           <View style={styles.imageContainer}>
-            <ImageBackground source={{ uri: imageUrl }} style={styles.image}>
-              <View style={styles.overlay} />
-              {icon}
-            </ImageBackground>
+            {imageUrl ? (
+              <ImageBackground source={{ uri: imageUrl }} style={styles.image}>
+                <View style={styles.overlay} />
+                {imageComponent ? <View style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'center', alignItems: 'center'}}>{imageComponent}</View> : <View style={styles.iconContainer}>{icon}</View>}
+              </ImageBackground>
+            ) : (
+              imageComponent
+            )}
           </View>
         </NeumorphicWrapper>
       </View>
       <View style={styles.whiteBlockWrapper}>
         <NeumorphicWrapper>
           <View style={styles.whiteBlock}>
-            {typeof title === 'string' ? <Text style={styles.title}>{title}</Text> : title}
+            <Text style={styles.title}>{title}</Text>
             <Text style={styles.body} numberOfLines={2}>{body}</Text>
           </View>
         </NeumorphicWrapper>

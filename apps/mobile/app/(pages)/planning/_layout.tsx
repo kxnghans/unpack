@@ -93,6 +93,7 @@ export default function PlanningLayout() {
         }}
       />
       <Stack.Screen name="mandatory-items" options={{ title: 'Mandatory Items', headerTitleStyle: { ...typography.fonts.title } }} />
+      <Stack.Screen name="savings" options={{ title: 'Savings Hub' }} />
     </Stack>
   );
 }

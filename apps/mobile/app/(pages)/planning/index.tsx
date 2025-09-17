@@ -12,6 +12,7 @@ import {
   Divider,
   CardGrid,
 } from '@ui';
+import { formatCurrency } from '@utils';
 import { HUBS, UPCOMING_ITEMS } from '../../../lib/mock-data';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
@@ -54,15 +55,21 @@ export default function PlanningScreen() {
     },
   });
 
-  const renderUpcomingItem = ({ item }) => (
-    <UpcomingCard
-      imageUrl={item.imageUrl}
-      icon={<FontAwesome5 name={iconMap[item.type]} size={24} color={colors.textOnOverlay} />}
-      title={item.title}
-      body={item.body}
-      onPress={() => item.url && Linking.openURL(item.url)}
-    />
-  );
+  const renderUpcomingItem = ({ item }) => {
+    let body = item.body;
+    if (item.type === 'savings') {
+      body = `${formatCurrency(item.currentAmount)} / ${formatCurrency(item.totalAmount)}`;
+    }
+    return (
+      <UpcomingCard
+        imageUrl={item.imageUrl}
+        icon={<FontAwesome5 name={iconMap[item.type]} size={24} color={colors.textOnOverlay} />}
+        title={item.title}
+        body={body}
+        onPress={() => item.url && Linking.openURL(item.url)}
+      />
+    );
+  };
 
   const ListHeader = () => (
     <View>
@@ -87,6 +94,9 @@ export default function PlanningScreen() {
                 }
                 if (hub.title === 'Packing') {
                   router.push('/planning/packing-lists');
+                }
+                if (hub.title === 'Savings') {
+                  router.push('/planning/savings');
                 }
               }}
             />
