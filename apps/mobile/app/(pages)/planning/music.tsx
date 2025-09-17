@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet, FlatList, Linking } from 'react-native';
-import { UpcomingCard, useTheme, Divider } from '@ui';
+import { View, Text, StyleSheet, Linking } from 'react-native';
+import { UpcomingCard, useTheme, CardGrid } from '@ui';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { MUSIC_DATA } from '../../../lib/mock-data';
 
@@ -16,10 +16,6 @@ export default function MusicScreen() {
       flex: 1,
       backgroundColor: colors.background,
     },
-    listContentContainer: {
-      paddingHorizontal: 24,
-      paddingTop: 24, // Add padding to the top of the list
-    },
   });
 
   const renderMusicItem = ({ item }) => (
@@ -34,12 +30,10 @@ export default function MusicScreen() {
 
   return (
     <View style={styles.container}>
-      <FlatList
+      <CardGrid
         data={MUSIC_DATA}
         renderItem={renderMusicItem}
         keyExtractor={(item) => item.id}
-        numColumns={2}
-        contentContainerStyle={styles.listContentContainer}
       />
     </View>
   );

@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
-import { View, StyleSheet, Text, FlatList, Linking } from 'react-native';
+import { View, StyleSheet, Text, Linking } from 'react-native';
 import { useFocusEffect } from 'expo-router';
-import { UpcomingCard, useTheme } from '@ui';
+import { UpcomingCard, useTheme, CardGrid } from '@ui';
 import documentStore from '../../../lib/document-store';
 import { UserDocument } from '@utils';
 import { FontAwesome5 } from '@expo/vector-icons';
@@ -66,9 +66,6 @@ export default function DocumentsScreen() {
       ...typography.fonts.body,
       color: colors.textSecondary,
     },
-    listContentContainer: {
-        padding: 24,
-    }
   });
 
   if (uploadedDocs.length === 0) {
@@ -81,19 +78,17 @@ export default function DocumentsScreen() {
 
   return (
     <View style={styles.container}>
-      <FlatList
+      <CardGrid
         data={uploadedDocs}
         keyExtractor={(item) => item.id}
-        contentContainerStyle={styles.listContentContainer}
         renderItem={({ item }) => (
-          <UpcomingCard
-            title={item.customName || item.type.name}
-            body={`Uploaded on ${item.uploadedAt?.toLocaleDateString()}`}
-            icon={<FontAwesome5 name="file-alt" size={24} color={colors.textOnOverlay} />}
-            onPress={() => handlePressDocument(item.uri!)}
-            // You can add a placeholder imageUrl if you have one
-            imageUrl="https://images.unsplash.com/photo-1583322097458-1d9b23641b46?q=80&w=2835&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-          />
+            <UpcomingCard
+              title={item.customName || item.type.name}
+              body={`Uploaded on ${item.uploadedAt?.toLocaleDateString()}`}
+              icon={<FontAwesome5 name="file-alt" size={24} color={colors.textOnOverlay} />}
+              onPress={() => handlePressDocument(item.uri!)}
+              imageUrl="https://images.unsplash.com/photo-1583322097458-1d9b23641b46?q=80&w=2835&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            />
         )}
       />
     </View>
