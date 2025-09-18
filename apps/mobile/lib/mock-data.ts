@@ -423,3 +423,11 @@ export const SAVINGS_GOALS: SavingsGoal[] = [
     status: 'Completed',
   },
 ];
+
+/**
+ * Adds a new savings goal to the list of savings goals.
+ * @param goal The savings goal to add.
+ */
+export const addSavingsGoal = (goal: Omit<SavingsGoal, 'id'>) => {
+  SAVINGS_GOALS.push({ ...goal, id: nanoid() });
+};

@@ -269,7 +269,7 @@ export function DetailAccordionCard({
   const styles = StyleSheet.create({
     container: {
       borderRadius: 8,
-      backgroundColor: colors.surface,
+      backgroundColor: colors.background,
     },
     header: {
       flexDirection: 'row',
@@ -316,7 +316,7 @@ export function DetailAccordionCard({
       marginBottom: 12,
     },
     leftActionContainer: {
-      backgroundColor: colors.surface,
+      backgroundColor: colors.background,
       justifyContent: 'space-evenly',
       alignItems: 'center',
       borderRadius: 10,

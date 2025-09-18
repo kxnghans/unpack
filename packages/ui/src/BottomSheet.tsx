@@ -168,7 +168,7 @@ export function BottomSheet({
       bottom: 0,
       left: 0,
       right: 0,
-      backgroundColor: colors.surface,
+      backgroundColor: colors.background,
       borderTopLeftRadius: 20,
       borderTopRightRadius: 20,
       shadowColor: colors.shadow,

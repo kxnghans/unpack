@@ -93,7 +93,7 @@ export function MonthTile({ month, label, isUsed, estimatedValue, onToggle, curr
       justifyContent: 'center',
       alignItems: 'center',
       // The color of the tile changes based on whether the reward has been used or if the month is in the past.
-      backgroundColor: isUsed ? colors.success : isPast && periodType === 'monthly' ? colors.danger : colors.surface,
+      backgroundColor: isUsed ? colors.success : isPast && periodType === 'monthly' ? colors.danger : colors.background,
       marginHorizontal: 4,
     },
     monthText: {

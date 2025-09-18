@@ -15,25 +15,25 @@ import { useTheme } from './ThemeProvider';
  * @param {object} props.textStyle - Custom styles for the text.
  */
 export const NeumorphicButton = ({ onPress, title, style, textStyle }) => {
-  const { colors, typography } = useTheme();
+  const { colors, typography, theme } = useTheme();
 
   const styles = StyleSheet.create({
     buttonContainer: {
       borderRadius: 10,
       shadowColor: colors.shadow,
-      shadowOffset: { width: 4, height: 4 },
-      shadowOpacity: 0.1,
-      shadowRadius: 4,
-      elevation: 5,
+      shadowOffset: { width: 6, height: 6 },
+      shadowOpacity: theme === 'dark' ? 0.3 : 1,
+      shadowRadius: 5,
+      elevation: 8,
     },
     button: {
       borderRadius: 10,
       shadowColor: colors.highlight,
-      shadowOffset: { width: -4, height: -4 },
-      shadowOpacity: 0.75,
-      shadowRadius: 4,
-      elevation: 5,
-      backgroundColor: colors.surface, // Default to neutral surface color
+      shadowOffset: { width: -6, height: -6 },
+      shadowOpacity: 1,
+      shadowRadius: 5,
+      elevation: 8,
+      backgroundColor: colors.background, // Default to neutral background color
       paddingVertical: 16,
       paddingHorizontal: 32,
       alignItems: 'center',
@@ -49,7 +49,7 @@ export const NeumorphicButton = ({ onPress, title, style, textStyle }) => {
     <TouchableOpacity onPress={onPress}>
       {/* The neumorphic effect is created by nesting two views with different shadows. */}
       <View style={styles.buttonContainer}>
-        <View style={[styles.button, style]}>
+        <View style={StyleSheet.compose(styles.button, style)}>
           <Text style={[styles.text, textStyle]}>{title}</Text>
         </View>
       </View>

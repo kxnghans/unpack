@@ -5,8 +5,9 @@
  */
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
-import { useTheme, SegmentedControl } from '@ui';
+import { useTheme, SegmentedControl, NeumorphicButton } from '@ui';
 import { Feather } from '@expo/vector-icons';
+import { PlanTag } from '../lib/plan-data';
 
 /**
  * The tabs for the main segmented control (Personal vs. Creator).
@@ -28,7 +29,7 @@ const THEME_TABS = [
 /**
  * The header component for the stats screen.
  * @param {object} props - The component props.
- * @param {object} props.user - The user object.
+ * @param {object} props.user - The user object.s
  * @param {string} props.activeTab - The currently active tab.
  * @param {(key: string) => void} props.onTabPress - A function to call when a tab is pressed.
  * @param {boolean} props.isThemeExpanded - Whether the theme selection is expanded.
@@ -107,66 +108,11 @@ export const StatsHeader = ({ user, activeTab, onTabPress, isThemeExpanded, onTo
       ...typography.fonts.title,
       color: colors.text,
     },
-    planTag: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      paddingVertical: 4,
-      paddingHorizontal: 10,
-      borderRadius: 6,
-      marginBottom: spacing.small,
-    },
-    planTagText: {
-      ...typography.fonts.caption,
-      textTransform: 'uppercase',
-      marginLeft: 4,
-    },
-    freePlan: {
-      backgroundColor: theme === 'light' ? '#E5E7EB' : '#374151',
-    },
-    freePlanText: {
-      color: theme === 'light' ? '#4B5563' : '#D1D5DB',
-    },
-    premiumPlan: {
-      backgroundColor: '#FBBF24',
-    },
-    premiumPlanText: {
-      color: theme === 'light' ? '#FFFFFF' : '#111827',
-    },
     editProfileButton: {
-      paddingVertical: 8,
-      paddingHorizontal: 32,
-      borderRadius: 8,
-      borderWidth: 1,
-      borderColor: colors.primary,
       flex: 1,
-      marginLeft: 16,
-      alignItems: 'center',
-    },
-    editProfileButtonText: {
-      color: colors.primary,
-      fontWeight: 'bold',
+      marginHorizontal: 16,
     },
   });
-
-  /**
-   * A component that displays a tag for the user's plan (e.g., Free or Premium).
-   * @param {object} props - The component props.
-   * @param {string} props.plan - The user's plan.
-   */
-  const PlanTag = ({ plan }) => {
-    const isPremium = plan.toLowerCase() === 'premium';
-    const tagStyle = isPremium ? styles.premiumPlan : styles.freePlan;
-    const textStyle = isPremium ? styles.premiumPlanText : styles.freePlanText;
-    const iconName = isPremium ? 'star' : 'shield';
-    const iconColor = isPremium ? textStyle.color : textStyle.color;
-
-    return (
-      <View style={[styles.planTag, tagStyle]}>
-        <Feather name={iconName} size={12} color={iconColor} />
-        <Text style={[styles.planTagText, textStyle]}>{plan}</Text>
-      </View>
-    );
-  };
 
   return (
     <View style={styles.headerContainer}>
@@ -205,9 +151,14 @@ export const StatsHeader = ({ user, activeTab, onTabPress, isThemeExpanded, onTo
             <Text style={styles.userName}>{user.name}</Text>
           </View>
         </View>
-        <TouchableOpacity style={styles.editProfileButton}>
-          <Text style={styles.editProfileButtonText}>Edit Profile</Text>
-        </TouchableOpacity>
+        <View style={styles.editProfileButton}>
+        <NeumorphicButton
+          title="Edit Profile"
+          onPress={() => {}}
+          style={{ backgroundColor: colors.primary, paddingVertical: 8, paddingHorizontal: 16 }}
+          textStyle={{ color: colors.white, ...typography.fonts.body, fontWeight: 'bold' }}
+        />
+        </View>
       </View>
 
       {/* Row 3: Main segmented control for switching between stats views */}

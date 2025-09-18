@@ -79,7 +79,7 @@ const InsetNeumorphicWrapper = ({ children, style }) => {
       shadowOpacity: 0.75,
       shadowRadius: 4,
       elevation: 5,
-      backgroundColor: colors.surface,
+      backgroundColor: colors.background,
     },
   });
 

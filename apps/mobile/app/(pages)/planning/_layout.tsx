@@ -118,7 +118,14 @@ export default function PlanningLayout() {
       {/* The screen for managing mandatory items. */}
       <Stack.Screen name="mandatory-items" options={{ title: 'Mandatory Items', headerTitleStyle: { ...typography.fonts.title } }} />
       {/* The screen for the savings hub. */}
-      <Stack.Screen name="savings" options={{ title: 'Savings Hub' }} />
+      <Stack.Screen 
+        name="savings" 
+        options={{
+          title: 'Savings Hub',
+          headerRight: () => <NeumorphicAddButton href="/planning/add-savings-goal" />,
+        }}
+      />
+      <Stack.Screen name="add-savings-goal" options={{ title: 'Add Savings Goal', headerTitleStyle: { ...typography.fonts.title } }} />
     </Stack>
   );
 }

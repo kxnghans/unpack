@@ -2,11 +2,12 @@
  * This file defines the SavingsScreen, which displays a list of the user's
  * savings goals, separated into "In Progress" and "Completed" sections.
  */
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { View, StyleSheet, FlatList } from 'react-native';
 import { useTheme, UpcomingCard, PieChart, SectionHeader, Divider } from '@ui';
 import { formatCurrency } from '@utils';
 import { SAVINGS_GOALS } from '../../../lib/mock-data';
+import { useFocusEffect } from '@react-navigation/native';
 
 /**
  * The savings screen, displaying a list of savings goals.
@@ -16,6 +17,15 @@ export default function SavingsScreen() {
   const { colors } = useTheme();
   const [isInProgressCollapsed, setIsInProgressCollapsed] = useState(false);
   const [isCompletedCollapsed, setIsCompletedCollapsed] = useState(false);
+  const [inProgressGoals, setInProgressGoals] = useState([]);
+  const [completedGoals, setCompletedGoals] = useState([]);
+
+  useFocusEffect(
+    useCallback(() => {
+      setInProgressGoals(SAVINGS_GOALS.filter(goal => goal.status === 'In Progress'));
+      setCompletedGoals(SAVINGS_GOALS.filter(goal => goal.status === 'Completed'));
+    }, [])
+  );
 
   const styles = StyleSheet.create({
     container: {
@@ -35,10 +45,6 @@ export default function SavingsScreen() {
       marginBottom: 16,
     },
   });
-
-  // Filter the savings goals into "In Progress" and "Completed" lists.
-  const inProgressGoals = SAVINGS_GOALS.filter(goal => goal.status === 'In Progress');
-  const completedGoals = SAVINGS_GOALS.filter(goal => goal.status === 'Completed');
 
   /**
    * Groups an array of items into pairs for the two-column grid layout.
