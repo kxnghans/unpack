@@ -39,7 +39,7 @@ export const StatCard = ({ label, value, unit, icon }: StatCardProps) => {
     container: {
       flex: 1,
       padding: spacing.medium,
-      backgroundColor: colors.surface,
+      backgroundColor: colors.background,
       borderRadius: spacing.medium,
       alignItems: 'center',
       justifyContent: 'center',

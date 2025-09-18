@@ -15,7 +15,6 @@ export const theme = {
       shadow: 'rgba(0,0,0,0.2)',
       highlight: 'rgba(0,0,0,0.01)',
       //highlight: 'rgba(255,255,255,0.9)',
-      surface: '#F8F9FF',
       overlay: 'rgba(0, 0, 0, 0.4)',
       textOnOverlay: '#FFFFFF',
       border: '#EAEAEA',
@@ -35,6 +34,12 @@ export const theme = {
       oneTime: '#D5F5E3',
       mediumGrey: '#E0E0E0',
       disabled: '#D3D3D3',
+    },
+    neumorphic: {
+      shadowColor: 'rgba(0,0,0,0.2)',
+      shadowOffset: { width: 4, height: 4 },
+      shadowOpacity: 1,
+      shadowRadius: 4,
     },
     gradients: {
       primary: ['#007bff', '#0056b3'],
@@ -110,7 +115,6 @@ export const theme = {
       card: '#2E2E2E',
       shadow: 'rgba(0,0,0,0.5)',
       highlight: 'rgba(255,255,255,0.08)',
-      surface: '#2E2E2E',
       overlay: 'rgba(0, 0, 0, 0.5)',
       textOnOverlay: '#FFFFFF',
       border: '#3A3A3A',
@@ -130,6 +134,12 @@ export const theme = {
       oneTime: '#3E4B40',
       mediumGrey: '#2E2E2E',
       disabled: '#3A3A3A',
+    },
+    neumorphic: {
+      shadowColor: 'rgba(0,0,0,0.5)',
+      shadowOffset: { width: 4, height: 4 },
+      shadowOpacity: 1,
+      shadowRadius: 4,
     },
     gradients: {
       primary: ['#BB86FC', '#3700B3'],

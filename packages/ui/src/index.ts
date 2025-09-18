@@ -17,6 +17,7 @@ export * from './HubRow';
 export * from './InsetNeumorphicInput';
 export * from './MonthTile';
 export * from './NeumorphicButton';
+export * from './NeumorphicToggle';
 export * from './PieChart';
 export * from './PillButton';
 export * from './ProgressBar';

@@ -92,7 +92,7 @@ export function ProgressBar({ currentValue, targetValue, variant = 'full' }: Pro
     },
     container: {
       height: isSimplified ? 10 : 24,
-      backgroundColor: colors.surface,
+      backgroundColor: colors.background,
       borderRadius: 5,
       overflow: 'hidden',
       flex: 1,
