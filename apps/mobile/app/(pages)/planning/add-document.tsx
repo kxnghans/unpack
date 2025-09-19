@@ -5,6 +5,9 @@
 import { View, StyleSheet } from 'react-native';
 import { DocumentsHub } from '../../../components/DocumentsHub';
 import { useTheme } from '@ui';
+import { useDocumentUploader } from '../../../lib/hooks/useDocumentUploader';
+import { UserDocument } from '@utils';
+import { useRouter } from 'expo-router';
 
 /**
  * Screen for adding a new document.
@@ -12,6 +15,15 @@ import { useTheme } from '@ui';
  */
 export default function AddDocumentScreen() {
   const { colors } = useTheme();
+  const router = useRouter();
+  const { uploadDocument, loading } = useDocumentUploader();
+
+  const handleUpload = async (docToUpload: UserDocument) => {
+    const result = await uploadDocument(docToUpload);
+    if (result.success) {
+      router.back();
+    }
+  };
 
   const styles = StyleSheet.create({
     container: {
@@ -25,7 +37,7 @@ export default function AddDocumentScreen() {
 
   return (
     <View style={styles.container}>
-      <DocumentsHub />
+      <DocumentsHub onUpload={handleUpload} disabled={loading} />
     </View>
   );
 }

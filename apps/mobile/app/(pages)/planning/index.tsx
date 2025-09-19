@@ -28,6 +28,7 @@ const iconMap = {
   savings: 'piggy-bank',
   playlist: 'music',
   packing: 'suitcase',
+  document: 'id-badge',
 };
 
 /**
@@ -83,7 +84,13 @@ export default function PlanningScreen() {
         icon={<FontAwesome5 name={iconMap[item.type]} size={24} color={colors.textOnOverlay} />}
         title={item.title}
         body={body}
-        onPress={() => item.url && Linking.openURL(item.url)}
+        onPress={() => {
+          if (item.type === 'document') {
+            Linking.openURL(item.url);
+          } else if (item.url) {
+            Linking.openURL(item.url);
+          }
+        }}
       />
     );
   };

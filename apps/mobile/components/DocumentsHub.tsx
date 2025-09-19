@@ -11,12 +11,10 @@ import {
   ActivityIndicator,
   ScrollView,
 } from 'react-native';
-import { InsetNeumorphicInput, UpcomingCard, useTheme } from '@ui';
+import { InsetNeumorphicInput, useTheme } from '@ui';
 import { POPULAR_DOCUMENTS } from '../lib/mock-data';
 import { UserDocument } from '@utils';
 import { nanoid } from 'nanoid/non-secure';
-import { useDocumentUploader } from '../lib/hooks/useDocumentUploader';
-import { useRouter } from 'expo-router';
 import { Feather } from '@expo/vector-icons';
 
 /**
@@ -36,7 +34,6 @@ const DocumentItem = ({
   disabled: boolean;
 }) => {
   const { colors } = useTheme();
-  const isUploaded = document.status === 'Uploaded';
 
   const styles = StyleSheet.create({
     container: {
@@ -46,14 +43,14 @@ const DocumentItem = ({
       paddingVertical: 10,
       borderBottomWidth: 1,
       borderBottomColor: colors.border,
-      opacity: disabled && !isUploaded ? 0.5 : 1,
+      opacity: disabled ? 0.5 : 1,
     },
     name: {
-      color: isUploaded ? colors.textSecondary : colors.text,
+      color: colors.text,
       flex: 1,
     },
     uploadButton: {
-      backgroundColor: isUploaded ? colors.success : colors.primary,
+      backgroundColor: colors.primary,
       paddingHorizontal: 16,
       paddingVertical: 8,
       borderRadius: 8,
@@ -72,15 +69,12 @@ const DocumentItem = ({
       <TouchableOpacity
         onPress={onUpload}
         style={styles.uploadButton}
-        disabled={isUploaded || disabled}
+        disabled={disabled}
       >
-        {/* Show a loading indicator when the upload is in progress. */}
-        {disabled && !isUploaded ? (
+        {disabled ? (
           <ActivityIndicator size="small" color={colors.white} />
         ) : (
-          <Text style={styles.uploadButtonText}>
-            {isUploaded ? 'Uploaded' : 'Upload'}
-          </Text>
+          <Text style={styles.uploadButtonText}>Upload</Text>
         )}
       </TouchableOpacity>
     </View>
@@ -150,9 +144,6 @@ const OtherDocumentItem = ({
     },
   });
 
-  /**
-   * Handles the upload of a custom document, then resets the state.
-   */
   const handleUpload = () => {
     onUpload(customName);
     setCustomName('');
@@ -163,7 +154,6 @@ const OtherDocumentItem = ({
     <View style={styles.container}>
       <View style={styles.row}>
         <Text style={styles.name}>Other</Text>
-        {/* The plus/minus button toggles the visibility of the custom input field. */}
         <TouchableOpacity
           onPress={() => setIsAddingOther(!isAddingOther)}
           style={styles.iconButton}
@@ -171,7 +161,6 @@ const OtherDocumentItem = ({
           <Feather name={isAddingOther ? 'minus-circle' : 'plus-circle'} size={24} color={colors.primary} />
         </TouchableOpacity>
       </View>
-      {/* The custom input field is only shown when isAddingOther is true. */}
       {isAddingOther && (
         <View style={styles.inputContainer}>
           <Text style={styles.asterisk}>*</Text>
@@ -205,46 +194,17 @@ const OtherDocumentItem = ({
  * A component that displays a list of documents and allows the user to upload them.
  * It manages the state of pending and uploaded documents.
  */
-export const DocumentsHub = () => {
+export const DocumentsHub = ({ onUpload, disabled }: { onUpload: (doc: UserDocument) => void, disabled: boolean }) => {
   const { colors, typography } = useTheme();
-  const router = useRouter();
-  const { uploadDocument, loading } = useDocumentUploader();
 
-  // The list of documents that have not yet been uploaded.
-  const [pendingDocuments, setPendingDocuments] = useState<UserDocument[]>(
-    POPULAR_DOCUMENTS.filter((doc) => !doc.isCustom).map((doc) => ({
-      id: nanoid(),
-      type: doc,
-      status: 'Pending',
-      customName: '',
-    }))
-  );
-  // The list of documents that have been successfully uploaded.
-  const [uploadedDocuments, setUploadedDocuments] = useState<UserDocument[]>([]);
+  const popularDocuments = POPULAR_DOCUMENTS.filter((doc) => !doc.isCustom).map((doc) => ({
+    id: nanoid(),
+    type: doc,
+    status: 'Pending',
+    customName: '',
+  }));
 
-  /**
-   * Handles the upload of a document.
-   * @param {UserDocument} docToUpload - The document to upload.
-   */
-  const handleUpload = async (docToUpload: UserDocument) => {
-    const result = await uploadDocument(docToUpload);
-    if (result.success) {
-      const uploadedDoc = { ...docToUpload, status: 'Uploaded' as const };
-      // Move the document from the pending list to the uploaded list.
-      setUploadedDocuments((docs) => [...docs, uploadedDoc]);
-      setPendingDocuments((docs) =>
-        docs.filter((d) => d.id !== docToUpload.id)
-      );
-      // Navigate back to the previous screen after a short delay.
-      setTimeout(() => router.back(), 500);
-    }
-  };
-
-  /**
-   * Handles the upload of a custom document.
-   * @param {string} customName - The name of the custom document.
-   */
-  const handleOtherUpload = async (customName: string) => {
+  const handleOtherUpload = (customName: string) => {
     const otherDocType = POPULAR_DOCUMENTS.find((doc) => doc.isCustom);
     if (otherDocType) {
       const newDoc: UserDocument = {
@@ -253,12 +213,7 @@ export const DocumentsHub = () => {
         status: 'Pending',
         customName,
       };
-      const result = await uploadDocument(newDoc);
-      if (result.success) {
-        const uploadedDoc = { ...newDoc, status: 'Uploaded' as const };
-        setUploadedDocuments((docs) => [...docs, uploadedDoc]);
-        setTimeout(() => router.back(), 500);
-      }
+      onUpload(newDoc);
     }
   };
 
@@ -282,27 +237,15 @@ export const DocumentsHub = () => {
     <View style={styles.card}>
       <Text style={styles.title}>Documents</Text>
       <ScrollView>
-        {/* Display the list of uploaded documents. */}
-        {uploadedDocuments.map((doc) => (
-          <UpcomingCard
-            key={doc.id}
-            title={doc.customName || doc.type.name}
-            body={doc.status}
-            imageUrl="https://picsum.photos/200"
-            icon={<Feather name="check-circle" size={24} color="white" />}
-          />
-        ))}
-        {/* Display the list of pending documents. */}
-        {pendingDocuments.map((doc) => (
+        {popularDocuments.map((doc) => (
           <DocumentItem
             key={doc.id}
             document={doc}
-            onUpload={() => handleUpload(doc)}
-            disabled={loading}
+            onUpload={() => onUpload(doc)}
+            disabled={disabled}
           />
         ))}
-        {/* The component for uploading a custom document. */}
-        <OtherDocumentItem onUpload={handleOtherUpload} disabled={loading} />
+        <OtherDocumentItem onUpload={handleOtherUpload} disabled={disabled} />
       </ScrollView>
     </View>
   );
