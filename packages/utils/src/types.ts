@@ -10,6 +10,8 @@ export interface DocumentType {
   id: string;
   name: string;
   isCustom?: boolean;
+  imageUrl?: string;
+  icon?: string;
 }
 
 /**

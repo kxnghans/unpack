@@ -237,7 +237,8 @@ export default function DocumentsScreen() {
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
             <UpcomingCard
-              icon={<FontAwesome5 name={getFileIcon(item.uri!)} size={24} color={colors.textOnOverlay} />}
+              imageUrl={item.type.imageUrl}
+              icon={<FontAwesome5 name={item.type.icon!} size={24} color={colors.textOnOverlay} />}
               title={item.customName || item.type.name}
               body={getOriginalFileName(item.uri!)}
               onPress={() => handlePressDocument(item.uri!, item.customName || item.type.name)}

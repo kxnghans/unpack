@@ -12,7 +12,7 @@ import {
   ScrollView,
 } from 'react-native';
 import { InsetNeumorphicInput, useTheme } from '@ui';
-import { POPULAR_DOCUMENTS } from '../lib/mock-data';
+import { QUICK_ACCESS_DOCS } from '../lib/mock-data';
 import { UserDocument } from '@utils';
 import { nanoid } from 'nanoid/non-secure';
 import { Feather } from '@expo/vector-icons';
@@ -87,13 +87,7 @@ const DocumentItem = ({
  * @param {(customName: string) => void} props.onUpload - A function to call when the upload button is pressed.
  * @param {boolean} props.disabled - Whether the upload button is disabled.
  */
-const OtherDocumentItem = ({
-  onUpload,
-  disabled,
-}: {
-  onUpload: (customName: string) => void;
-  disabled: boolean;
-}) => {
+const OtherDocumentItem = ({ onUpload, disabled }: { onUpload: (customName: string) => void; disabled: boolean; }) => {
   const { colors } = useTheme();
   const [isAddingOther, setIsAddingOther] = useState(false);
   const [customName, setCustomName] = useState('');
@@ -197,7 +191,7 @@ const OtherDocumentItem = ({
 export const DocumentsHub = ({ onUpload, disabled }: { onUpload: (doc: UserDocument) => void, disabled: boolean }) => {
   const { colors, typography } = useTheme();
 
-  const popularDocuments = POPULAR_DOCUMENTS.filter((doc) => !doc.isCustom).map((doc) => ({
+  const quickAccessDocs = QUICK_ACCESS_DOCS.filter((doc) => !doc.isCustom).map((doc) => ({
     id: nanoid(),
     type: doc,
     status: 'Pending',
@@ -205,7 +199,7 @@ export const DocumentsHub = ({ onUpload, disabled }: { onUpload: (doc: UserDocum
   }));
 
   const handleOtherUpload = (customName: string) => {
-    const otherDocType = POPULAR_DOCUMENTS.find((doc) => doc.isCustom);
+    const otherDocType = QUICK_ACCESS_DOCS.find((doc) => doc.isCustom);
     if (otherDocType) {
       const newDoc: UserDocument = {
         id: nanoid(),
@@ -219,11 +213,9 @@ export const DocumentsHub = ({ onUpload, disabled }: { onUpload: (doc: UserDocum
 
   const styles = StyleSheet.create({
     card: {
-      width: 280,
       height: 'auto',
       borderRadius: 20,
       padding: 16,
-      marginHorizontal: 16,
       backgroundColor: colors.card,
     },
     title: {
@@ -237,7 +229,7 @@ export const DocumentsHub = ({ onUpload, disabled }: { onUpload: (doc: UserDocum
     <View style={styles.card}>
       <Text style={styles.title}>Documents</Text>
       <ScrollView>
-        {popularDocuments.map((doc) => (
+        {quickAccessDocs.map((doc) => (
           <DocumentItem
             key={doc.id}
             document={doc}
