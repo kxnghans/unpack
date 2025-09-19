@@ -1,46 +1,47 @@
-/**
- * This file defines a simple in-memory store for managing user documents.
- * It uses a listener pattern to notify components of changes.
- */
 import { UserDocument } from '@utils';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-// This is a simple in-memory store for demonstration purposes.
-// In a real app, you would use a more robust state management solution or a backend.
+const DOCUMENTS_KEY = 'user_documents';
 
 let documents: UserDocument[] = [];
-
 const listeners: Array<() => void> = [];
 
-/**
- * A simple in-memory store for documents.
- */
 const documentStore = {
-  /**
-   * Adds a document to the store.
-   * @param {UserDocument} doc - The document to add.
-   */
-  addDocument: (doc: UserDocument) => {
-    // Avoid adding duplicates
+  async addDocument(doc: UserDocument) {
     if (!documents.find(d => d.id === doc.id)) {
-        documents.push(doc);
-        listeners.forEach(l => l());
+      documents.push(doc);
+      await this.saveDocuments();
+      listeners.forEach(l => l());
     }
   },
 
-  /**
-   * Gets all the documents from the store.
-   * @returns {UserDocument[]} The documents in the store.
-   */
-  getDocuments: () => {
+  async deleteDocument(docId: string) {
+    documents = documents.filter(d => d.id !== docId);
+    await this.saveDocuments();
+    listeners.forEach(l => l());
+  },
+
+  async getDocuments(): Promise<UserDocument[]> {
+    try {
+      const storedDocs = await AsyncStorage.getItem(DOCUMENTS_KEY);
+      if (storedDocs) {
+        documents = JSON.parse(storedDocs);
+      }
+    } catch (error) {
+      console.error('Failed to load documents from storage', error);
+    }
     return documents;
   },
 
-  /**
-   * Subscribes to changes in the store.
-   * @param {() => void} listener - The listener to subscribe.
-   * @returns {() => void} A function to unsubscribe the listener.
-   */
-  subscribe: (listener: () => void) => {
+  async saveDocuments() {
+    try {
+      await AsyncStorage.setItem(DOCUMENTS_KEY, JSON.stringify(documents));
+    } catch (error) {
+      console.error('Failed to save documents to storage', error);
+    }
+  },
+
+  subscribe(listener: () => void): () => void {
     listeners.push(listener);
     return () => {
       const index = listeners.indexOf(listener);

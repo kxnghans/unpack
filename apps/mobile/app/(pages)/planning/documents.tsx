@@ -3,9 +3,10 @@
  * uploaded documents.
  */
 import React, { useState, useCallback } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, Alert } from 'react-native';
 import { useFocusEffect, useRouter } from 'expo-router';
 import * as Sharing from 'expo-sharing';
+import { File } from 'expo-file-system'; // Import File from new API
 import { UpcomingCard, useTheme, CardGrid } from '@ui';
 import documentStore from '../../../lib/document-store';
 import { UserDocument } from '@utils';
@@ -20,20 +21,19 @@ export default function DocumentsScreen() {
   const router = useRouter();
   const [uploadedDocs, setUploadedDocs] = useState<UserDocument[]>([]);
 
-  // The useFocusEffect hook runs when the screen comes into focus.
-  // It's used here to load documents from the store and subscribe to updates.
   useFocusEffect(
     useCallback(() => {
-      const storeDocs = documentStore.getDocuments();
-      setUploadedDocs(storeDocs);
-
-      // Subscribe to future updates to the document store.
-      const unsubscribe = documentStore.subscribe(() => {
-        const storeDocs = documentStore.getDocuments();
+      const loadDocuments = async () => {
+        const storeDocs = await documentStore.getDocuments();
         setUploadedDocs(storeDocs);
+      };
+
+      loadDocuments();
+
+      const unsubscribe = documentStore.subscribe(() => {
+        loadDocuments();
       });
 
-      // Unsubscribe from the document store when the screen goes out of focus.
       return () => unsubscribe();
     }, [])
   );
@@ -44,6 +44,47 @@ export default function DocumentsScreen() {
    */
   const handlePressDocument = async (uri: string) => {
     await Sharing.shareAsync(uri);
+  };
+
+  const handleDeleteDocument = (doc: UserDocument) => {
+    Alert.alert(
+      'Delete Document',
+      `Are you sure you want to delete ${doc.customName || doc.type.name}?`,
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Delete',
+          style: 'destructive',
+          onPress: async () => {
+            try {
+              // Remove from document store first
+              await documentStore.deleteDocument(doc.id);
+              
+              // Delete the physical file using new File API
+              if (doc.uri) {
+                const file = new File(doc.uri);
+                if (file.exists) {
+                  await file.delete();
+                  console.log('File deleted successfully:', doc.uri);
+                } else {
+                  console.warn('File does not exist:', doc.uri);
+                }
+              }
+            } catch (error) {
+              console.error('Error deleting document:', error);
+              Alert.alert(
+                'Delete Error',
+                'Failed to delete the document. Please try again.',
+                [{ text: 'OK' }]
+              );
+            }
+          },
+        },
+      ]
+    );
   };
 
   const getOriginalFileName = (uri: string) => {
@@ -97,6 +138,7 @@ export default function DocumentsScreen() {
               title={item.customName || item.type.name}
               body={getOriginalFileName(item.uri!)}
               onPress={() => handlePressDocument(item.uri!)}
+              onLongPress={() => handleDeleteDocument(item)}
             />
           )}
         />
