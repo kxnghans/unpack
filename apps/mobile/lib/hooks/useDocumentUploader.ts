@@ -59,7 +59,7 @@ export const useDocumentUploader = () => {
 
         // Create filename with proper extension
         const fileExtension = getFileExtension(asset.name);
-        const fileName = `${Date.now()}-${asset.name}`;
+        const fileName = `${Date.now()}-${asset.name.replace(/\s+/g, '_')}`;
         
         // Create File objects for source and destination
         const sourceFile = new File(asset.uri);
