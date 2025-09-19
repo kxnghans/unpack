@@ -1,5 +1,6 @@
 import { UserDocument } from '@utils';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { QUICK_ACCESS_DOCS } from './mock-data';
 
 const DOCUMENTS_KEY = 'user_documents';
 
@@ -25,7 +26,17 @@ const documentStore = {
     try {
       const storedDocs = await AsyncStorage.getItem(DOCUMENTS_KEY);
       if (storedDocs) {
-        documents = JSON.parse(storedDocs);
+        const parsedDocs = JSON.parse(storedDocs) as UserDocument[];
+        documents = parsedDocs.map(doc => {
+          const popularDoc = QUICK_ACCESS_DOCS.find(pd => pd.id === doc.type.id);
+          if (popularDoc) {
+            return {
+              ...doc,
+              type: popularDoc,
+            };
+          }
+          return doc;
+        });
       }
     } catch (error) {
       console.error('Failed to load documents from storage', error);

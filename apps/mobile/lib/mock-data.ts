@@ -288,12 +288,12 @@ export const MOCK_USER = {
   plan: 'Free',
 };
 
-export const POPULAR_DOCUMENTS = [
-  { id: '1', name: 'Passport' },
-  { id: '2', name: 'Visa' },
-  { id: '3', name: 'ID' },
-  { id: '4', name: 'Immunizations' },
-  { id: '5', name: 'Other', isCustom: true },
+export const QUICK_ACCESS_DOCS = [
+  { id: '1', name: 'Passport', icon: 'passport', imageUrl: 'https://images.unsplash.com/photo-1655722722754-3e536225c64b?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+  { id: '2', name: 'Visa', icon: 'file-contract', imageUrl: 'https://images.unsplash.com/photo-1581553672347-95d9444c0d2c?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+  { id: '3', name: 'ID', icon: 'id-card', imageUrl: 'https://images.unsplash.com/photo-1623795457671-600b1223c2db?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+  { id: '4', name: 'Immunizations', icon: 'syringe', imageUrl: 'https://images.unsplash.com/photo-1611694449252-02453c27856a?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+  { id: '5', name: 'Other', isCustom: true, icon: 'file-alt', imageUrl: 'https://images.pexels.com/photos/159866/books-book-pages-read-literature-159866.jpeg' },
 ];
 
 export const MOCK_UPLOADED_DOCUMENTS = [

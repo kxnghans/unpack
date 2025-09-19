@@ -91,8 +91,6 @@ export function UpcomingCard({ imageUrl, imageComponent, icon, title, body, onPr
       height: 140,
       borderRadius: 20,
       overflow: 'hidden',
-      justifyContent: 'center',
-      alignItems: 'center',
       backgroundColor: colors.card,
     },
     image: {
