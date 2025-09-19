@@ -1,4 +1,3 @@
-
 /**
  * This file defines the UpcomingCard component, a card used for displaying an
  * upcoming event or item with an image, icon, title, and body.
@@ -35,6 +34,10 @@ export interface UpcomingCardProps {
    * A function to call when the card is pressed.
    */
   onPress?: () => void;
+  /**
+   * A function to call when the card is long-pressed.
+   */
+  onLongPress?: () => void;
 }
 
 /**
@@ -75,7 +78,7 @@ const NeumorphicWrapper = ({ children }) => {
  * A card that displays an upcoming event or item.
  * It features a prominent image or icon, with a title and body text below.
  */
-export function UpcomingCard({ imageUrl, imageComponent, icon, title, body, onPress }: UpcomingCardProps) {
+export function UpcomingCard({ imageUrl, imageComponent, icon, title, body, onPress, onLongPress }: UpcomingCardProps) {
   const { colors, typography, spacing } = useTheme();
 
   const styles = StyleSheet.create({
@@ -135,7 +138,7 @@ export function UpcomingCard({ imageUrl, imageComponent, icon, title, body, onPr
   });
 
   return (
-    <TouchableOpacity onPress={onPress} style={styles.card}>
+    <TouchableOpacity onPress={onPress} onLongPress={onLongPress} style={styles.card}>
       {/* The image container is elevated with a neumorphic shadow. */}
       <View style={{ zIndex: 1, marginTop: 14 }}>
         <NeumorphicWrapper>
