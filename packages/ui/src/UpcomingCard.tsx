@@ -147,7 +147,7 @@ export function UpcomingCard({ imageUrl, imageComponent, icon, title, body, onPr
                 {imageComponent ? <View style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'center', alignItems: 'center'}}>{imageComponent}</View> : <View style={styles.iconContainer}>{icon}</View>}
               </ImageBackground>
             ) : (
-              imageComponent
+              imageComponent ? imageComponent : <View style={styles.iconContainer}>{icon}</View>
             )}
           </View>
         </NeumorphicWrapper>

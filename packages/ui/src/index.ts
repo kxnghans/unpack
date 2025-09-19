@@ -8,6 +8,7 @@ export * from './CardGrid';
 export * from './ChecklistRow';
 export * from './DetailAccordionCard';
 export * from './Divider';
+export * from './DocumentCard';
 export * from './FilterDialog';
 export * from './FullRedemptionButton';
 export * from './HeartIcon';
